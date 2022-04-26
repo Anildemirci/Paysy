@@ -1,0 +1,1073 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0412FDCD2810AD41003C4439 /* CustomPhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */; };
+		0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420239D2809F68D00C2824A /* CustomObjects.swift */; };
+		042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */; };
+		0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */; };
+		0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A32809A1B2000D0CAD /* QRView.swift */; };
+		0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */; };
+		045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */; };
+		0483975D2810E2DE00272F85 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0483975C2810E2DE00272F85 /* GoogleService-Info.plist */; };
+		0499557E28063D120085107B /* Login&SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499557D28063D120085107B /* Login&SignInView.swift */; };
+		04A6305B2808C10800F4088C /* TownsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6305A2808C10800F4088C /* TownsView.swift */; };
+		04A6305D2808C16700F4088C /* PlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6305C2808C16700F4088C /* PlacesView.swift */; };
+		04A9056A28175F1D00999A5F /* PhoneTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056928175F1D00999A5F /* PhoneTextModel.swift */; };
+		04A9056C28175F3700999A5F /* PlaceInformationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */; };
+		04A9056E28175F6E00999A5F /* PlaceCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056D28175F6E00999A5F /* PlaceCommentModel.swift */; };
+		04A9057028175F8500999A5F /* PlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056F28175F8500999A5F /* PlacesViewModel.swift */; };
+		04A9057228175FA300999A5F /* CreditCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9057128175FA300999A5F /* CreditCardModel.swift */; };
+		04A9057428175FAE00999A5F /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9057328175FAE00999A5F /* HomeModel.swift */; };
+		04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9057528175FF600999A5F /* UserInformationsModel.swift */; };
+		04AF162D28104D4300135A04 /* UserInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AF162C28104D4300135A04 /* UserInformationsView.swift */; };
+		04B727CB2818952D0026144B /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B727CA2818952D0026144B /* NotificationService.swift */; };
+		04B727CF2818952D0026144B /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 04B727C82818952D0026144B /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		04C8444928060FE300DEE45E /* PaysyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8444828060FE300DEE45E /* PaysyApp.swift */; };
+		04C8444B28060FE300DEE45E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8444A28060FE300DEE45E /* ContentView.swift */; };
+		04C8444D28060FE400DEE45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C8444C28060FE400DEE45E /* Assets.xcassets */; };
+		04C8445028060FE400DEE45E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C8444F28060FE400DEE45E /* Preview Assets.xcassets */; };
+		04C8445A28060FE400DEE45E /* PaysyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8445928060FE400DEE45E /* PaysyTests.swift */; };
+		04C8446428060FE400DEE45E /* PaysyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8446328060FE400DEE45E /* PaysyUITests.swift */; };
+		04C8446628060FE400DEE45E /* PaysyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8446528060FE400DEE45E /* PaysyUITestsLaunchTests.swift */; };
+		04C844732806100100DEE45E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C844722806100100DEE45E /* HomeView.swift */; };
+		04C844792806111400DEE45E /* closeKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C844782806111400DEE45E /* closeKeyboard.swift */; };
+		04CAD7BE2808C77D005D13AB /* SelectedPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7BD2808C77D005D13AB /* SelectedPlaceView.swift */; };
+		04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */; };
+		04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */; };
+		04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */; };
+		0CC0A39379EAE427F9689EA9 /* Pods_Paysy_PaysyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */; };
+		1BCAEA90B53D05088590EC56 /* Pods_Paysy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9FDFBABB80184A0472D34B1 /* Pods_Paysy.framework */; };
+		7DF050A59B5FA42FE108B52F /* Pods_PaysyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F087E300895312DF2D7EF5 /* Pods_PaysyTests.framework */; };
+		EAFA5E74E64D7C7D6A4E1E9D /* Pods_Paysy_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BBAFE3F08EACD2A271752F /* Pods_Paysy_OneSignalNotificationServiceExtension.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		04B727CD2818952D0026144B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04C8443D28060FE300DEE45E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04B727C72818952D0026144B;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
+		04C8445628060FE400DEE45E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04C8443D28060FE300DEE45E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04C8444428060FE300DEE45E;
+			remoteInfo = Paysy;
+		};
+		04C8446028060FE400DEE45E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04C8443D28060FE300DEE45E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04C8444428060FE300DEE45E;
+			remoteInfo = Paysy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		04B727D02818952D0026144B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				04B727CF2818952D0026144B /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPhoneTextField.swift; sourceTree = "<group>"; };
+		0420239D2809F68D00C2824A /* CustomObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObjects.swift; sourceTree = "<group>"; };
+		042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login&SignInViewModel.swift"; sourceTree = "<group>"; };
+		0433D1C0281897C80064CBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesView.swift; sourceTree = "<group>"; };
+		0445F1A32809A1B2000D0CAD /* QRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView.swift; sourceTree = "<group>"; };
+		0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardsView.swift; sourceTree = "<group>"; };
+		045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsViewModel.swift; sourceTree = "<group>"; };
+		0483975C2810E2DE00272F85 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0499557D28063D120085107B /* Login&SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login&SignInView.swift"; sourceTree = "<group>"; };
+		04A6305A2808C10800F4088C /* TownsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownsView.swift; sourceTree = "<group>"; };
+		04A6305C2808C16700F4088C /* PlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesView.swift; sourceTree = "<group>"; };
+		04A9056928175F1D00999A5F /* PhoneTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextModel.swift; sourceTree = "<group>"; };
+		04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInformationsModel.swift; sourceTree = "<group>"; };
+		04A9056D28175F6E00999A5F /* PlaceCommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCommentModel.swift; sourceTree = "<group>"; };
+		04A9056F28175F8500999A5F /* PlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModel.swift; sourceTree = "<group>"; };
+		04A9057128175FA300999A5F /* CreditCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardModel.swift; sourceTree = "<group>"; };
+		04A9057328175FAE00999A5F /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		04A9057528175FF600999A5F /* UserInformationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsModel.swift; sourceTree = "<group>"; };
+		04A905772817681900999A5F /* Paysy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Paysy.entitlements; sourceTree = "<group>"; };
+		04AF162C28104D4300135A04 /* UserInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsView.swift; sourceTree = "<group>"; };
+		04B727C82818952D0026144B /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		04B727CA2818952D0026144B /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		04B727CC2818952D0026144B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04C8444528060FE300DEE45E /* Paysy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paysy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04C8444828060FE300DEE45E /* PaysyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaysyApp.swift; sourceTree = "<group>"; };
+		04C8444A28060FE300DEE45E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		04C8444C28060FE400DEE45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04C8444F28060FE400DEE45E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		04C8445528060FE400DEE45E /* PaysyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaysyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04C8445928060FE400DEE45E /* PaysyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaysyTests.swift; sourceTree = "<group>"; };
+		04C8445F28060FE400DEE45E /* PaysyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaysyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04C8446328060FE400DEE45E /* PaysyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaysyUITests.swift; sourceTree = "<group>"; };
+		04C8446528060FE400DEE45E /* PaysyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaysyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		04C844722806100100DEE45E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		04C844782806111400DEE45E /* closeKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = closeKeyboard.swift; sourceTree = "<group>"; };
+		04CAD7BD2808C77D005D13AB /* SelectedPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPlaceView.swift; sourceTree = "<group>"; };
+		04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotosView.swift; sourceTree = "<group>"; };
+		04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInformationsView.swift; sourceTree = "<group>"; };
+		04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCommentsView.swift; sourceTree = "<group>"; };
+		1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.debug.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.debug.xcconfig"; sourceTree = "<group>"; };
+		3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.release.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.release.xcconfig"; sourceTree = "<group>"; };
+		4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Paysy_PaysyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71786C4B9540E85045AE82C3 /* Pods-Paysy-PaysyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy-PaysyUITests.release.xcconfig"; path = "Target Support Files/Pods-Paysy-PaysyUITests/Pods-Paysy-PaysyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		93BBAFE3F08EACD2A271752F /* Pods_Paysy_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Paysy_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9444B7ACB7A7EC1300C48D4D /* Pods-PaysyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaysyTests.release.xcconfig"; path = "Target Support Files/Pods-PaysyTests/Pods-PaysyTests.release.xcconfig"; sourceTree = "<group>"; };
+		99B793B48D0566207A84098D /* Pods-Paysy-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-Paysy-OneSignalNotificationServiceExtension/Pods-Paysy-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		AB4E986B6ACF4526517367A1 /* Pods-Paysy-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-Paysy-OneSignalNotificationServiceExtension/Pods-Paysy-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		B9FDFBABB80184A0472D34B1 /* Pods_Paysy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Paysy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD4E63AE1E3D52684F4E8CCF /* Pods-PaysyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaysyTests.debug.xcconfig"; path = "Target Support Files/Pods-PaysyTests/Pods-PaysyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D3F087E300895312DF2D7EF5 /* Pods_PaysyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PaysyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA77F70032BAFE248E82F51F /* Pods-Paysy-PaysyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy-PaysyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Paysy-PaysyUITests/Pods-Paysy-PaysyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04B727C52818952D0026144B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAFA5E74E64D7C7D6A4E1E9D /* Pods_Paysy_OneSignalNotificationServiceExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8444228060FE300DEE45E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BCAEA90B53D05088590EC56 /* Pods_Paysy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8445228060FE400DEE45E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DF050A59B5FA42FE108B52F /* Pods_PaysyTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8445C28060FE400DEE45E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CC0A39379EAE427F9689EA9 /* Pods_Paysy_PaysyUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		042023982809F5B500C2824A /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				0420239D2809F68D00C2824A /* CustomObjects.swift */,
+				0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		04B727C92818952D0026144B /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				04B727CA2818952D0026144B /* NotificationService.swift */,
+				04B727CC2818952D0026144B /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		04C8443C28060FE300DEE45E = {
+			isa = PBXGroup;
+			children = (
+				04C8444728060FE300DEE45E /* Paysy */,
+				04C8445828060FE400DEE45E /* PaysyTests */,
+				04C8446228060FE400DEE45E /* PaysyUITests */,
+				04B727C92818952D0026144B /* OneSignalNotificationServiceExtension */,
+				04C8444628060FE300DEE45E /* Products */,
+				1DC7F9D147C73A4C248BABD4 /* Pods */,
+				088E983ED2D1C13316696800 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		04C8444628060FE300DEE45E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04C8444528060FE300DEE45E /* Paysy.app */,
+				04C8445528060FE400DEE45E /* PaysyTests.xctest */,
+				04C8445F28060FE400DEE45E /* PaysyUITests.xctest */,
+				04B727C82818952D0026144B /* OneSignalNotificationServiceExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		04C8444728060FE300DEE45E /* Paysy */ = {
+			isa = PBXGroup;
+			children = (
+				0433D1C0281897C80064CBB1 /* Info.plist */,
+				04A905772817681900999A5F /* Paysy.entitlements */,
+				04C8444828060FE300DEE45E /* PaysyApp.swift */,
+				04C8444A28060FE300DEE45E /* ContentView.swift */,
+				042023982809F5B500C2824A /* Custom */,
+				04C84477280610D000DEE45E /* Extension */,
+				04C844752806104500DEE45E /* View */,
+				04C844762806104B00DEE45E /* ViewModel */,
+				04C844742806103800DEE45E /* Model */,
+				04C8444C28060FE400DEE45E /* Assets.xcassets */,
+				0483975C2810E2DE00272F85 /* GoogleService-Info.plist */,
+				04C8444E28060FE400DEE45E /* Preview Content */,
+			);
+			path = Paysy;
+			sourceTree = "<group>";
+		};
+		04C8444E28060FE400DEE45E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				04C8444F28060FE400DEE45E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		04C8445828060FE400DEE45E /* PaysyTests */ = {
+			isa = PBXGroup;
+			children = (
+				04C8445928060FE400DEE45E /* PaysyTests.swift */,
+			);
+			path = PaysyTests;
+			sourceTree = "<group>";
+		};
+		04C8446228060FE400DEE45E /* PaysyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				04C8446328060FE400DEE45E /* PaysyUITests.swift */,
+				04C8446528060FE400DEE45E /* PaysyUITestsLaunchTests.swift */,
+			);
+			path = PaysyUITests;
+			sourceTree = "<group>";
+		};
+		04C844742806103800DEE45E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04A9057328175FAE00999A5F /* HomeModel.swift */,
+				04A9057128175FA300999A5F /* CreditCardModel.swift */,
+				04A9056F28175F8500999A5F /* PlacesViewModel.swift */,
+				04A9056D28175F6E00999A5F /* PlaceCommentModel.swift */,
+				04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */,
+				04A9056928175F1D00999A5F /* PhoneTextModel.swift */,
+				04A9057528175FF600999A5F /* UserInformationsModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04C844752806104500DEE45E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C844722806100100DEE45E /* HomeView.swift */,
+				0499557D28063D120085107B /* Login&SignInView.swift */,
+				04A6305A2808C10800F4088C /* TownsView.swift */,
+				04A6305C2808C16700F4088C /* PlacesView.swift */,
+				0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */,
+				0445F1A32809A1B2000D0CAD /* QRView.swift */,
+				0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */,
+				04CAD7BD2808C77D005D13AB /* SelectedPlaceView.swift */,
+				04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */,
+				04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */,
+				04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */,
+				04AF162C28104D4300135A04 /* UserInformationsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C844762806104B00DEE45E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */,
+				045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		04C84477280610D000DEE45E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				04C844782806111400DEE45E /* closeKeyboard.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		088E983ED2D1C13316696800 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B9FDFBABB80184A0472D34B1 /* Pods_Paysy.framework */,
+				4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */,
+				D3F087E300895312DF2D7EF5 /* Pods_PaysyTests.framework */,
+				93BBAFE3F08EACD2A271752F /* Pods_Paysy_OneSignalNotificationServiceExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1DC7F9D147C73A4C248BABD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */,
+				3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */,
+				EA77F70032BAFE248E82F51F /* Pods-Paysy-PaysyUITests.debug.xcconfig */,
+				71786C4B9540E85045AE82C3 /* Pods-Paysy-PaysyUITests.release.xcconfig */,
+				BD4E63AE1E3D52684F4E8CCF /* Pods-PaysyTests.debug.xcconfig */,
+				9444B7ACB7A7EC1300C48D4D /* Pods-PaysyTests.release.xcconfig */,
+				AB4E986B6ACF4526517367A1 /* Pods-Paysy-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				99B793B48D0566207A84098D /* Pods-Paysy-OneSignalNotificationServiceExtension.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04B727C72818952D0026144B /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04B727D32818952D0026144B /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				4227B5544029C62779EF17A8 /* [CP] Check Pods Manifest.lock */,
+				04B727C42818952D0026144B /* Sources */,
+				04B727C52818952D0026144B /* Frameworks */,
+				04B727C62818952D0026144B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 04B727C82818952D0026144B /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		04C8444428060FE300DEE45E /* Paysy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04C8446928060FE400DEE45E /* Build configuration list for PBXNativeTarget "Paysy" */;
+			buildPhases = (
+				C8240045672BEBD6202BA85A /* [CP] Check Pods Manifest.lock */,
+				04C8444128060FE300DEE45E /* Sources */,
+				04C8444228060FE300DEE45E /* Frameworks */,
+				04C8444328060FE300DEE45E /* Resources */,
+				B14969D13F53CB70D1DF3907 /* [CP] Embed Pods Frameworks */,
+				04B727D02818952D0026144B /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04B727CE2818952D0026144B /* PBXTargetDependency */,
+			);
+			name = Paysy;
+			productName = Paysy;
+			productReference = 04C8444528060FE300DEE45E /* Paysy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		04C8445428060FE400DEE45E /* PaysyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04C8446C28060FE400DEE45E /* Build configuration list for PBXNativeTarget "PaysyTests" */;
+			buildPhases = (
+				36F2423660D1778B67F464A8 /* [CP] Check Pods Manifest.lock */,
+				04C8445128060FE400DEE45E /* Sources */,
+				04C8445228060FE400DEE45E /* Frameworks */,
+				04C8445328060FE400DEE45E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04C8445728060FE400DEE45E /* PBXTargetDependency */,
+			);
+			name = PaysyTests;
+			productName = PaysyTests;
+			productReference = 04C8445528060FE400DEE45E /* PaysyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		04C8445E28060FE400DEE45E /* PaysyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04C8446F28060FE400DEE45E /* Build configuration list for PBXNativeTarget "PaysyUITests" */;
+			buildPhases = (
+				F7C1925018EDEDCAA8B9FFF6 /* [CP] Check Pods Manifest.lock */,
+				04C8445B28060FE400DEE45E /* Sources */,
+				04C8445C28060FE400DEE45E /* Frameworks */,
+				04C8445D28060FE400DEE45E /* Resources */,
+				8157C3DA9BDB04527E6D37DE /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04C8446128060FE400DEE45E /* PBXTargetDependency */,
+			);
+			name = PaysyUITests;
+			productName = PaysyUITests;
+			productReference = 04C8445F28060FE400DEE45E /* PaysyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		04C8443D28060FE300DEE45E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					04B727C72818952D0026144B = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+					04C8444428060FE300DEE45E = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+					04C8445428060FE400DEE45E = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = 04C8444428060FE300DEE45E;
+					};
+					04C8445E28060FE400DEE45E = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = 04C8444428060FE300DEE45E;
+					};
+				};
+			};
+			buildConfigurationList = 04C8444028060FE300DEE45E /* Build configuration list for PBXProject "Paysy" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 04C8443C28060FE300DEE45E;
+			productRefGroup = 04C8444628060FE300DEE45E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04C8444428060FE300DEE45E /* Paysy */,
+				04C8445428060FE400DEE45E /* PaysyTests */,
+				04C8445E28060FE400DEE45E /* PaysyUITests */,
+				04B727C72818952D0026144B /* OneSignalNotificationServiceExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04B727C62818952D0026144B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8444328060FE300DEE45E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C8445028060FE400DEE45E /* Preview Assets.xcassets in Resources */,
+				04C8444D28060FE400DEE45E /* Assets.xcassets in Resources */,
+				0483975D2810E2DE00272F85 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8445328060FE400DEE45E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8445D28060FE400DEE45E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		36F2423660D1778B67F464A8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PaysyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4227B5544029C62779EF17A8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Paysy-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8157C3DA9BDB04527E6D37DE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Paysy-PaysyUITests/Pods-Paysy-PaysyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Paysy-PaysyUITests/Pods-Paysy-PaysyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Paysy-PaysyUITests/Pods-Paysy-PaysyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B14969D13F53CB70D1DF3907 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Paysy/Pods-Paysy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Paysy/Pods-Paysy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Paysy/Pods-Paysy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8240045672BEBD6202BA85A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Paysy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F7C1925018EDEDCAA8B9FFF6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Paysy-PaysyUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04B727C42818952D0026144B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04B727CB2818952D0026144B /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8444128060FE300DEE45E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */,
+				042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */,
+				04C844732806100100DEE45E /* HomeView.swift in Sources */,
+				04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */,
+				0499557E28063D120085107B /* Login&SignInView.swift in Sources */,
+				0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */,
+				04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */,
+				0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */,
+				04A9056A28175F1D00999A5F /* PhoneTextModel.swift in Sources */,
+				04A6305B2808C10800F4088C /* TownsView.swift in Sources */,
+				04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */,
+				04C844792806111400DEE45E /* closeKeyboard.swift in Sources */,
+				04A9057228175FA300999A5F /* CreditCardModel.swift in Sources */,
+				04AF162D28104D4300135A04 /* UserInformationsView.swift in Sources */,
+				045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */,
+				0412FDCD2810AD41003C4439 /* CustomPhoneTextField.swift in Sources */,
+				04A9056C28175F3700999A5F /* PlaceInformationsModel.swift in Sources */,
+				04C8444B28060FE300DEE45E /* ContentView.swift in Sources */,
+				04CAD7BE2808C77D005D13AB /* SelectedPlaceView.swift in Sources */,
+				04A6305D2808C16700F4088C /* PlacesView.swift in Sources */,
+				04C8444928060FE300DEE45E /* PaysyApp.swift in Sources */,
+				04A9057028175F8500999A5F /* PlacesViewModel.swift in Sources */,
+				04A9057428175FAE00999A5F /* HomeModel.swift in Sources */,
+				0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */,
+				04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */,
+				04A9056E28175F6E00999A5F /* PlaceCommentModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8445128060FE400DEE45E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C8445A28060FE400DEE45E /* PaysyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04C8445B28060FE400DEE45E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04C8446428060FE400DEE45E /* PaysyUITests.swift in Sources */,
+				04C8446628060FE400DEE45E /* PaysyUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04B727CE2818952D0026144B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04B727C72818952D0026144B /* OneSignalNotificationServiceExtension */;
+			targetProxy = 04B727CD2818952D0026144B /* PBXContainerItemProxy */;
+		};
+		04C8445728060FE400DEE45E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04C8444428060FE300DEE45E /* Paysy */;
+			targetProxy = 04C8445628060FE400DEE45E /* PBXContainerItemProxy */;
+		};
+		04C8446128060FE400DEE45E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04C8444428060FE300DEE45E /* Paysy */;
+			targetProxy = 04C8446028060FE400DEE45E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		04B727D12818952D0026144B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB4E986B6ACF4526517367A1 /* Pods-Paysy-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.Paysy.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		04B727D22818952D0026144B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99B793B48D0566207A84098D /* Pods-Paysy-OneSignalNotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.Paysy.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		04C8446728060FE400DEE45E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		04C8446828060FE400DEE45E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		04C8446A28060FE400DEE45E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Paysy/Paysy.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Paysy/Preview Content\"";
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Paysy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.Paysy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		04C8446B28060FE400DEE45E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Paysy/Paysy.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Paysy/Preview Content\"";
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Paysy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.Paysy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		04C8446D28060FE400DEE45E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD4E63AE1E3D52684F4E8CCF /* Pods-PaysyTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.PaysyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Paysy.app/Paysy";
+			};
+			name = Debug;
+		};
+		04C8446E28060FE400DEE45E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9444B7ACB7A7EC1300C48D4D /* Pods-PaysyTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.PaysyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Paysy.app/Paysy";
+			};
+			name = Release;
+		};
+		04C8447028060FE400DEE45E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA77F70032BAFE248E82F51F /* Pods-Paysy-PaysyUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.PaysyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Paysy;
+			};
+			name = Debug;
+		};
+		04C8447128060FE400DEE45E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71786C4B9540E85045AE82C3 /* Pods-Paysy-PaysyUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4H7485JNQW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AnilDemirci.PaysyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Paysy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04B727D32818952D0026144B /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04B727D12818952D0026144B /* Debug */,
+				04B727D22818952D0026144B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04C8444028060FE300DEE45E /* Build configuration list for PBXProject "Paysy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C8446728060FE400DEE45E /* Debug */,
+				04C8446828060FE400DEE45E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04C8446928060FE400DEE45E /* Build configuration list for PBXNativeTarget "Paysy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C8446A28060FE400DEE45E /* Debug */,
+				04C8446B28060FE400DEE45E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04C8446C28060FE400DEE45E /* Build configuration list for PBXNativeTarget "PaysyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C8446D28060FE400DEE45E /* Debug */,
+				04C8446E28060FE400DEE45E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04C8446F28060FE400DEE45E /* Build configuration list for PBXNativeTarget "PaysyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04C8447028060FE400DEE45E /* Debug */,
+				04C8447128060FE400DEE45E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 04C8443D28060FE300DEE45E /* Project object */;
+}

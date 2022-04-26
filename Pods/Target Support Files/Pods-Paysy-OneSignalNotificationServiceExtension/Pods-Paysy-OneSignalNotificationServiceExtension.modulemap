@@ -1,0 +1,6 @@
+framework module Pods_Paysy_OneSignalNotificationServiceExtension {
+  umbrella header "Pods-Paysy-OneSignalNotificationServiceExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}
