@@ -14,6 +14,7 @@ struct HomeView: View {
     @State var show = false
     @State var userLogin=true
     var currentUser=Auth.auth().currentUser
+    @State var connected=false
     
     init() {
         let NavBarAppearance = UINavigationBarAppearance()
@@ -80,9 +81,15 @@ struct HomeView: View {
                         }
                         .tag(1)
                         if currentUser != nil {
-                            QRView().tabItem {
-                                Image(systemName: "qrcode.viewfinder")
-                            }.tag(2)
+                            if connected == false {
+                                QRView().tabItem {
+                                    Image(systemName: "qrcode.viewfinder")
+                                }.tag(2)
+                            } else {
+                                ConnectToPlaceView().tabItem {
+                                    Image(systemName: "person.3")
+                                }.tag(2)
+                            }
                         } else {
                             Login_SignInView().tabItem {
                                 Image(systemName: "qrcode.viewfinder")

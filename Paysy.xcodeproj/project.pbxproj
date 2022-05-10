@@ -41,6 +41,8 @@
 		04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */; };
 		04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */; };
 		04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */; };
+		04E916D42829CD20009A4DA3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 04E916D32829CD20009A4DA3 /* CodeScanner */; };
+		04E916DC2829D7B6009A4DA3 /* ConnectToPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */; };
 		0CC0A39379EAE427F9689EA9 /* Pods_Paysy_PaysyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */; };
 		1BCAEA90B53D05088590EC56 /* Pods_Paysy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9FDFBABB80184A0472D34B1 /* Pods_Paysy.framework */; };
 		7DF050A59B5FA42FE108B52F /* Pods_PaysyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F087E300895312DF2D7EF5 /* Pods_PaysyTests.framework */; };
@@ -126,6 +128,7 @@
 		04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotosView.swift; sourceTree = "<group>"; };
 		04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInformationsView.swift; sourceTree = "<group>"; };
 		04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCommentsView.swift; sourceTree = "<group>"; };
+		04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToPlaceView.swift; sourceTree = "<group>"; };
 		1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.debug.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.debug.xcconfig"; sourceTree = "<group>"; };
 		3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.release.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.release.xcconfig"; sourceTree = "<group>"; };
 		4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Paysy_PaysyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E916D42829CD20009A4DA3 /* CodeScanner in Frameworks */,
 				1BCAEA90B53D05088590EC56 /* Pods_Paysy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +289,7 @@
 				04A6305C2808C16700F4088C /* PlacesView.swift */,
 				0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */,
 				0445F1A32809A1B2000D0CAD /* QRView.swift */,
+				04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */,
 				0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */,
 				04CAD7BD2808C77D005D13AB /* SelectedPlaceView.swift */,
 				04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */,
@@ -376,6 +381,9 @@
 				04B727CE2818952D0026144B /* PBXTargetDependency */,
 			);
 			name = Paysy;
+			packageProductDependencies = (
+				04E916D32829CD20009A4DA3 /* CodeScanner */,
+			);
 			productName = Paysy;
 			productReference = 04C8444528060FE300DEE45E /* Paysy.app */;
 			productType = "com.apple.product-type.application";
@@ -454,6 +462,9 @@
 				Base,
 			);
 			mainGroup = 04C8443C28060FE300DEE45E;
+			packageReferences = (
+				04E916D22829CD20009A4DA3 /* XCRemoteSwiftPackageReference "Codescanner" */,
+			);
 			productRefGroup = 04C8444628060FE300DEE45E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -664,6 +675,7 @@
 				0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */,
 				04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */,
 				04A9056E28175F6E00999A5F /* PlaceCommentModel.swift in Sources */,
+				04E916DC2829D7B6009A4DA3 /* ConnectToPlaceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +898,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Paysy/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"to use camera\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -920,6 +933,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Paysy/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"to use camera\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1068,6 +1082,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04E916D22829CD20009A4DA3 /* XCRemoteSwiftPackageReference "Codescanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/Codescanner";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04E916D32829CD20009A4DA3 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04E916D22829CD20009A4DA3 /* XCRemoteSwiftPackageReference "Codescanner" */;
+			productName = CodeScanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04C8443D28060FE300DEE45E /* Project object */;
 }
