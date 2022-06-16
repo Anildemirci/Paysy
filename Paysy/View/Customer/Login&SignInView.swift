@@ -76,8 +76,8 @@ struct SignIn: View {
                                     .padding()
                                     
                             }
-                            .fullScreenCover(isPresented: $show) { () -> HomeView in
-                                HomeView()
+                            .fullScreenCover(isPresented: $show) { () -> CustomerHomeView in
+                                CustomerHomeView()
                             }
                         }.frame(height: 25)
                     }
@@ -117,6 +117,7 @@ struct SignIn: View {
                                     }
                                 } else {
                                     TextField("Şifre", text: $signInModel.password)
+                                        .font(.system(size: 20,weight: .semibold))
                                     Button(action: {
                                         shownPass.toggle()
                                     }) {
@@ -138,6 +139,7 @@ struct SignIn: View {
                                     }
                                 } else {
                                     TextField("Şifre tekrarı", text: $signInModel.reEnterPassword)
+                                        .font(.system(size: 20,weight: .semibold))
                                     Button(action: {
                                         shownPass2.toggle()
                                     }) {
@@ -222,8 +224,8 @@ struct Login: View {
                                 .clipShape(Circle())
                                 .padding()
                         }
-                        .fullScreenCover(isPresented: $show) { () -> HomeView in
-                            HomeView()
+                        .fullScreenCover(isPresented: $show) { () -> CustomerHomeView in
+                            CustomerHomeView()
                         }
                     }.frame(height: 25)
                 }
@@ -255,6 +257,7 @@ struct Login: View {
                         }
                     } else {
                         TextField("Şifre", text: $loginModel.password)
+                            .font(.system(size: 20,weight: .semibold))
                             .foregroundColor(.black)
                             .padding(.top,10)
                         Button(action: {
@@ -298,8 +301,8 @@ struct Login: View {
                         .shadow(color: Color.red.opacity(0.6), radius: 5, x: 0, y: 0)
                     
                 })
-                .fullScreenCover(isPresented: $loginModel.showHome) { () -> HomeView in
-                    return HomeView()
+                .fullScreenCover(isPresented: $loginModel.showHome) { () -> CustomerHomeView in
+                    return CustomerHomeView()
                 }
             }
             

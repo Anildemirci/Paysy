@@ -41,6 +41,8 @@
 		04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */; };
 		04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */; };
 		04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */; };
+		04E41229285BC7640000C4EC /* BusinessHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E41228285BC7630000C4EC /* BusinessHomePage.swift */; };
+		04E4122D285BC88F0000C4EC /* CustomerHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4122C285BC88F0000C4EC /* CustomerHomeView.swift */; };
 		04E916D42829CD20009A4DA3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 04E916D32829CD20009A4DA3 /* CodeScanner */; };
 		04E916DC2829D7B6009A4DA3 /* ConnectToPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */; };
 		0CC0A39379EAE427F9689EA9 /* Pods_Paysy_PaysyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */; };
@@ -128,6 +130,8 @@
 		04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotosView.swift; sourceTree = "<group>"; };
 		04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInformationsView.swift; sourceTree = "<group>"; };
 		04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCommentsView.swift; sourceTree = "<group>"; };
+		04E41228285BC7630000C4EC /* BusinessHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessHomePage.swift; sourceTree = "<group>"; };
+		04E4122C285BC88F0000C4EC /* CustomerHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerHomeView.swift; sourceTree = "<group>"; };
 		04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToPlaceView.swift; sourceTree = "<group>"; };
 		1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.debug.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.debug.xcconfig"; sourceTree = "<group>"; };
 		3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.release.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.release.xcconfig"; sourceTree = "<group>"; };
@@ -284,18 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				04C844722806100100DEE45E /* HomeView.swift */,
-				0499557D28063D120085107B /* Login&SignInView.swift */,
-				04A6305A2808C10800F4088C /* TownsView.swift */,
-				04A6305C2808C16700F4088C /* PlacesView.swift */,
-				0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */,
-				0445F1A32809A1B2000D0CAD /* QRView.swift */,
-				04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */,
-				0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */,
-				04CAD7BD2808C77D005D13AB /* SelectedPlaceView.swift */,
-				04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */,
-				04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */,
-				04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */,
-				04AF162C28104D4300135A04 /* UserInformationsView.swift */,
+				04E4122B285BC8680000C4EC /* Business */,
+				04E4122A285BC7E30000C4EC /* Customer */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -315,6 +309,34 @@
 				04C844782806111400DEE45E /* closeKeyboard.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		04E4122A285BC7E30000C4EC /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+				04E4122C285BC88F0000C4EC /* CustomerHomeView.swift */,
+				0499557D28063D120085107B /* Login&SignInView.swift */,
+				04A6305A2808C10800F4088C /* TownsView.swift */,
+				04A6305C2808C16700F4088C /* PlacesView.swift */,
+				0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */,
+				0445F1A32809A1B2000D0CAD /* QRView.swift */,
+				04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */,
+				0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */,
+				04CAD7BD2808C77D005D13AB /* SelectedPlaceView.swift */,
+				04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */,
+				04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */,
+				04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */,
+				04AF162C28104D4300135A04 /* UserInformationsView.swift */,
+			);
+			path = Customer;
+			sourceTree = "<group>";
+		};
+		04E4122B285BC8680000C4EC /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				04E41228285BC7630000C4EC /* BusinessHomePage.swift */,
+			);
+			path = Business;
 			sourceTree = "<group>";
 		};
 		088E983ED2D1C13316696800 /* Frameworks */ = {
@@ -653,12 +675,14 @@
 				042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */,
 				04C844732806100100DEE45E /* HomeView.swift in Sources */,
 				04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */,
+				04E4122D285BC88F0000C4EC /* CustomerHomeView.swift in Sources */,
 				0499557E28063D120085107B /* Login&SignInView.swift in Sources */,
 				0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */,
 				04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */,
 				0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */,
 				04A9056A28175F1D00999A5F /* PhoneTextModel.swift in Sources */,
 				04A6305B2808C10800F4088C /* TownsView.swift in Sources */,
+				04E41229285BC7640000C4EC /* BusinessHomePage.swift in Sources */,
 				04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */,
 				04C844792806111400DEE45E /* closeKeyboard.swift in Sources */,
 				04A9057228175FA300999A5F /* CreditCardModel.swift in Sources */,
@@ -902,6 +926,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -937,6 +962,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

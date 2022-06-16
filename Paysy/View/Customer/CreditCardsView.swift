@@ -13,7 +13,6 @@ struct CreditCardsView: View {
     @State var navigationBar=false
     
     var body: some View {
-        NavigationView{
             VStack(spacing: 25){
                 AnimationCardView(navigationBar: $navigationBar)
             }
@@ -34,7 +33,6 @@ struct CreditCardsView: View {
                 .fullScreenCover(isPresented: $showAddCard) {
                     AddCard(showAddCard: $showAddCard)
                 }
-        }
     }
 }
 
