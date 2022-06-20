@@ -15,6 +15,8 @@ class LoginAndSignInViewModel : ObservableObject {
     @Published var password=""
     @Published var reEnterPassword=""
     @Published var isVerify=false
+    @Published var businessName=""
+    @Published var ownerName=""
     @Published var firstName=""
     @Published var lastName=""
     @Published var showAlert=false
@@ -29,7 +31,8 @@ class LoginAndSignInViewModel : ObservableObject {
     @Published var isLoading=false
     @Published var showHome=false
     
-    let currentUser=Auth.auth().currentUser
+    
+    var currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
     
     func login(){
@@ -108,7 +111,7 @@ class LoginAndSignInViewModel : ObservableObject {
                                            "Type":"User",
                                            "Date":FieldValue.serverTimestamp()] as [String:Any]
                         
-                        self.firestoreDatabase.collection("Users").document(self.currentUser!.uid).setData(firestoreUser) { error2 in
+                        self.firestoreDatabase.collection("Users").document(Auth.auth().currentUser!.uid).setData(firestoreUser) { error2 in
                             if error2 != nil {
                                 self.alertTitle="Hata!"
                                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
@@ -212,7 +215,7 @@ class LoginAndSignInViewModel : ObservableObject {
     }
     
     func changeEmail(){
-        let oldmail=currentUser?.email
+        
         if newEmail != "" && newEmail2 != "" {
             if newEmail != newEmail2 {
                 self.alertTitle="Hata"
@@ -229,7 +232,7 @@ class LoginAndSignInViewModel : ObservableObject {
                         self.alertMessage="E-posta adresiniz değiştirilmiştir."
                         self.showAlert.toggle()
                         
-                        self.firestoreDatabase.collection("Users").document(oldmail!).updateData(["Email":self.newEmail])
+                        self.firestoreDatabase.collection("Users").document(self.currentUser!.uid).updateData(["Email":self.newEmail])
                     }
                 })
             }
@@ -279,5 +282,120 @@ class LoginAndSignInViewModel : ObservableObject {
         
         UIApplication.shared.windows.first?.rootViewController?.present(alert,animated: true)
         
+    }
+    
+    func signInForBusiness(){
+        if email != "" && password != "" && reEnterPassword != "" && businessName != "" && ownerName != "" {
+            
+            if password==reEnterPassword {
+                
+                withAnimation{
+                    self.isLoading.toggle()
+                }
+                
+                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                    
+                    withAnimation{
+                        self.isLoading.toggle()
+                    }
+                    
+                    if error != nil {
+                        
+                        self.alertTitle = "Hata!"
+                        self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                        self.showAlert.toggle()
+                        
+                    } else {
+                       
+                        let firestoreUser=["User":Auth.auth().currentUser!.uid,
+                                           "Email":Auth.auth().currentUser!.email!,
+                                           "Owner's Name":self.ownerName,
+                                           "Place Name":self.businessName,
+                                           "City":"",
+                                           "Town":"",
+                                           "Phone":"",
+                                           "Village":"",
+                                           "Street":"",
+                                           "Address":"",
+                                           "WorkingHour":"",
+                                           "Type":"Business",
+                                           "Date":FieldValue.serverTimestamp()] as [String:Any]
+                        
+                        self.firestoreDatabase.collection("Business").document(Auth.auth().currentUser!.uid).setData(firestoreUser) { error2 in
+                            if error2 != nil {
+                                self.alertTitle="Hata!"
+                                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                                self.showAlert.toggle()
+                            } else {
+                                 result?.user.sendEmailVerification(completion: { (err) in
+                                     if err != nil{
+                                         self.alertTitle="Hata!"
+                                         self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                                         self.showAlert.toggle()
+                                     } else {
+                                         self.alertTitle="Başarılı!"
+                                         self.alertMessage="Üyelik oluşturuldu e-posta adresinize mail gönderildi."
+                                         self.showAlert.toggle()
+                                         
+                                         try! Auth.auth().signOut()
+                                     }
+                                 })
+                            }
+                        }
+                        
+                    }
+                }
+            } else {
+                self.alertTitle = "Hata!"
+                self.alertMessage = "Şifreler eşleşmiyor."
+                self.showAlert.toggle()
+            }
+        } else {
+            self.alertTitle = "Hata!"
+            self.alertMessage = "Lütfen tüm bilgileri giriniz."
+            self.showAlert.toggle()
+        }
+    }
+    
+    func loginForBusiness(){
+        
+        if email != "" && password != "" {
+            
+            withAnimation{
+                self.isLoading.toggle()
+            }
+            
+            Auth.auth().signIn(withEmail: email, password: password) { (result,error) in
+                
+                withAnimation{
+                    self.isLoading.toggle()
+                }
+                
+                if error != nil {
+                    // database'den kontrol ettir sonra giriş yaptır.
+                    self.alertTitle = "Hata!"
+                    self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                    self.showAlert.toggle()
+                    
+                } else {
+                    
+                    if self.currentUser?.isEmailVerified == false {
+                        
+                        self.alertTitle = "Hata!"
+                        self.alertMessage = "Giriş yapabilmek için lütfen email adresinizi doğrulayınız."
+                        self.showAlert.toggle()
+                        
+                        try! Auth.auth().signOut()
+                        
+                    } else {
+                        self.showHome.toggle()
+                    }
+                }
+            }
+        } else {
+            self.alertTitle = "Hata!"
+            self.alertMessage = "Lütfen tüm bilgileri giriniz."
+            self.showAlert.toggle()
+        }
     }
 }

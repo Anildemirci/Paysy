@@ -10,114 +10,131 @@ import Firebase
 
 struct CustomerHomeView: View {
     
-        @State var dark = false
-        @State var show = false
-        @State var userLogin=true
-        var currentUser=Auth.auth().currentUser
-        @State var connected=false
+    @State var dark = false
+    @State var show = false
+    @State var userLogin=true
+    var currentUser=Auth.auth().currentUser
+    @State var connected=false
+    
+    init() {
+        let NavBarAppearance = UINavigationBarAppearance()
+        NavBarAppearance.configureWithOpaqueBackground()
+        NavBarAppearance.backgroundColor = .purple
+        NavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        NavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+                
+        UINavigationBar.appearance().standardAppearance = NavBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = NavBarAppearance
         
-        var body: some View {
-            ZStack(alignment: .leading) {
-                GeometryReader{_ in
-                    VStack(spacing:55){
-                        TabView {
-                            NavigationView{
-                                VStack{
-                                    ScrollView(.vertical,showsIndicators: false) {
-                                        Spacer(minLength: 15)
-                                        CampaignCell()
-                                        Spacer(minLength: 15)
-                                        CategoriesCell()
-                                        Spacer(minLength: 25)
-                                        PlacesCell()
-                                    }.padding(.horizontal)
-                                }
-                                .navigationTitle("PAYSY").navigationBarTitleDisplayMode(.inline)
-                                    .navigationBarItems(leading: Button(action: {
-                                        withAnimation(.default){
-                                            show.toggle()
-                                        }
-                                    }) {
-                                        Image(systemName: "person.circle")
-                                            .foregroundColor(.white)
-                                    })
-                                    .navigationBarItems(trailing: Button(action: {
-                                        print(Auth.auth().currentUser?.uid)
-                                    }) {
-                                        Image(systemName: "envelope")
-                                            .foregroundColor(.white)
-                                    })
-                                    .navigationBarItems(trailing: Button(action: {
-                                        
-                                    }) {
-                                        Image(systemName: "magnifyingglass")
-                                            .foregroundColor(.white)
+        //let TabBarAppearance = UITabBar.appearance()
+        //TabBarAppearance.barTintColor = .blue
+        //TabBarAppearance.scrollEdgeAppearance = UITabBarAppearance()
+        //TabBarAppearance.standardAppearance = UITabBarAppearance()
+        //TabBarAppearance.isHidden=false
+        }
+        
+    var body: some View {
+        ZStack(alignment: .leading) {
+            GeometryReader{_ in
+                VStack(spacing:55){
+                    TabView {
+                        NavigationView{
+                            VStack{
+                                ScrollView(.vertical,showsIndicators: false) {
+                                    Spacer(minLength: 15)
+                                    CampaignCell()
+                                    Spacer(minLength: 15)
+                                    CategoriesCell()
+                                    Spacer(minLength: 25)
+                                    PlacesCell()
+                                }.padding(.horizontal)
+                            }
+                            .navigationTitle("PAYSY").navigationBarTitleDisplayMode(.inline)
+                                .navigationBarItems(leading: Button(action: {
+                                    withAnimation(.default){
+                                        show.toggle()
+                                    }
+                                }) {
+                                    Image(systemName: "person.circle")
+                                        .foregroundColor(.white)
                                 })
-                            }
-                            .tabItem {
-                                Image(systemName: "house.fill")
-                            }
-                            .tag(0)
-                            FavoritePlacesView().tabItem {
-                                Image(systemName: "star.fill")
-                            }
-                            .tag(1)
-                            if currentUser != nil {
-                                if connected == false {
-                                    QRView().tabItem {
-                                        Image(systemName: "qrcode.viewfinder")
-                                    }.tag(2)
-                                } else {
-                                    ConnectToPlaceView().tabItem {
-                                        Image(systemName: "person.3")
-                                    }.tag(2)
-                                }
-                            } else {
-                                HomeView().tabItem {
-                                    Image(systemName: "p.circle")
-                                        .resizable()
-                                        .frame(width: 25, height: 25)
+                                .navigationBarItems(trailing: Button(action: {
+                                    print(Auth.auth().currentUser?.uid)
+                                }) {
+                                    Image(systemName: "envelope")
+                                        .foregroundColor(.white)
+                                })
+                                .navigationBarItems(trailing: Button(action: {
+                                    
+                                }) {
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.white)
+                            })
+                        }
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                        }
+                        .tag(0)
+                        FavoritePlacesView().tabItem {
+                            Image(systemName: "star.fill")
+                        }
+                        .tag(1)
+                        if currentUser != nil {
+                            if connected == false {
+                                QRView().tabItem {
+                                    Image(systemName: "qrcode.viewfinder")
                                 }.tag(2)
-                                /*
-                                 Login_SignInView().tabItem {
-                                     Image(systemName: "qrcode.viewfinder")
-                                 }.tag(2)
-                                 */
-                            }
-                            TownsView().tabItem {
-                                Image(systemName: "magnifyingglass")
-                            }
-                            .tag(3)
-                            if currentUser != nil {
-                                CreditCardsView().tabItem {
-                                    Image(systemName: "creditcard.fill")
-                                }
-                                .tag(4)
                             } else {
-                                Login_SignInView().tabItem {
-                                    Image(systemName: "creditcard.fill")
-                                }
-                                .tag(4)
+                                ConnectToPlaceView().tabItem {
+                                    Image(systemName: "person.3")
+                                }.tag(2)
                             }
-                        }
-                    }//.accentColor(Color.white)
-                    HStack {
-                        if (currentUser != nil) {
-                            ProfileMenu(dark: $dark, show: $show)
-                                .preferredColorScheme(dark ? .dark : .light)
-                                .offset(x: show ? 0 : -UIScreen.main.bounds.width / 1.4)
-                            Spacer(minLength: 0)
                         } else {
-                            ProfileMenuNotLogin(dark: $dark, show: $show)
-                                .preferredColorScheme(dark ? .dark : .light)
-                                .offset(x: show ? 0 : -UIScreen.main.bounds.width / 1.4)
-                            Spacer(minLength: 0)
+                            HomeView().tabItem {
+                                Image(systemName: "p.circle")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                            }.tag(2)
+                            /*
+                                Login_SignInView().tabItem {
+                                    Image(systemName: "qrcode.viewfinder")
+                                }.tag(2)
+                                */
                         }
-                            
-                    }.background(Color.primary.opacity(show ? (dark ? 0.05 : 0.25):0).edgesIgnoringSafeArea(.all))
-                }
+                        TownsView().tabItem {
+                            Image(systemName: "magnifyingglass")
+                        }
+                        .tag(3)
+                        if currentUser != nil {
+                            CreditCardsView().tabItem {
+                                Image(systemName: "creditcard.fill")
+                            }
+                            .tag(4)
+                        } else {
+                            Login_SignInView().tabItem {
+                                Image(systemName: "creditcard.fill")
+                            }
+                            .tag(4)
+                        }
+                    }
+                }//.accentColor(Color.white)
+                HStack {
+                    if (currentUser != nil) {
+                        ProfileMenu(dark: $dark, show: $show)
+                            .preferredColorScheme(dark ? .dark : .light)
+                            .offset(x: show ? 0 : -UIScreen.main.bounds.width / 1.4)
+                        Spacer(minLength: 0)
+                    } else {
+                        ProfileMenuNotLogin(dark: $dark, show: $show)
+                            .preferredColorScheme(dark ? .dark : .light)
+                            .offset(x: show ? 0 : -UIScreen.main.bounds.width / 1.4)
+                        Spacer(minLength: 0)
+                    }
+                        
+                }.background(Color.primary.opacity(show ? (dark ? 0.05 : 0.25):0).edgesIgnoringSafeArea(.all))
             }
         }
+    }
 }
 
 

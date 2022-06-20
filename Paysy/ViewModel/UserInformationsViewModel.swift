@@ -23,16 +23,48 @@ class UserInformationsViewModel : ObservableObject {
     @Published var notificationCheck=false
     @Published var SMSCheck=false
     @Published var phoneCheck=false
+    @Published var userArray=[String]()
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
     
     func updateInfo(){
-        firestoreDatabase.collection("Users").document(currentUser!.email!).updateData(["Phone":phoneNumber,
+        firestoreDatabase.collection("Users").document(currentUser!.uid).updateData(["Phone":phoneNumber,
                                                                                         "DateofBirth":birthDay,
                                                                                         "City":city,
                                                                                         "Town":town
                                                                                        ])
+    }
+    
+    func getInfos(){
+        firestoreDatabase.collection("Users").document(currentUser!.uid).addSnapshotListener { (snapshot, error) in
+            if error != nil {
+                
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+                
+            } else {
+                if let name = snapshot?.get("Name") as? String {
+                    self.firstName=name
+                }
+                if let surName = snapshot?.get("Surname") as? String {
+                    self.lastName=surName
+                }
+                if let city = snapshot?.get("City") as? String {
+                    self.city=city
+                }
+                if let dateofBirth = snapshot?.get("DateofBirth") as? String {
+                    self.birthDay=dateofBirth
+                }
+                if let town = snapshot?.get("Town") as? String {
+                    self.town=town
+                }
+                if let phone = snapshot?.get("Phone") as? String {
+                    self.phoneNumber=phone
+                }
+            }
+        }
     }
     
     func communicationPreferences(){
@@ -59,11 +91,28 @@ class UserInformationsViewModel : ObservableObject {
                 self.showAlert.toggle()
                 
             } else {
-                 
+                
             }
         }
     }
-    
-    
+
+    //kullanıcılar arrayi
+    func users(){
+        firestoreDatabase.collection("Users").getDocuments { snapshot, error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                for document in snapshot!.documents {
+                    if let userEmail=document.get("Email") as? String {
+                        self.userArray.append(userEmail)
+                    }
+                }
+            }
+        }
+    }
+    //business arrayi
+
     
 }

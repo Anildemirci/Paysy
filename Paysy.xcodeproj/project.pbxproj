@@ -14,6 +14,11 @@
 		0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A32809A1B2000D0CAD /* QRView.swift */; };
 		0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */; };
 		045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */; };
+		048300C9285E62A80085AC62 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300C8285E62A80085AC62 /* Location.swift */; };
+		048300CB285E68E90085AC62 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CA285E68E90085AC62 /* PinView.swift */; };
+		048300CD285E69170085AC62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CC285E69170085AC62 /* MapView.swift */; };
+		048300CF285E69410085AC62 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CE285E69410085AC62 /* MapViewModel.swift */; };
+		048300D1285E69BF0085AC62 /* BusinessInformationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300D0285E69BF0085AC62 /* BusinessInformationsViewModel.swift */; };
 		0483975D2810E2DE00272F85 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0483975C2810E2DE00272F85 /* GoogleService-Info.plist */; };
 		0499557E28063D120085107B /* Login&SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499557D28063D120085107B /* Login&SignInView.swift */; };
 		04A6305B2808C10800F4088C /* TownsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6305A2808C10800F4088C /* TownsView.swift */; };
@@ -41,8 +46,16 @@
 		04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */; };
 		04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */; };
 		04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */; };
-		04E41229285BC7640000C4EC /* BusinessHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E41228285BC7630000C4EC /* BusinessHomePage.swift */; };
 		04E4122D285BC88F0000C4EC /* CustomerHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4122C285BC88F0000C4EC /* CustomerHomeView.swift */; };
+		04E4551B285CBC1300452B1F /* BusinessAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4551A285CBC1300452B1F /* BusinessAccountView.swift */; };
+		04E4551D285CCE3D00452B1F /* BusinessHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4551C285CCE3D00452B1F /* BusinessHomeView.swift */; };
+		04E4551F285CD7E400452B1F /* BusinessPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4551E285CD7E400452B1F /* BusinessPhotos.swift */; };
+		04E45521285CD7F000452B1F /* BusinessComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E45520285CD7F000452B1F /* BusinessComments.swift */; };
+		04E45523285CD7FD00452B1F /* BusinessInformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E45522285CD7FD00452B1F /* BusinessInformations.swift */; };
+		04E45525285CDCDE00452B1F /* BusinessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E45524285CDCDE00452B1F /* BusinessSettingsView.swift */; };
+		04E45527285CE6E400452B1F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E45526285CE6E400452B1F /* ImagePicker.swift */; };
+		04E45529285CE70400452B1F /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E45528285CE70400452B1F /* ImageLoader.swift */; };
+		04E4552C285CE9FC00452B1F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 04E4552B285CE9FC00452B1F /* SDWebImageSwiftUI */; };
 		04E916D42829CD20009A4DA3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 04E916D32829CD20009A4DA3 /* CodeScanner */; };
 		04E916DC2829D7B6009A4DA3 /* ConnectToPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */; };
 		0CC0A39379EAE427F9689EA9 /* Pods_Paysy_PaysyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */; };
@@ -98,6 +111,11 @@
 		0445F1A32809A1B2000D0CAD /* QRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView.swift; sourceTree = "<group>"; };
 		0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardsView.swift; sourceTree = "<group>"; };
 		045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsViewModel.swift; sourceTree = "<group>"; };
+		048300C8285E62A80085AC62 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		048300CA285E68E90085AC62 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		048300CC285E69170085AC62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		048300CE285E69410085AC62 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		048300D0285E69BF0085AC62 /* BusinessInformationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessInformationsViewModel.swift; sourceTree = "<group>"; };
 		0483975C2810E2DE00272F85 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0499557D28063D120085107B /* Login&SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login&SignInView.swift"; sourceTree = "<group>"; };
 		04A6305A2808C10800F4088C /* TownsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownsView.swift; sourceTree = "<group>"; };
@@ -130,8 +148,15 @@
 		04CAD7BF2808D5EE005D13AB /* PlacePhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotosView.swift; sourceTree = "<group>"; };
 		04CAD7C12808D600005D13AB /* PlaceInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInformationsView.swift; sourceTree = "<group>"; };
 		04CAD7C32808D60B005D13AB /* PlaceCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCommentsView.swift; sourceTree = "<group>"; };
-		04E41228285BC7630000C4EC /* BusinessHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessHomePage.swift; sourceTree = "<group>"; };
 		04E4122C285BC88F0000C4EC /* CustomerHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerHomeView.swift; sourceTree = "<group>"; };
+		04E4551A285CBC1300452B1F /* BusinessAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessAccountView.swift; sourceTree = "<group>"; };
+		04E4551C285CCE3D00452B1F /* BusinessHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessHomeView.swift; sourceTree = "<group>"; };
+		04E4551E285CD7E400452B1F /* BusinessPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessPhotos.swift; sourceTree = "<group>"; };
+		04E45520285CD7F000452B1F /* BusinessComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessComments.swift; sourceTree = "<group>"; };
+		04E45522285CD7FD00452B1F /* BusinessInformations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessInformations.swift; sourceTree = "<group>"; };
+		04E45524285CDCDE00452B1F /* BusinessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSettingsView.swift; sourceTree = "<group>"; };
+		04E45526285CE6E400452B1F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		04E45528285CE70400452B1F /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToPlaceView.swift; sourceTree = "<group>"; };
 		1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.debug.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.debug.xcconfig"; sourceTree = "<group>"; };
 		3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.release.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E4552C285CE9FC00452B1F /* SDWebImageSwiftUI in Frameworks */,
 				04E916D42829CD20009A4DA3 /* CodeScanner in Frameworks */,
 				1BCAEA90B53D05088590EC56 /* Pods_Paysy.framework in Frameworks */,
 			);
@@ -280,6 +306,7 @@
 				04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */,
 				04A9056928175F1D00999A5F /* PhoneTextModel.swift */,
 				04A9057528175FF600999A5F /* UserInformationsModel.swift */,
+				048300C8285E62A80085AC62 /* Location.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -288,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				04C844722806100100DEE45E /* HomeView.swift */,
+				0499557D28063D120085107B /* Login&SignInView.swift */,
 				04E4122B285BC8680000C4EC /* Business */,
 				04E4122A285BC7E30000C4EC /* Customer */,
 			);
@@ -298,7 +326,9 @@
 			isa = PBXGroup;
 			children = (
 				042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */,
+				048300D0285E69BF0085AC62 /* BusinessInformationsViewModel.swift */,
 				045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */,
+				048300CE285E69410085AC62 /* MapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -307,6 +337,10 @@
 			isa = PBXGroup;
 			children = (
 				04C844782806111400DEE45E /* closeKeyboard.swift */,
+				04E45526285CE6E400452B1F /* ImagePicker.swift */,
+				04E45528285CE70400452B1F /* ImageLoader.swift */,
+				048300CA285E68E90085AC62 /* PinView.swift */,
+				048300CC285E69170085AC62 /* MapView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -315,7 +349,6 @@
 			isa = PBXGroup;
 			children = (
 				04E4122C285BC88F0000C4EC /* CustomerHomeView.swift */,
-				0499557D28063D120085107B /* Login&SignInView.swift */,
 				04A6305A2808C10800F4088C /* TownsView.swift */,
 				04A6305C2808C16700F4088C /* PlacesView.swift */,
 				0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */,
@@ -334,7 +367,12 @@
 		04E4122B285BC8680000C4EC /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				04E41228285BC7630000C4EC /* BusinessHomePage.swift */,
+				04E4551C285CCE3D00452B1F /* BusinessHomeView.swift */,
+				04E4551A285CBC1300452B1F /* BusinessAccountView.swift */,
+				04E45524285CDCDE00452B1F /* BusinessSettingsView.swift */,
+				04E4551E285CD7E400452B1F /* BusinessPhotos.swift */,
+				04E45520285CD7F000452B1F /* BusinessComments.swift */,
+				04E45522285CD7FD00452B1F /* BusinessInformations.swift */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -405,6 +443,7 @@
 			name = Paysy;
 			packageProductDependencies = (
 				04E916D32829CD20009A4DA3 /* CodeScanner */,
+				04E4552B285CE9FC00452B1F /* SDWebImageSwiftUI */,
 			);
 			productName = Paysy;
 			productReference = 04C8444528060FE300DEE45E /* Paysy.app */;
@@ -486,6 +525,7 @@
 			mainGroup = 04C8443C28060FE300DEE45E;
 			packageReferences = (
 				04E916D22829CD20009A4DA3 /* XCRemoteSwiftPackageReference "Codescanner" */,
+				04E4552A285CE9FC00452B1F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 04C8444628060FE300DEE45E /* Products */;
 			projectDirPath = "";
@@ -672,30 +712,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */,
+				04E45525285CDCDE00452B1F /* BusinessSettingsView.swift in Sources */,
 				042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */,
 				04C844732806100100DEE45E /* HomeView.swift in Sources */,
+				048300CD285E69170085AC62 /* MapView.swift in Sources */,
+				04E45521285CD7F000452B1F /* BusinessComments.swift in Sources */,
 				04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */,
 				04E4122D285BC88F0000C4EC /* CustomerHomeView.swift in Sources */,
 				0499557E28063D120085107B /* Login&SignInView.swift in Sources */,
+				04E4551B285CBC1300452B1F /* BusinessAccountView.swift in Sources */,
 				0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */,
 				04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */,
+				048300D1285E69BF0085AC62 /* BusinessInformationsViewModel.swift in Sources */,
 				0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */,
 				04A9056A28175F1D00999A5F /* PhoneTextModel.swift in Sources */,
 				04A6305B2808C10800F4088C /* TownsView.swift in Sources */,
-				04E41229285BC7640000C4EC /* BusinessHomePage.swift in Sources */,
+				04E45529285CE70400452B1F /* ImageLoader.swift in Sources */,
+				048300C9285E62A80085AC62 /* Location.swift in Sources */,
 				04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */,
 				04C844792806111400DEE45E /* closeKeyboard.swift in Sources */,
+				04E45523285CD7FD00452B1F /* BusinessInformations.swift in Sources */,
+				04E45527285CE6E400452B1F /* ImagePicker.swift in Sources */,
 				04A9057228175FA300999A5F /* CreditCardModel.swift in Sources */,
 				04AF162D28104D4300135A04 /* UserInformationsView.swift in Sources */,
 				045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */,
 				0412FDCD2810AD41003C4439 /* CustomPhoneTextField.swift in Sources */,
 				04A9056C28175F3700999A5F /* PlaceInformationsModel.swift in Sources */,
 				04C8444B28060FE300DEE45E /* ContentView.swift in Sources */,
+				048300CB285E68E90085AC62 /* PinView.swift in Sources */,
 				04CAD7BE2808C77D005D13AB /* SelectedPlaceView.swift in Sources */,
+				04E4551D285CCE3D00452B1F /* BusinessHomeView.swift in Sources */,
 				04A6305D2808C16700F4088C /* PlacesView.swift in Sources */,
+				048300CF285E69410085AC62 /* MapViewModel.swift in Sources */,
 				04C8444928060FE300DEE45E /* PaysyApp.swift in Sources */,
 				04A9057028175F8500999A5F /* PlacesViewModel.swift in Sources */,
 				04A9057428175FAE00999A5F /* HomeModel.swift in Sources */,
+				04E4551F285CD7E400452B1F /* BusinessPhotos.swift in Sources */,
 				0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */,
 				04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */,
 				04A9056E28175F6E00999A5F /* PlaceCommentModel.swift in Sources */,
@@ -900,6 +952,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -923,6 +976,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Paysy/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"to use camera\"";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "\"to find your location\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -959,6 +1013,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Paysy/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"to use camera\"";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "\"to find your location\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1110,6 +1165,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		04E4552A285CE9FC00452B1F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		04E916D22829CD20009A4DA3 /* XCRemoteSwiftPackageReference "Codescanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/Codescanner";
@@ -1121,6 +1184,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		04E4552B285CE9FC00452B1F /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04E4552A285CE9FC00452B1F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
 		04E916D32829CD20009A4DA3 /* CodeScanner */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 04E916D22829CD20009A4DA3 /* XCRemoteSwiftPackageReference "Codescanner" */;

@@ -13,23 +13,7 @@ struct HomeView: View {
     @State var showCustomer=false
     @State var showBusiness=false
     
-    init() {
-        let NavBarAppearance = UINavigationBarAppearance()
-        NavBarAppearance.configureWithOpaqueBackground()
-        NavBarAppearance.backgroundColor = .purple
-        NavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        NavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-                
-        UINavigationBar.appearance().standardAppearance = NavBarAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = NavBarAppearance
-        
-        //let TabBarAppearance = UITabBar.appearance()
-        //TabBarAppearance.barTintColor = .blue
-        //TabBarAppearance.scrollEdgeAppearance = UITabBarAppearance()
-        //TabBarAppearance.standardAppearance = UITabBarAppearance()
-        //TabBarAppearance.isHidden=false
-        }
-    
+
     var body: some View {
             VStack(spacing: 25){
                     Image("paysy")
@@ -67,8 +51,8 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $showCustomer) { () -> CustomerHomeView in
             return CustomerHomeView()
         }
-        .fullScreenCover(isPresented: $showBusiness) { () -> BusinessHomePage in
-            return BusinessHomePage()
+        .fullScreenCover(isPresented: $showBusiness) { () -> BusinessHomeView in
+            return BusinessHomeView()
         }
     }
 }

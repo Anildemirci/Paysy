@@ -24,12 +24,6 @@ struct UserInformationsView_Previews: PreviewProvider {
 
 struct PersonalInformationView: View{
     
-    @State var name="Anıl"
-    @State var surName="Demirci"
-    @State var phoneNumber=""
-    @State var dateOfBirth=""
-    @State var city=""
-    @State var town=""
     @Binding var show: Bool
     
     @StateObject var personalInfoModel=UserInformationsViewModel()
@@ -43,12 +37,12 @@ struct PersonalInformationView: View{
                 .fontWeight(.medium)
             Group {
                 HStack{
-                    TextField(name, text: $name)
+                    TextField("İsim", text: $personalInfoModel.firstName)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                     Spacer()
-                    TextField(surName, text: $surName)
+                    TextField("Soyisim", text: $personalInfoModel.lastName)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
@@ -88,7 +82,9 @@ struct PersonalInformationView: View{
         }
         .padding()
         .background(Color("back"))
-        
+        .onAppear{
+            personalInfoModel.getInfos()
+        }
     }
 }
 

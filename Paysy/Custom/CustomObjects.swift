@@ -30,6 +30,28 @@ struct CustomDismissButton : View{
     }
 }
 
+//edit button
+struct CustomEditButton : View{
+    @Binding var show:Bool
+    var body: some View{
+        HStack{
+            Spacer()
+            Button(action: {
+                show.toggle()
+            }) {
+                Image(systemName: "pencil.circle")
+                    .resizable()
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.black)
+                    .background(Color.white)
+                    .clipShape(Circle())
+                    .padding()
+                    
+            }
+        }.frame(height: 25)
+    }
+}
+
 //sayfaları gösteriyor
 struct CustomTabIndicator: View {
     var count: Int
