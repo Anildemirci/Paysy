@@ -59,7 +59,7 @@ struct CustomTabIndicator: View {
     
     var body: some View {
         HStack{
-            ForEach(0..<count,id:\.self){i in
+            ForEach(1..<count+1,id:\.self){i in
                 ZStack{
                     if(current)==i {
                         Circle().fill(Color.blue)

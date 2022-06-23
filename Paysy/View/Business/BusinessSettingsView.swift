@@ -18,4 +18,4 @@ struct BusinessSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         BusinessSettingsView()
     }
-}
+}   

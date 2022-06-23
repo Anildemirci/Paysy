@@ -28,22 +28,31 @@ struct BusinessAccountView: View {
         //TabBarAppearance.standardAppearance = UITabBarAppearance()
         //TabBarAppearance.isHidden=false
         }
-
     
     @State var selected=1
     @State var showAddPhoto=false
     @State var isShowPhotoLibrary=false
     @State var isShowCamera=false
     @State var image:UIImage?
+    @State var showProfile=false
+    @State var show=false
     
-    var name=""
-    var photo=""
+    @StateObject var businessInfo=BusinessInformationsViewModel()
+    @StateObject var businessPhoto=BusinessPhotoViewModel()
     
     var body: some View {
         TabView {
             NavigationView {
                 VStack{
-                    if image == nil {
+                    if image != nil {
+                        Image(uiImage: image!)
+                            .resizable()
+                            .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
+                    } else if businessPhoto.profilPhoto != "" {
+                        AnimatedImage(url: URL(string: businessPhoto.profilPhoto))
+                            .resizable()
+                            .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
+                    } else if businessPhoto.profilPhoto == "" {
                         Button(action: {
                             showAddPhoto.toggle()
                         }) {
@@ -51,16 +60,10 @@ struct BusinessAccountView: View {
                                 .resizable()
                                 .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
                         }
-                    } else {
-                        Image(uiImage: image!)
-                            .resizable()
-                            .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
                     }
                     HStack{
-                        Button(action: {
-                            selected=0
-                        }) {
-                            Text("Fotoğraflar")
+                        NavigationLink("Fotoğraflar") {
+                            BusinessPhotosView(placeName:businessInfo.placeName)
                         }
                         Spacer()
                         Button(action: {
@@ -77,17 +80,15 @@ struct BusinessAccountView: View {
                     }
                     .padding()
                     VStack{
-                        if selected == 0 {
-                            BusinessPhotos()
-                        } else if selected == 1 {
-                            BusinessInformations()
+                        if selected == 1 {
+                            BusinessInformationsView()
                         } else {
-                            BusinessComments()
+                            BusinessCommentsView()
                         }
                     }
                     Spacer()
                     
-                        .navigationTitle("DorockXL").navigationBarTitleDisplayMode(.inline)
+                        .navigationTitle(businessInfo.placeName).navigationBarTitleDisplayMode(.inline)
                         .navigationBarItems(leading:
                                                 Button(action: {
                             if image != nil {
@@ -99,19 +100,34 @@ struct BusinessAccountView: View {
                                 }
                             }
                         )
+                    
                         .navigationBarItems(trailing:
                                                 Button(action: {
-                            //onayla yükle
+                            if businessPhoto.profilPhoto == "" && image == nil {
+                                showAddPhoto.toggle()
+                            } else if image != nil {
+                                businessPhoto.uploadProfilePhoto(selectPhoto: image!)
+                            } else if businessPhoto.profilPhoto != "" {
+                                businessPhoto.trashClicked()
+                            }
                         }){
                             if image != nil {
                                 Image(systemName: "checkmark").resizable().frame(width: 25, height: 25).foregroundColor(Color.blue)
-                            } else {
+                            } else if businessPhoto.profilPhoto == "" && image == nil {
                                 Image(systemName: "plus").resizable().frame(width: 25, height: 25).foregroundColor(Color.blue)
+                            } else if businessPhoto.profilPhoto != "" {
+                                Image(systemName: "trash").resizable().frame(width: 25, height: 25).foregroundColor(Color.blue)
                             }
                         })
                 }
             }
-            
+            .onAppear{
+                businessInfo.getInfos()
+                businessPhoto.getProfilePhoto()
+            }
+            .alert(isPresented: $businessPhoto.showingAlert, content: {
+                Alert(title: Text(businessPhoto.titleInput), message: Text(businessPhoto.messageInput), dismissButton: .default(Text("Tamam")))
+            })
             .actionSheet(isPresented: $showAddPhoto){
                 ActionSheet(title: Text("Fotoğraf Yükle"),
                             buttons: [
@@ -131,7 +147,9 @@ struct BusinessAccountView: View {
             }.sheet(isPresented: $isShowCamera) {
                 ImagePicker(sourceType: .camera, selectedImage: $image)
             }
-            
+            .fullScreenCover(isPresented: $businessPhoto.showProfile, content: {
+                BusinessAccountView()
+            })
             .tabItem {
                 Image(systemName: "house.fill")
             }

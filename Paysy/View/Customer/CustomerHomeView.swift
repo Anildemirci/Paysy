@@ -59,7 +59,7 @@ struct CustomerHomeView: View {
                                         .foregroundColor(.white)
                                 })
                                 .navigationBarItems(trailing: Button(action: {
-                                    print(Auth.auth().currentUser?.uid)
+                                    //print(Auth.auth().currentUser?.uid)
                                 }) {
                                     Image(systemName: "envelope")
                                         .foregroundColor(.white)
@@ -172,7 +172,7 @@ struct CategoriesCell: View {
         .frame(width: UIScreen.main.bounds.width * 0.9)
         .background(Color("back"))
         .cornerRadius(20)
-        .shadow(color: .red, radius: 5)
+        .shadow(color: .purple, radius: 5)
     }
 }
 
@@ -202,27 +202,29 @@ struct PlacesCell: View {
         .padding()
         .background(Color("back"))
         .cornerRadius(20)
-        .shadow(color: .red, radius: 2)
+        .shadow(color: .purple, radius: 2)
         
     }
 }
 
 struct CampaignCell: View {
     
-    @State var currentIndex : Int = 0
+    @State private var currentIndex : Int = 1
+    private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+    private var numberOfCampaign=3
     
     var body: some View {
         VStack {
             TabView(selection: $currentIndex){
                 if Auth.auth().currentUser != nil {
-                    ForEach(0...2,id:\.self) { i in
-                        Image("pic\(i+1)")
+                    ForEach(1..<numberOfCampaign+1,id:\.self) { i in
+                        Image("pic\(i)")
                             .resizable()
                             .padding(.horizontal)
                     }
                 } else {
-                    ForEach(0...3,id:\.self) { i in
-                        if i==0 {
+                    ForEach(1..<numberOfCampaign+2,id:\.self) { i in
+                        if i==1 {
                             VStack(spacing:10){
                                 Text("Paysy'nin fırsatlarından ve kolaylıklarından yararlanmak için..").font(.body)
                                     .foregroundColor(Color.black).multilineTextAlignment(.center)
@@ -242,7 +244,7 @@ struct CampaignCell: View {
                                 }
                             }
                         } else {
-                            Image("pic\(i)")
+                            Image("pic\(i-1)")
                                 .resizable()
                                 .padding(.horizontal)
                         }
@@ -255,8 +257,16 @@ struct CampaignCell: View {
         .padding()
         .background(Color("back"))
         .cornerRadius(20)
-        .shadow(color: .red, radius: 2)
-        
+        .shadow(color: .purple, radius: 2)
+        .onReceive(timer, perform: { _ in
+            withAnimation{
+                if Auth.auth().currentUser != nil {
+                    currentIndex = currentIndex < numberOfCampaign ? currentIndex + 1 : 1
+                } else {
+                    currentIndex = currentIndex < numberOfCampaign + 1 ? currentIndex + 1 : 1
+                }
+            }
+        })
         CustomTabIndicator(count: (Auth.auth().currentUser != nil ) ? 3 : 4, current: $currentIndex)
     }
 }

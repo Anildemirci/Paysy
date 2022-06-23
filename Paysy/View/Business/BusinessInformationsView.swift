@@ -1,73 +1,75 @@
 //
-//  BusinessInformations.swift
+//  BusinessInformationsView.swift
 //  Paysy
 //
-//  Created by Anıl Demirci on 17.06.2022.
+//  Created by Anıl Demirci on 21.06.2022.
 //
 
 import SwiftUI
 
-struct BusinessInformations: View {
+struct BusinessInformationsView: View {
     
     @State private var showEdit=false
     @StateObject var businessInfo=BusinessInformationsViewModel()
     
     var body: some View {
         VStack{
-            HStack{
-                 Spacer()
-                 Button(action: {
-                     showEdit.toggle()
-                 }) {
-                     Text("Düzenle")
+            ScrollView(.vertical, showsIndicators: false){
+                HStack{
+                     Spacer()
+                     Button(action: {
+                         showEdit.toggle()
+                     }) {
+                         Text("Düzenle")
+                     }
                  }
-             }
-            Text("İletişim Bilgileri")
-                .font(.title2)
-                .fontWeight(.medium)
-                VStack{
-                    HStack{
-                        Image(systemName: "map.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                        Text(businessInfo.address)
-                    }
-                    HStack{
-                        Image(systemName: "location")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.green)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                        
-                        Button(action: {
-                            
-                        }) {
-                            Text("Yol tarifi al")
-                                .foregroundColor(Color.white)
+                Text("İletişim Bilgileri")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    VStack{
+                        HStack{
+                            Image(systemName: "map.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                            Text(businessInfo.address)
                         }
+                        HStack{
+                            Image(systemName: "location")
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(.green)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                            
+                            Button(action: {
+                                
+                            }) {
+                                Text("Yol tarifi al")
+                                    .foregroundColor(Color.white)
+                            }
+                            
+                        }.padding()
+                            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
+                            .background(Color.blue)
                         
-                    }.padding()
-                        .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
-                        .background(Color.blue)
-                    
-                    HStack{
-                        Image(systemName: "phone")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.green)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                            
-                        Button(action: {
-                            
-                        }) {
-                            Text(businessInfo.phoneNumber)
-                                .foregroundColor(Color.white)
-                        }
-                    }.padding()
-                        .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
-                        .background(Color.green)
+                        HStack{
+                            Image(systemName: "phone")
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(.green)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                
+                            Button(action: {
+                                
+                            }) {
+                                Text(businessInfo.phoneNumber)
+                                    .foregroundColor(Color.white)
+                            }
+                        }.padding()
+                            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
+                            .background(Color.green)
 
-                }
+                    }
+            }
         }
         .onAppear{
             businessInfo.getInfos()
@@ -78,9 +80,9 @@ struct BusinessInformations: View {
     }
 }
 
-struct BusinessInformations_Previews: PreviewProvider {
+struct BusinessInformationsView_Previews: PreviewProvider {
     static var previews: some View {
-        BusinessInformations()
+        BusinessInformationsView()
     }
 }
 
@@ -88,27 +90,29 @@ struct BusinessInformations_Previews: PreviewProvider {
 //edit view
 
 struct EditBusinessInformations: View {
+    @State private var show=false
+    
     var body: some View {
         VStack{
             ScrollView(.vertical, showsIndicators: false){
-                EditAddressInformations()
+                CustomDismissButton(show: $show)
                 EditLocation()
+                EditAddressInformations()
                 EditWorkingHour()
             }
+        }.fullScreenCover(isPresented: $show) { () -> BusinessAccountView in
+            return BusinessAccountView()
         }
     }
 }
 
 struct EditAddressInformations: View {
     
-    @State private var show=false
-
     @StateObject var businessInfo=BusinessInformationsViewModel()
     
     var body: some View {
         VStack{
             Spacer()
-            CustomDismissButton(show: $show)
             Text("İletişim Bilgileri")
                 .font(.title)
                 .fontWeight(.medium)
@@ -152,9 +156,6 @@ struct EditAddressInformations: View {
         .onAppear{
             businessInfo.getInfos()
         }
-        .fullScreenCover(isPresented: $show) { () -> BusinessAccountView in
-            return BusinessAccountView()
-        }
     }
 }
 
@@ -189,7 +190,7 @@ struct EditWorkingHour: View {
                 .font(.title3)
                 .multilineTextAlignment(.center)
                 .padding()
-                .foregroundColor(Color("myGreen"))
+                .foregroundColor(Color.black)
             HStack{
                 TextField("Açılış saati", text: $openingTime)
                     .padding()
@@ -206,7 +207,7 @@ struct EditWorkingHour: View {
                 Text("Onayla")
                     .padding()
                     .frame(width: 250.0, height: 50.0)
-                    .background(Color("myGreen"))
+                    .background(Color.green)
                     .foregroundColor(Color.white)
                     .clipShape(Capsule())
             }

@@ -324,7 +324,6 @@ struct SignInForBusiness: View {
     @State var shownPass=false
     @State var shownPass2=false
     @State var show=false
-    
     @StateObject var signInModel=LoginAndSignInViewModel()
     
     var body: some View {
@@ -456,10 +455,65 @@ struct SignInForBusiness: View {
                 }
             }
             .padding()
-            
             .alert(isPresented: $signInModel.showAlert, content: {
                 Alert(title: Text(signInModel.alertTitle), message: Text(signInModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
         })
+        }
+    }
+}
+
+struct BusinessLocationInfo: View {
+    
+    @StateObject private var businessInfo=BusinessInformationsViewModel()
+    @State private var show=false
+    var body: some View{
+        VStack{
+            TextField("İlçe", text: $businessInfo.town)
+                    .font(.system(size: 20,weight: .semibold))
+                    .autocapitalization(.words)
+            Divider()
+            TextField("İl", text: $businessInfo.city)
+                    .font(.system(size: 20,weight: .semibold))
+                    .autocapitalization(.words)
+            Divider()
+            TextField("Adres(isteğe bağlı)", text: $businessInfo.address)
+                    .font(.system(size: 20,weight: .semibold))
+                    .autocapitalization(.words)
+            Button(action: {
+                //action
+            }, label: {
+                Text("İlerle")
+                    .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.075)
+                    .foregroundColor(.yellow)
+                    .padding()
+                    .background(Color.black)
+                    .clipShape(Capsule())
+                    .shadow(color: Color.red.opacity(0.6), radius: 5, x: 0, y: 0)
+            })
+        }.padding()
+        .fullScreenCover(isPresented: $show) { () -> BusinessPhoneInfo in
+            BusinessPhoneInfo()
+        }
+
+    }
+}
+
+struct BusinessPhoneInfo: View {
+    @StateObject var businessInfo=BusinessInformationsViewModel()
+    var body: some View{
+        VStack{
+            CustomPhoneTextField()
+            Button(action: {
+                //action
+            }, label: {
+                Text("Üyeliği Tamamla")
+                    .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.075)
+                    .foregroundColor(.yellow)
+                    .padding()
+                    .background(Color.black)
+                    .clipShape(Capsule())
+                    .shadow(color: Color.red.opacity(0.6), radius: 5, x: 0, y: 0)
+            })
         }
     }
 }
