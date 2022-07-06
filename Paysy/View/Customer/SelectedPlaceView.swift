@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectedPlaceView: View {
     var name=""
-    @State var selected=1
+    @State private var selected=1
     
     var body: some View {
         VStack{
@@ -18,6 +18,7 @@ struct SelectedPlaceView: View {
                 .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
             HStack{
                 Button(action: {
+                    placeNameFromUser=name
                     selected=0
                 }) {
                     Text("Fotoğraflar")

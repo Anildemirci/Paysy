@@ -11,7 +11,7 @@ struct PlacesView: View {
     
     @State var searchPlace=""
     @State var show=false
-    
+    @StateObject private var businessInfo=BusinessesViewModel()
     var type=""
     var town=""
     
@@ -25,26 +25,29 @@ struct PlacesView: View {
                 .padding(.horizontal)
                 .background(Color.primary.opacity(0.05))
                 .cornerRadius(8)
-            List{
-                ForEach(type == "" ? (searchPlace == "" ? placesArray : placesArray.filter{$0.name.contains(searchPlace)}) : placesArray.filter{$0.type.contains(type)} ,id:\.self) { i in
-                    NavigationLink(destination: SelectedPlaceView(name: i.name)) {
+            List(searchPlace == "" ? businessInfo.businessArray : businessInfo.businessArray.filter{$0.contains(searchPlace)},id: \.self){ i in
+                    NavigationLink(destination: SelectedPlaceView(name: i)) {
                         VStack{
                                 HStack{
-                                    Text(i.name)
+                                    Text(i)
                                         .font(.title)
                                     Spacer()
-                                    Text("Puan: \(i.point,specifier: "%.2f")")
+                                    //Text("Puan: \(i.point,specifier: "%.2f")")
                                 }
-                            Image(i.name)
+                            Image(i)
                                     .resizable()
                                     .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.25)
                                     .cornerRadius(20)
-                            Text(i.location)
+                            //Text(i.location)
                         }
                     }
-                }
+                
             }.listStyle(.plain)
                 .navigationBarTitle(town,displayMode: .inline)
+        }
+        .onAppear{
+            businessInfo.getBusinesses(town: town)
+            print(businessInfo.businessArray)
         }
     }
 }

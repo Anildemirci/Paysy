@@ -40,9 +40,8 @@ class UserInformationsViewModel : ObservableObject {
         firestoreDatabase.collection("Users").document(currentUser!.uid).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 
-                self.alertTitle="Hata!"
-                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
-                self.showAlert.toggle()
+                
+                
                 
             } else {
                 if let name = snapshot?.get("Name") as? String {

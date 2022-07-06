@@ -44,10 +44,12 @@ struct MapView: View {
                 HStack{
                     Spacer()
                     Button{
+                        //mapViewModel.getAddressFromLatLon(pdblLatitude: mapViewModel.region.center.latitude, withLongitude: mapViewModel.region.center.longitude)
+                        
                         let firestoreUser=["User":Auth.auth().currentUser!.uid,
                                            "Email":Auth.auth().currentUser!.email,
                                            "BusinessName":infomodel.placeName,
-                                           "Town":infomodel.town,
+                                           "Town":mapViewModel.town,
                                            "City":infomodel.city,
                                            "Latitude":mapViewModel.region.center.latitude,
                                            "Longitude":mapViewModel.region.center.longitude,
@@ -64,7 +66,7 @@ struct MapView: View {
                                     locations.removeAll(keepingCapacity: false)
                                     let newLocation=Location(id:UUID(),name: infomodel.placeName, latitude: mapViewModel.region.center.latitude,longitude: mapViewModel.region.center.longitude)
                                     locations.append(newLocation)
-                                    
+                
                                     titleInput="Başarılı"
                                     messageInput="Konumuz kaydedildi."
                                     showingAlert.toggle()

@@ -11,13 +11,13 @@ import SDWebImageSwiftUI
 struct BusinessPhotosView: View {
     
     @State private var showEdit=false
-    @State var show=false
-    @State var url=""
+    @State private var show=false
+    @State private var url=""
     @StateObject var photosInfo=BusinessPhotoViewModel()
     var placeName=""
     
     var body: some View {
-        VStack{
+        VStack(alignment: .center){
             if photosInfo.posts.isEmpty {
                 Text("Saha tarafından henüz fotoğraf yüklenmedi.").fontWeight(.heavy)
             } else {
@@ -27,7 +27,7 @@ struct BusinessPhotosView: View {
                     }.onDelete(perform: photosInfo.deletePhoto)
                 }.listStyle(.plain)
             }
-    }
+    }.padding()
         .navigationBarItems(trailing:
                                 Button(action: {
             showEdit.toggle()
@@ -61,10 +61,10 @@ struct PhotosStructView : View {
     var body: some View {
         VStack{
             AnimatedImage(url: URL(string: image))
-                .resizable().frame(width:350 ,height:350)
+                .resizable()
+                .frame(height:UIScreen.main.bounds.height * 0.35)
                 .onTapGesture {
                     url=image
-                    print(url)
                     show.toggle()
                 }
             HStack{
@@ -72,8 +72,8 @@ struct PhotosStructView : View {
             }
         }
         .sheet(isPresented: $show){
-                        statusView(url: url)
-                    }
+            statusView(url: url)
+        }
     }
 }
 
@@ -187,7 +187,10 @@ struct statusView:View{
     @State var url=""
     var body: some View{
         ZStack{
-            AnimatedImage(url: URL(string: url)).resizable().edgesIgnoringSafeArea(.all)
+            AnimatedImage(url: URL(string: url))
+                .resizable()
+                //.scaledToFit()
+                .edgesIgnoringSafeArea(.all)
         }
     }
 }

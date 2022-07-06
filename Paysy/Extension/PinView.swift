@@ -13,10 +13,13 @@ import Firebase
 //henüz bir yerde kullanılmıyor.
 
 struct PinView: View {
+    @StateObject private var mapViewModel=MapViewModel()
     
     var body: some View {
         VStack {
-            MapView()
+            DraggableMapView(latitude: mapViewModel.region.center.latitude, longitude: mapViewModel.region.center.longitude)
+        }.onAppear{
+            mapViewModel.checkIfLocationServicesIsEnabled()
         }
     }
 }
@@ -27,20 +30,29 @@ struct PinView_Previews: PreviewProvider {
     }
 }
 
-struct MappView : UIViewRepresentable {
+struct DraggableMapView : UIViewRepresentable {
+    
+    @State var latitude = Double()
+    @State var longitude = Double()
     
     func makeCoordinator() -> Coordinator {
-        return MappView.Coordinator(parent1: self)
+        return DraggableMapView.Coordinator(parent1: self)
     }
 
     func makeUIView(context: Context) -> MKMapView {
+        
         let map = MKMapView()
-        let coordinate=CLLocationCoordinate2D(latitude: 41.0330382, longitude: 28.4517462)
+        
+        let coordinate=CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
         map.region=MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        
         let annotation=MKPointAnnotation()
         annotation.coordinate=coordinate
+        
         map.delegate=context.coordinator
         map.addAnnotation(annotation)
+        
         return map
     }
     func updateUIView(_ uiView: MKMapView, context: Context) {
@@ -48,9 +60,9 @@ struct MappView : UIViewRepresentable {
     }
     
     class Coordinator : NSObject,MKMapViewDelegate {
-        var parent:MappView
+        var parent:DraggableMapView
         
-        init(parent1:MappView) {
+        init(parent1:DraggableMapView) {
             parent=parent1
         }
         
@@ -59,17 +71,18 @@ struct MappView : UIViewRepresentable {
             pin.isDraggable=true
             pin.pinTintColor = .red
             pin.animatesDrop = true
-            
             return pin
         }
+        
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
             CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: (view.annotation?.coordinate.latitude)!, longitude: (view.annotation?.coordinate.longitude)!)) { (places, error)  in
-                print((places?.first?.name)!)
-                print((places?.first?.locality)!)
-                print(view.annotation?.coordinate.latitude)
-                print(view.annotation?.coordinate.longitude)
+                
+                print((places?.first?.name)!) //cadde sokak adres
+                print((places?.first?.locality)!) // ilçe
+                print((places?.first?.subLocality)) //mahalle
             }
         }
+        
     }
 }
 

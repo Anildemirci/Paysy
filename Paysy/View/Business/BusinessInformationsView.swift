@@ -109,6 +109,7 @@ struct EditBusinessInformations: View {
 struct EditAddressInformations: View {
     
     @StateObject var businessInfo=BusinessInformationsViewModel()
+    @StateObject var addressInfo=MapViewModel()
     
     var body: some View {
         VStack{
@@ -160,13 +161,17 @@ struct EditAddressInformations: View {
 }
 
 struct EditLocation: View {
+    @State private var text=""
+    
     var body: some View {
         VStack{
             Text("Navigasyon için sahanın konumunu ekleyin.")
                 .font(.headline)
                 .foregroundColor(Color.white)
-                MapView()
-                .frame(height:UIScreen.main.bounds.height * 0.35)
+                .textFieldStyle(.roundedBorder)
+                .padding(.horizontal)
+            MapView()
+            .frame(height:UIScreen.main.bounds.height * 0.35)
         }
     }
 }

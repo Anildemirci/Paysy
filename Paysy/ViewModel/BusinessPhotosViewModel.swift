@@ -28,9 +28,8 @@ class BusinessPhotoViewModel : ObservableObject {
     var firebaseDatabase=Firestore.firestore()
     
     func getDataForStadium(){
-        
-        let db=Firestore.firestore()
-        db.collection("BusinessPhotos").document(placeName).collection("Photos").order(by: "Date", descending: true).addSnapshotListener { (snapshot, error) in
+      
+        firebaseDatabase.collection("BusinessPhotos").document(placeName).collection("Photos").order(by: "Date", descending: true).addSnapshotListener { (snapshot, error) in
                 if error != nil {
                     print((error?.localizedDescription)!)
                     return
@@ -225,4 +224,36 @@ class BusinessPhotoViewModel : ObservableObject {
              }
          }
     
+    
+    //user tarafı
+    
+    func getBusinessPhotoForUser(){
+        firebaseDatabase.collection("BusinessPhotos").document(placeNameFromUser).collection("Photos").order(by: "Date", descending: true).addSnapshotListener { (snapshot, error) in
+                if error != nil {
+                    print((error?.localizedDescription)!)
+                    return
+                } else {
+                    
+                    self.storageId.removeAll(keepingCapacity: false)
+                    self.imageUrl.removeAll(keepingCapacity: false)
+                    self.posts.removeAll(keepingCapacity: false)
+                    
+                    for document in snapshot!.documents{
+                        
+                        let documentID=document.documentID
+                        let statement=document.get("Statement") as! String
+                        let image=document.get("photoUrl") as! String
+                        let storageID=document.get("StorageID") as! String
+                        self.posts.append((dataType(id: documentID, statement: statement, image: image)))
+                        self.imageUrl.append(image)
+                        self.storageId.append(storageID)
+                        
+                    }
+                    self.didChange.send(self.posts)
+                }
+            }
+    }
+    
 }
+
+var placeNameFromUser=""

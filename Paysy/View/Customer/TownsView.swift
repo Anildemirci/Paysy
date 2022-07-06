@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TownsView: View {
     
-    @State var searchText=""
+    @State private var searchText=""
+    @StateObject var businessViewModel=BusinessesViewModel()
     
     var body: some View {
             NavigationView{
@@ -22,14 +23,15 @@ struct TownsView: View {
                         .padding(.horizontal)
                         .background(Color.primary.opacity(0.05))
                         .cornerRadius(8)
-                    List{
-                        ForEach(town.filter({searchText.isEmpty ? true : $0.contains(searchText)}),id:\.self) { i in
-                            NavigationLink(destination: PlacesView(town: i)) {
-                                Text(i)
-                            }
+                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.town.contains(searchText)}){ towns in
+                        NavigationLink(destination: PlacesView(town: towns.town)) {
+                            Text(towns.town)
                         }
                     }.listStyle(.plain)
                 }.navigationBarTitle("İstanbul",displayMode: .inline)
+            }
+            .onAppear{
+                businessViewModel.getTowns()
             }
     }
 }
@@ -41,5 +43,7 @@ struct TownsView_Previews: PreviewProvider {
 }
 
 
-var town=["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla","Ümraniye","Üsküdar","Zeytinburnu"]
+/*
+ var town=["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla","Ümraniye","Üsküdar","Zeytinburnu"]
+ */
 

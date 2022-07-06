@@ -7,6 +7,7 @@
 
 import Foundation
 
+//databaseden verileri buna göre çek 
 struct placesInfo: Identifiable,Decodable,Hashable {
     var id: Int
     var name : String

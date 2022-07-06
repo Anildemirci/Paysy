@@ -16,21 +16,23 @@ struct HomeView: View {
 
     var body: some View {
             VStack(spacing: 25){
-                    Image("paysy")
+                    Image("PLOGO")
                         .resizable()
-                        .frame(width:UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.45)
+                        .frame(width:UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.55)
                         .cornerRadius(20)
                         .padding()
-                HStack{
+                HStack(spacing:12){
                     Button(action: {
                         showCustomer.toggle()
                     }) {
-                        Image("customer")
+                        Image("customer2")
                             .resizable()
                             .frame(width:UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.height * 0.25)
                             .cornerRadius(20)
+                            .shadow(color: .purple, radius: 4)
                             //.padding()
                     }
+                    
                     Button(action: {
                         showBusiness.toggle()
                     }) {
@@ -38,6 +40,7 @@ struct HomeView: View {
                             .resizable()
                             .frame(width:UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.height * 0.25)
                             .cornerRadius(20)
+                            .shadow(color: .purple, radius: 4)
                             //.padding()
                     }
                 }
@@ -45,7 +48,7 @@ struct HomeView: View {
             }
             .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 1)
             .padding()
-            .background(Color("back"))
+            //.background(Color("back"))
         .ignoresSafeArea()
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(isPresented: $showCustomer) { () -> CustomerHomeView in

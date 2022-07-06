@@ -19,7 +19,8 @@ struct CustomerHomeView: View {
     init() {
         let NavBarAppearance = UINavigationBarAppearance()
         NavBarAppearance.configureWithOpaqueBackground()
-        NavBarAppearance.backgroundColor = .purple
+        NavBarAppearance.backgroundColor = UIColor(named: "logoColor")
+        UINavigationBar.appearance().tintColor = .white
         NavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         NavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                 
@@ -36,18 +37,18 @@ struct CustomerHomeView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             GeometryReader{_ in
-                VStack(spacing:55){
+                VStack{
                     TabView {
                         NavigationView{
                             VStack{
                                 ScrollView(.vertical,showsIndicators: false) {
-                                    Spacer(minLength: 15)
+                                    //Spacer(minLength: 15)
                                     CampaignCell()
-                                    Spacer(minLength: 15)
+                                    //Spacer(minLength: 15)
                                     CategoriesCell()
-                                    Spacer(minLength: 25)
+                                    //Spacer(minLength: 15)
                                     PlacesCell()
-                                }.padding(.horizontal)
+                                }
                             }
                             .navigationTitle("PAYSY").navigationBarTitleDisplayMode(.inline)
                                 .navigationBarItems(leading: Button(action: {
@@ -117,7 +118,7 @@ struct CustomerHomeView: View {
                             .tag(4)
                         }
                     }
-                }//.accentColor(Color.white)
+                }.accentColor(Color("logoColor"))
                 HStack {
                     if (currentUser != nil) {
                         ProfileMenu(dark: $dark, show: $show)
@@ -150,7 +151,7 @@ struct CategoriesCell: View {
             Text("Kategoriler")
                 .font(.largeTitle)
             ScrollView(.horizontal,showsIndicators: false){
-                HStack(spacing:50){
+                HStack(spacing:10){
                     ForEach(categories,id:\.self) { i in
                         NavigationLink(destination: PlacesView(type:i))
                         {
@@ -168,21 +169,22 @@ struct CategoriesCell: View {
                 }
             }
         }
-        .padding()
+        //.padding()
         .frame(width: UIScreen.main.bounds.width * 0.9)
-        .background(Color("back"))
+        //.background(Color("back"))
         .cornerRadius(20)
-        .shadow(color: .purple, radius: 5)
+        //.shadow(color: .purple, radius: 5)
     }
 }
 
 struct PlacesCell: View {
+    
     var body: some View {
         VStack(alignment: .leading,spacing: 10){
             Text("Mekanlar")
                 .font(.largeTitle)
             ScrollView(.horizontal,showsIndicators: false){
-                HStack(spacing:50){
+                HStack(spacing:10){
                     ForEach(places,id:\.self) { i in
                         NavigationLink(destination: SelectedPlaceView(name: i)) {
                             VStack{
@@ -199,18 +201,20 @@ struct PlacesCell: View {
                 }
             }
         }
-        .padding()
-        .background(Color("back"))
+        //.padding()
+        .frame(width: UIScreen.main.bounds.width * 0.9)
+        //.background(Color("back"))
         .cornerRadius(20)
-        .shadow(color: .purple, radius: 2)
-        
+        //.shadow(color: .purple, radius: 2)
+        .padding()
+       
     }
 }
 
 struct CampaignCell: View {
     
     @State private var currentIndex : Int = 1
-    private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     private var numberOfCampaign=3
     
     var body: some View {
@@ -233,6 +237,7 @@ struct CampaignCell: View {
                                         .padding()
                                         .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.05)
                                         .background(Color.yellow)
+                                        .foregroundColor(.white)
                                         .cornerRadius(20)
                                 }
                                 NavigationLink(destination: Login()) {
@@ -240,6 +245,7 @@ struct CampaignCell: View {
                                         .padding()
                                         .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.05)
                                         .background(Color.yellow)
+                                        .foregroundColor(Color.white)
                                         .cornerRadius(20)
                                 }
                             }
@@ -254,10 +260,10 @@ struct CampaignCell: View {
         }
         
         .frame(width:UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.275)
-        .padding()
-        .background(Color("back"))
+        //.padding()
+        //.background(Color("back"))
         .cornerRadius(20)
-        .shadow(color: .purple, radius: 2)
+        //.shadow(color: .purple, radius: 2)
         .onReceive(timer, perform: { _ in
             withAnimation{
                 if Auth.auth().currentUser != nil {
@@ -487,8 +493,8 @@ struct ProfileMenuNotLogin : View {
                     Text("Üye Ol")
                         .frame(width: 100, height: 35)
                         .foregroundColor(Color.yellow)
-                            .background(Color.black)
-                            .clipShape(Capsule())
+                        .background(Color.black)
+                        .clipShape(Capsule())
                 }
                 .fullScreenCover(isPresented: $showSignIn) { () -> SignIn in
                     return SignIn(showDismissButton: "1")

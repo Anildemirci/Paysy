@@ -14,6 +14,7 @@
 		0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A32809A1B2000D0CAD /* QRView.swift */; };
 		0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */; };
 		045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */; };
+		047101AD2875E09800F76A33 /* BusinessesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047101AC2875E09800F76A33 /* BusinessesViewModel.swift */; };
 		048300C9285E62A80085AC62 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300C8285E62A80085AC62 /* Location.swift */; };
 		048300CB285E68E90085AC62 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CA285E68E90085AC62 /* PinView.swift */; };
 		048300CD285E69170085AC62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CC285E69170085AC62 /* MapView.swift */; };
@@ -113,6 +114,7 @@
 		0445F1A32809A1B2000D0CAD /* QRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView.swift; sourceTree = "<group>"; };
 		0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardsView.swift; sourceTree = "<group>"; };
 		045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsViewModel.swift; sourceTree = "<group>"; };
+		047101AC2875E09800F76A33 /* BusinessesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessesViewModel.swift; sourceTree = "<group>"; };
 		048300C8285E62A80085AC62 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		048300CA285E68E90085AC62 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		048300CC285E69170085AC62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				048300D0285E69BF0085AC62 /* BusinessInformationsViewModel.swift */,
 				04E3102F2863742A003C63F3 /* BusinessPhotosViewModel.swift */,
 				045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */,
+				047101AC2875E09800F76A33 /* BusinessesViewModel.swift */,
 				048300CE285E69410085AC62 /* MapViewModel.swift */,
 			);
 			path = ViewModel;
@@ -721,6 +724,7 @@
 				04E45525285CDCDE00452B1F /* BusinessSettingsView.swift in Sources */,
 				04C47FDA2862133F005BA7E4 /* BusinessCommentsView.swift in Sources */,
 				042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */,
+				047101AD2875E09800F76A33 /* BusinessesViewModel.swift in Sources */,
 				04C844732806100100DEE45E /* HomeView.swift in Sources */,
 				048300CD285E69170085AC62 /* MapView.swift in Sources */,
 				04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */,
