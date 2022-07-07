@@ -7,7 +7,7 @@
 
 import Foundation
 import Firebase
-
+import Combine
 
 class BusinessesViewModel : ObservableObject {
     
@@ -16,9 +16,10 @@ class BusinessesViewModel : ObservableObject {
     @Published var alertTitle=""
     @Published var alertMessage=""
     @Published var showAlert=false
-    @Published var nameArray=[String]()
-    @Published var townArray=[townNameModel]()
+    //@Published var nameArray=[String]()
+    @Published var townArray=[String]()
     @Published var businessArray=[String]()
+    var didChange=PassthroughSubject<Array<Any>,Never>()
     
     func getTowns(){
         
@@ -31,16 +32,16 @@ class BusinessesViewModel : ObservableObject {
                 self.townArray.removeAll(keepingCapacity: false)
                 if snapshot?.isEmpty != true && snapshot != nil {
                     for document in snapshot!.documents {
+                        
                         if let Town=document.get("Town") as? String {
-                            if self.nameArray.contains(Town) {
+                            if self.townArray.contains(Town) {
                                 //zaten içeriyor
                             } else{
-                                self.nameArray.append(Town)
-                                self.townArray.append(townNameModel(town: Town))
+                                self.townArray.append(Town)
                             }
                         }
                     }
-                    
+                    self.didChange.send(self.townArray)
                 }
             }
         }
@@ -62,7 +63,6 @@ class BusinessesViewModel : ObservableObject {
                             if Name==town {
                                 let businessName=document.get("Place Name") as! String
                                 self.businessArray.append(businessName)
-                                print(self.businessArray)
                             }
                         }
                     }

@@ -287,6 +287,7 @@ struct ProfileMenu : View {
     @State var showHelp=false
     
     @StateObject var model=LoginAndSignInViewModel()
+    @StateObject var userInfo=UserInformationsViewModel()
     
     var body: some View {
         VStack{
@@ -311,7 +312,7 @@ struct ProfileMenu : View {
                 .clipShape(Circle())
             
             VStack(spacing: 12){
-                Text("Anıl")
+                Text(userInfo.firstName)
                     .font(.caption)
             }
             .padding(.top,5)
@@ -440,9 +441,12 @@ struct ProfileMenu : View {
         }
         .foregroundColor(.primary)
         .padding(.horizontal,20)
-        .frame(width: UIScreen.main.bounds.width / 1.4)
+        .frame(width: UIScreen.main.bounds.width / 1.4,height: UIScreen.main.bounds.height * 1)
         .background((self.dark ? Color.black : Color.white))
         .overlay(Rectangle().stroke(Color.primary.opacity(0.2), lineWidth: 2).shadow(radius: 3).edgesIgnoringSafeArea(.all))
+        .onAppear{
+            userInfo.getInfos()
+        }
     }
 }
 
@@ -571,7 +575,7 @@ struct ProfileMenuNotLogin : View {
         }
         .foregroundColor(.primary)
         .padding(.horizontal,20)
-        .frame(width: UIScreen.main.bounds.width / 1.4)
+        .frame(width: UIScreen.main.bounds.width / 1.4,height: UIScreen.main.bounds.height * 1)
         .background((self.dark ? Color.black : Color.white))
         .overlay(Rectangle().stroke(Color.primary.opacity(0.2), lineWidth: 2).shadow(radius: 3).edgesIgnoringSafeArea(.all))
     }

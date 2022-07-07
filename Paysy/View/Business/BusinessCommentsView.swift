@@ -20,6 +20,7 @@ struct BusinessCommentsView: View {
                     show.toggle()
                 }){
                     Text("Yorum Yap")
+                        .foregroundColor(Color.white)
                     //Image(systemName: "plus").resizable().frame(width: 25, height: 25).foregroundColor(Color.blue)
                 })
         }
@@ -124,6 +125,7 @@ struct EditBusinessComments: View {
         VStack{
             CustomDismissButton(show: $show)
             Text("yorum düzenle")
+                .foregroundColor(Color.white)
             Spacer()
         }
         .fullScreenCover(isPresented: $show) { () -> BusinessAccountView in

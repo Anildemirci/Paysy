@@ -33,6 +33,7 @@ struct BusinessPhotosView: View {
             showEdit.toggle()
         }){
             Text("Fotoğraf Yükle")
+                .foregroundColor(Color.white)
             //Image(systemName: "plus").resizable().frame(width: 25, height: 25).foregroundColor(Color.blue)
         })
         .fullScreenCover(isPresented: $showEdit) { () -> PhotoUploadView in
@@ -184,7 +185,9 @@ struct PhotoUploadView : View {
 
 //ilk tıklamada fotoğraf gelmiyor düzelt
 struct statusView:View{
+    
     @State var url=""
+    
     var body: some View{
         ZStack{
             AnimatedImage(url: URL(string: url))

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct UserInformationsView: View {
     var body: some View {
@@ -41,11 +42,15 @@ struct PersonalInformationView: View{
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
+                        .allowsHitTesting(false)
+                        .background(Color.secondary)
                     Spacer()
                     TextField("Soyisim", text: $personalInfoModel.lastName)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
+                        .allowsHitTesting(false)
+                        .background(Color.secondary)
                 }
                 TextField("telefon numarası", text: $personalInfoModel.phoneNumber)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
@@ -98,6 +103,7 @@ struct LoginInformationView: View {
     @State var showFingerID=false
     
     @StateObject var model=LoginAndSignInViewModel()
+    @StateObject var business=BusinessInformationsViewModel()
     
     var body: some View{
         VStack{
@@ -119,7 +125,11 @@ struct LoginInformationView: View {
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                         .background(Color.white)
                     Button(action: {
-                        model.changeEmail()
+                        if business.businessArray.contains(Auth.auth().currentUser!.uid) {
+                            model.changeEmailForBusiness()
+                        } else {
+                            model.changeEmailForUser()
+                        }
                     }) {
                         Text("Değiştir")
                             .font(.title2)
@@ -170,7 +180,9 @@ struct LoginInformationView: View {
         }
         .padding()
         .background(Color("back"))
-        
+        .onAppear{
+            business.businesses()
+        }
         .alert(isPresented: $model.showAlert, content: {
             Alert(title: Text(model.alertTitle), message: Text(model.alertMessage), dismissButton: .destructive(Text("Tamam")))
         })

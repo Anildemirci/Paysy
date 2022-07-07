@@ -42,7 +42,7 @@ struct SelectedPlaceView: View {
                 if selected == 0 {
                     PlacePhotosView()
                 } else if selected == 1 {
-                    PlaceInformationsView()
+                    PlaceInformationsView(placeName: name)
                 } else {
                     PlaceCommentsView(placeName: name)
                 }

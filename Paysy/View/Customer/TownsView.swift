@@ -23,15 +23,17 @@ struct TownsView: View {
                         .padding(.horizontal)
                         .background(Color.primary.opacity(0.05))
                         .cornerRadius(8)
-                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.town.contains(searchText)}){ towns in
-                        NavigationLink(destination: PlacesView(town: towns.town)) {
-                            Text(towns.town)
+                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.contains(searchText)}, id: \.self){ towns in
+                        NavigationLink(destination: PlacesView(town: towns)) {
+                            Text(towns)
                         }
                     }.listStyle(.plain)
-                }.navigationBarTitle("İstanbul",displayMode: .inline)
-            }
-            .onAppear{
-                businessViewModel.getTowns()
+                }
+                .navigationBarTitle("İstanbul",displayMode: .inline)
+                .onAppear{
+                    businessViewModel.getTowns()
+                    print(businessViewModel.townArray)
+                }
             }
     }
 }

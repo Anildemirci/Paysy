@@ -47,7 +47,6 @@ struct PlacesView: View {
         }
         .onAppear{
             businessInfo.getBusinesses(town: town)
-            print(businessInfo.businessArray)
         }
     }
 }

@@ -33,41 +33,37 @@ struct BusinessInformationsView: View {
                                 .frame(width: 30, height: 30)
                             Text(businessInfo.address)
                         }
-                        HStack{
-                            Image(systemName: "location")
-                                .frame(width: 25, height: 25)
-                                .foregroundColor(.green)
-                                .background(Color.white)
-                                .clipShape(Circle())
+                        Button(action: {
                             
-                            Button(action: {
-                                
-                            }) {
+                        }) {
+                            HStack(){
+                                Spacer()
+                                Image(systemName: "location")
+                                    .frame(width: 25, height: 25)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
                                 Text("Yol tarifi al")
-                                    .foregroundColor(Color.white)
-                            }
-                            
-                        }.padding()
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
-                            .background(Color.blue)
+                                    .foregroundColor(.white)
+                                Spacer()
+                            }.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
+                        }
+                        .background(Color.blue)
                         
-                        HStack{
-                            Image(systemName: "phone")
-                                .frame(width: 25, height: 25)
-                                .foregroundColor(.green)
-                                .background(Color.white)
-                                .clipShape(Circle())
-                                
-                            Button(action: {
-                                
-                            }) {
+                        Button(action: {
+                            
+                        }) {
+                            HStack(){
+                                Spacer()
+                                Image(systemName: "phone")
+                                    .frame(width: 25, height: 25)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
                                 Text(businessInfo.phoneNumber)
-                                    .foregroundColor(Color.white)
-                            }
-                        }.padding()
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
-                            .background(Color.green)
-
+                                    .foregroundColor(.white)
+                                Spacer()
+                            }.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
+                        }
+                        .background(Color.green)
                     }
             }
         }

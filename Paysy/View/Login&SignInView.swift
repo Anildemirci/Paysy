@@ -610,11 +610,9 @@ struct LoginForBusiness: View {
                     .padding(.top,10)
                 Spacer()
                 Button(action: {
-                    if businessArray.businessArray.contains(loginModel.email) {
+                    if businessArray.businessEmailArray.contains(loginModel.email) {
                         loginModel.loginForBusiness()
                     }
-                    
-                    
                 }, label: {
                     Text("Giriş Yap")
                         .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.075)

@@ -214,7 +214,7 @@ class LoginAndSignInViewModel : ObservableObject {
         }
     }
     
-    func changeEmail(){
+    func changeEmailForUser(){
         
         if newEmail != "" && newEmail2 != "" {
             if newEmail != newEmail2 {
@@ -233,6 +233,35 @@ class LoginAndSignInViewModel : ObservableObject {
                         self.showAlert.toggle()
                         
                         self.firestoreDatabase.collection("Users").document(self.currentUser!.uid).updateData(["Email":self.newEmail])
+                    }
+                })
+            }
+        }else {
+            self.alertTitle="Hata"
+            self.alertMessage="Lütfen yeni e-posta adresini giriniz."
+            self.showAlert.toggle()
+        }
+    }
+    
+    func changeEmailForBusiness(){
+        
+        if newEmail != "" && newEmail2 != "" {
+            if newEmail != newEmail2 {
+                self.alertTitle="Hata"
+                self.alertMessage="E-posta adresleriniz eşleşmiyor."
+                self.showAlert.toggle()
+            } else {
+                currentUser?.updateEmail(to: newEmail, completion: { (error) in
+                    if error != nil {
+                        self.alertTitle="Hata!"
+                        self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                        self.showAlert.toggle()
+                    } else {
+                        self.alertTitle="Başarılı!"
+                        self.alertMessage="E-posta adresiniz değiştirilmiştir."
+                        self.showAlert.toggle()
+                        
+                        self.firestoreDatabase.collection("Business").document(self.currentUser!.uid).updateData(["Email":self.newEmail])
                     }
                 })
             }

@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct PlaceInformationsView: View {
+    
+    @State var placeName=""
+    
     var body: some View {
         VStack{
             ScrollView(.vertical, showsIndicators: false){
                 Spacer()
-                Contact()
+                Contact(placeName: placeName)
                 Spacer()
                 Menu()
                 Spacer()
@@ -32,6 +35,10 @@ struct PlaceInformationsView_Previews: PreviewProvider {
 }
 
 struct Contact : View {
+    
+    @StateObject private var businessInfoForUser=BusinessInformationsViewModel()
+    @State var placeName=""
+    
     var body: some View {
         
         Text("İletişim Bilgileri")
@@ -42,46 +49,55 @@ struct Contact : View {
                     Image(systemName: "map.fill")
                         .resizable()
                         .frame(width: 30, height: 30)
-                    Text("Caferağa Mh Moda Cd. &, Damacı Sk. No:4, 34710 Kadıköy")
+                    Text(businessInfoForUser.address)
                 }
-                HStack{
-                    Image(systemName: "location")
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(.green)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                    
-                    Button(action: {
-                        
-                    }) {
+                Button(action: {
+                    businessInfoForUser.navigationClicked(placeName: placeName,x: businessInfoForUser.annotationLatitude,y:businessInfoForUser.annotationLongitude)
+                }) {
+                    HStack(){
+                        Spacer()
+                        Image(systemName: "location")
+                            .frame(width: 25, height: 25)
+                            .background(Color.white)
+                            .clipShape(Circle())
                         Text("Yol tarifi al")
-                            .foregroundColor(Color.white)
-                    }
-                    
-                }.padding()
-                    .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
-                    .background(Color.blue)
+                            .foregroundColor(.white)
+                        Spacer()
+                    }.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
+                }
+                .background(Color.blue)
                 
-                HStack{
-                    Image(systemName: "phone")
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(.green)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                        
-                    Button(action: {
-                        
-                    }) {
-                        Text("0537 254 12 34")
-                            .foregroundColor(Color.white)
-                    }
-                }.padding()
-                    .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
-                    .background(Color.green)
+                Button(action: {
+                    
+                }) {
+                    HStack(){
+                        Spacer()
+                        Image(systemName: "phone")
+                            .frame(width: 25, height: 25)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                        if businessInfoForUser.phoneNumber == "" {
+                            Text("Henüz numara girilmedi.")
+                                .foregroundColor(.white)
+                        } else {
+                            Text(businessInfoForUser.phoneNumber)
+                                .foregroundColor(.white)
+                        }
+                        Spacer()
+                    }.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.075)
+                }
+                .background(Color.green)
 
             }
             .padding()
             .background(Color.white)
+            .onAppear{
+                businessInfoForUser.getInfoForUser(placeName: placeName)
+                businessInfoForUser.getLocation(placeName: placeName)
+            }
+            .alert(isPresented: $businessInfoForUser.showAlert, content: {
+                Alert(title: Text(businessInfoForUser.alertTitle), message: Text(businessInfoForUser.alertMessage), dismissButton: .destructive(Text("Tamam")))
+            })
     }
 }
 

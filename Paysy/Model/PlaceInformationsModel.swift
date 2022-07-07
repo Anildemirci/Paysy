@@ -28,7 +28,7 @@ var placeInfos=[
     placesInformations(name: "Bausta", address: "Suadiye, Ayşeçavuş Cd no:9, 34740 Kadıköy/İstanbul", city: "İstanbul", town: "Suadiye", openingTime: "12:00", closingTime: "03:00")
 ]
 
-struct townNameModel: Identifiable {
+struct townNameModel: Identifiable,Codable {
     var id=UUID()
     var town:String
 }

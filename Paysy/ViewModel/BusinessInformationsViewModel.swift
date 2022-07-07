@@ -7,10 +7,12 @@
 
 import Foundation
 import Firebase
+import MapKit
 
 class BusinessInformationsViewModel : ObservableObject {
     
     @Published var placeName=""
+    @Published var placeID=""
     @Published var ownerName=""
     @Published var phoneNumber=""
     @Published var address=""
@@ -22,6 +24,10 @@ class BusinessInformationsViewModel : ObservableObject {
     @Published var alertMessage=""
     @Published var showAlert=false
     @Published var businessArray=[String]()
+    @Published var businessEmailArray=[String]()
+    @Published var annotationLongitude=Double()
+    @Published var annotationLatitude=Double()
+    
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -64,6 +70,83 @@ class BusinessInformationsViewModel : ObservableObject {
         }
     }
     
+    func getInfoForUser(placeName:String){
+        firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).getDocuments { (snapshot, error) in
+            if error == nil {
+                for document in snapshot!.documents{
+                    if let address=document.get("Address") as? String {
+                        self.address=address
+                    }
+                    
+                    if let city=document.get("City") as? String {
+                        self.city=city
+                    }
+                    
+                    if let name=document.get("Name") as? String {
+                        self.placeName=name
+                    }
+    
+                    if let phonenumber=document.get("Phone") as? String {
+                        self.phoneNumber=phonenumber
+                    }
+                    if let town=document.get("Town") as? String {
+                        self.town=town
+                    }
+                    if let id=document.get("User") as? String {
+                        self.placeID=id
+                    }
+                }
+            }
+        }
+    }
+    
+    func getLocation(placeName:String){
+        firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).getDocuments { (snapshot, error) in
+            if error == nil {
+                for document in snapshot!.documents {
+                    let documentId=document.documentID
+                    self.firestoreDatabase.collection("Locations").document(documentId).addSnapshotListener { (snapshot, error) in
+                        if error == nil {
+                            
+                            if let longitude=snapshot?.get("Longitude") {
+                                self.annotationLongitude=longitude as! Double
+                            } else  {
+                                self.annotationLongitude=0
+                            }
+                            if let latitude=snapshot?.get("Latitude") {
+                                self.annotationLatitude=latitude as! Double
+                            } else {
+                                self.annotationLatitude=0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func navigationClicked(placeName:String,x:Double,y:Double){
+        
+        if x != 0 && y != 0 {
+            let requestLocation=CLLocation(latitude: x, longitude: y)
+            CLGeocoder().reverseGeocodeLocation(requestLocation) { (placemarks, error) in
+                if let placemark = placemarks {
+                    if placemark.count > 0 {
+                        let newPlacemark=MKPlacemark(placemark: placemarks![0])
+                        let item=MKMapItem(placemark: newPlacemark)
+                        item.name=placeName
+                        let launchOptions=[MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                        item.openInMaps(launchOptions: launchOptions)
+                    }
+                }
+            }
+        } else {
+            self.alertTitle="Hata"
+            self.alertMessage="Saha tarafından konum bilgisi henüz kaydedilmedi."
+            self.showAlert.toggle()
+        }
+    }
+    
     func updateInfo(){
         firestoreDatabase.collection("Business").document(currentUser!.uid).updateData(["Phone":phoneNumber,
                                                                                         "Village":village,
@@ -84,7 +167,10 @@ class BusinessInformationsViewModel : ObservableObject {
             } else {
                 for document in snapshot!.documents {
                     if let userEmail=document.get("Email") as? String {
-                        self.businessArray.append(userEmail)
+                        self.businessEmailArray.append(userEmail)
+                    }
+                    if let userID=document.get("User") as? String {
+                        self.businessArray.append(userID)
                     }
                 }
             }
