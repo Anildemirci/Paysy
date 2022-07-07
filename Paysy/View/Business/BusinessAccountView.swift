@@ -83,7 +83,7 @@ struct BusinessAccountView: View {
                         if selected == 1 {
                             BusinessInformationsView()
                         } else {
-                            BusinessCommentsView()
+                            BusinessCommentsView(placeName:businessInfo.placeName)
                         }
                     }
                     Spacer()

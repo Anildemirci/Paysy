@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0412FDCD2810AD41003C4439 /* CustomPhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */; };
 		0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420239D2809F68D00C2824A /* CustomObjects.swift */; };
+		042119C6287640D6008B84B6 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042119C5287640D6008B84B6 /* CommentViewModel.swift */; };
 		042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */; };
 		0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */; };
 		0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A32809A1B2000D0CAD /* QRView.swift */; };
@@ -108,6 +109,7 @@
 /* Begin PBXFileReference section */
 		0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPhoneTextField.swift; sourceTree = "<group>"; };
 		0420239D2809F68D00C2824A /* CustomObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObjects.swift; sourceTree = "<group>"; };
+		042119C5287640D6008B84B6 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login&SignInViewModel.swift"; sourceTree = "<group>"; };
 		0433D1C0281897C80064CBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesView.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */,
 				048300D0285E69BF0085AC62 /* BusinessInformationsViewModel.swift */,
 				04E3102F2863742A003C63F3 /* BusinessPhotosViewModel.swift */,
+				042119C5287640D6008B84B6 /* CommentViewModel.swift */,
 				045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */,
 				047101AC2875E09800F76A33 /* BusinessesViewModel.swift */,
 				048300CE285E69410085AC62 /* MapViewModel.swift */,
@@ -720,6 +723,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				042119C6287640D6008B84B6 /* CommentViewModel.swift in Sources */,
 				0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */,
 				04E45525285CDCDE00452B1F /* BusinessSettingsView.swift in Sources */,
 				04C47FDA2862133F005BA7E4 /* BusinessCommentsView.swift in Sources */,

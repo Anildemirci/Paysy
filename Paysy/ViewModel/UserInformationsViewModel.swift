@@ -24,6 +24,8 @@ class UserInformationsViewModel : ObservableObject {
     @Published var SMSCheck=false
     @Published var phoneCheck=false
     @Published var userArray=[String]()
+    @Published var favCheck=false
+    @Published var userFavPlaces=[String]()
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -39,8 +41,6 @@ class UserInformationsViewModel : ObservableObject {
     func getInfos(){
         firestoreDatabase.collection("Users").document(currentUser!.uid).addSnapshotListener { (snapshot, error) in
             if error != nil {
-                
-                
                 
                 
             } else {
@@ -61,6 +61,9 @@ class UserInformationsViewModel : ObservableObject {
                 }
                 if let phone = snapshot?.get("Phone") as? String {
                     self.phoneNumber=phone
+                }
+                if let favPlaces=snapshot?.get("FavoritePlaces") as? [String]{
+                    self.userFavPlaces=favPlaces
                 }
             }
         }
@@ -111,7 +114,46 @@ class UserInformationsViewModel : ObservableObject {
             }
         }
     }
-    //business arrayi
+    
+    func addFavorite(placeName:String){
+        self.firestoreDatabase.collection("Users").whereField("User", isEqualTo: self.currentUser?.uid).getDocuments { (snapshot, error) in
+            if error == nil {
+                for document in snapshot!.documents{
+                    let documentId=document.documentID
+                    if var favArray=document.get("FavoritePlaces") as? [String] {
+                        if favArray.contains(placeName) {
+                            self.favCheck.toggle()
+                        } else {
+                            favArray.append(placeName)
+                            let addFavPlace=["FavoritePlaces":favArray] as [String:Any]
+                            self.firestoreDatabase.collection("Users").document(documentId).setData(addFavPlace, merge: true) { (error) in
+                                if error == nil {
+                                    self.favCheck.toggle()
+                                    self.alertTitle="Başarılı"
+                                    self.alertMessage="Saha favorilerinize eklenmiştir."
+                                    self.showAlert.toggle()
+                                }
+                            }
+                        }
+                    }else {
+                        let addFavPlace=["FavoritePlaces":[placeName]] as [String:Any]
+                        self.firestoreDatabase.collection("Users").document(documentId).setData(addFavPlace, merge: true)
+                        self.favCheck.toggle()
+                        self.alertTitle="Başarılı"
+                        self.alertMessage="Saha favorilerinize eklenmiştir."
+                        self.showAlert.toggle()
+                    }
+                }
+            }
+        }
+    }
 
+    func delFavorite(placeName:String){
+        firestoreDatabase.collection("Users").document(currentUser!.uid).updateData(["FavoritePlaces":FieldValue.arrayRemove([placeName])])
+        self.favCheck.toggle()
+        self.alertTitle="Başarılı"
+        self.alertMessage="Saha favorilerinizden çıkartılmıştır."
+        self.showAlert.toggle()
+    }
     
 }

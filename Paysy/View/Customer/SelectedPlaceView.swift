@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectedPlaceView: View {
     var name=""
     @State private var selected=1
+    @StateObject private var favPlace=UserInformationsViewModel()
     
     var body: some View {
         VStack{
@@ -43,17 +44,31 @@ struct SelectedPlaceView: View {
                 } else if selected == 1 {
                     PlaceInformationsView()
                 } else {
-                    PlaceCommentsView()
+                    PlaceCommentsView(placeName: name)
                 }
             }
             Spacer()
                 .navigationTitle(name).navigationBarTitleDisplayMode(.inline)
                     .navigationBarItems(trailing: Button(action: {
-                        
+                        if favPlace.userFavPlaces.contains(name) {
+                            favPlace.delFavorite(placeName: name)
+                        } else {
+                            favPlace.addFavorite(placeName: name)
+                        }
                     }) {
-                        Image(systemName: "star")
-                            .foregroundColor(.white)
+                        if favPlace.userFavPlaces.contains(name) {
+                            Image(systemName: "star.fill").resizable().frame(width: 30, height: 30)
+                                .foregroundColor(Color.yellow)
+                        } else {
+                            Image(systemName: "star").resizable().frame(width: 30, height: 30)
+                                .foregroundColor(.white)
+                        }
                 })
+                    .alert(isPresented: $favPlace.showAlert){
+                        Alert(title: Text(favPlace.alertTitle), message: Text(favPlace.alertMessage), dismissButton: .default(Text("Tamam")))
+                    }
+        }.onAppear{
+            favPlace.getInfos()
         }
     }
 }

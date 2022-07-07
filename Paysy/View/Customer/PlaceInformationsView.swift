@@ -21,7 +21,7 @@ struct PlaceInformationsView: View {
             }
         }
         .padding()
-        .background(Color("back"))
+        //.background(Color("back"))
     }
 }
 

@@ -11,10 +11,10 @@ struct BusinessCommentsView: View {
     
     @State private var showEdit=false
     @State private var show=false
-    
+    @State var placeName=""
     var body: some View {
         VStack{
-            CommentStructView()
+            CommentStructView(placeName:placeName)
                 .navigationBarItems(trailing:
                                         Button(action: {
                     show.toggle()
@@ -37,62 +37,82 @@ struct BusinessCommentsView_Previews: PreviewProvider {
 
 struct CommentStructView:View {
     
+    @StateObject var placeCommentViewModel=CommentViewModel()
+    @State var placeName=""
+    
     var body: some View {
         VStack{
-            Spacer()
-            Text("5 müşteri oyu ile 4.5 puan.").padding()
-                .border(Color.black, width: 2)
-            List(){
-                VStack{
-                    HStack(alignment:.top){
-                        VStack(alignment: .leading){
-                            Text("Anıl Demirci")
-                            Text("15.03.2022")
+            if placeCommentViewModel.commentsArrayStruct.count == 0 {
+                Text("Henüz yorum yapılmadı.")
+            } else {
+                let roundedValue=NSString(format: "%.2f",placeCommentViewModel.totalScore)
+                Text("\(placeCommentViewModel.commentsArrayStruct.count) müşteri oyu ile \(roundedValue) puan.").padding()
+                    .border(Color.black, width: 1)
+                List(placeCommentViewModel.commentsArrayStruct){ i in
+                    HStack {
+                        VStack(alignment: .leading,spacing: 10){
+                            HStack{
+                                Image(systemName: "person")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .background(Color.black)
+                                    .foregroundColor(.white)
+                                    .clipShape(Circle())
+                                Text(i.fullname)
+                                    .font(.subheadline)
+                                Spacer()
+                                if i.score == "5-Çok iyi"{
+                                    Group {
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                    }.foregroundColor(Color.yellow)
+                                } else if i.score == "4-İyi" {
+                                    Group {
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                    }.foregroundColor(Color.yellow)
+                                } else if i.score == "3-Orta" {
+                                    Group {
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                    }.foregroundColor(Color.yellow)
+                                } else if i.score == "2-Kötü" {
+                                    Group {
+                                        Image(systemName: "star.fill")
+                                        Image(systemName: "star.fill")
+                                    }.foregroundColor(Color.yellow)
+                                } else if i.score == "1-Çok kötü" {
+                                    Image(systemName: "star.fill").foregroundColor(Color.yellow)
+                                }
+                            }
+                            Text(i.date)
+                                .font(.footnote)
+                            Text(i.comment)
+                                .font(.body)
+                                .multilineTextAlignment(.leading)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding()
                         }
-                        Spacer()
-                        Group {
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                        }.foregroundColor(Color.yellow)
-                    }
-                    Spacer()
-                    Text("Mekanı çok beğendim.")
-                }
-                VStack{
-                    HStack(alignment:.top){
-                        VStack(alignment: .leading){
-                            Text("Anıl Demirci")
-                            Text("15.03.2022")
+                        Button(action: {
+                            
+                        }) {
+                            Image(systemName: "bubble.right")
+                            .foregroundColor(Color.black)
+                            .frame(width: 25, height: 25)
+                            .cornerRadius(25)
                         }
-                        Spacer()
-                        Group {
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                        }.foregroundColor(Color.yellow)
                     }
-                    Spacer()
-                    Text("Ortalama bir mekan.")
-                }
-                VStack{
-                    HStack(alignment:.top){
-                        VStack(alignment: .leading){
-                            Text("Anıl Demirci")
-                            Text("15.03.2022")
-                        }
-                        Spacer()
-                        Group {
-                            Image(systemName: "star.fill")
-                            Image(systemName: "star.fill")
-                        }.foregroundColor(Color.yellow)
-                    }
-                    Spacer()
-                    Text("Fiyatlar çok pahalı.")
-                }
-            }.listStyle(.plain)
+                }.listStyle(.plain)
+            }
+        }
+        .onAppear{
+            placeCommentViewModel.getComment(placeName: placeName)
         }
     }
 }
