@@ -353,13 +353,13 @@ class LoginAndSignInViewModel : ObservableObject {
                         self.firestoreDatabase.collection("Business").document(Auth.auth().currentUser!.uid).setData(firestoreUser) { error2 in
                             if error2 != nil {
                                 self.alertTitle="Hata!"
-                                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                                self.alertMessage=error2?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
                                 self.showAlert.toggle()
                             } else {
                                  result?.user.sendEmailVerification(completion: { (err) in
                                      if err != nil{
                                          self.alertTitle="Hata!"
-                                         self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                                         self.alertMessage=error2?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
                                          self.showAlert.toggle()
                                      } else {
                                          self.alertTitle="Başarılı!"

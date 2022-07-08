@@ -32,7 +32,6 @@ struct TownsView: View {
                 .navigationBarTitle("İstanbul",displayMode: .inline)
                 .onAppear{
                     businessViewModel.getTowns()
-                    print(businessViewModel.townArray)
                 }
             }
     }

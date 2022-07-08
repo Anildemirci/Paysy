@@ -134,10 +134,6 @@ struct BusinessAccountView: View {
                                     })
                             }
                         }
-                        .onAppear{
-                            businessInfo.getInfos()
-                            businessPhoto.getProfilePhoto()
-                        }
                         .alert(isPresented: $businessPhoto.showingAlert, content: {
                             Alert(title: Text(businessPhoto.titleInput), message: Text(businessPhoto.messageInput), dismissButton: .default(Text("Tamam")))
                         })
@@ -171,7 +167,12 @@ struct BusinessAccountView: View {
                             Image(systemName: "gearshape")
                         }
                     }
+                    .onAppear{
+                        businessInfo.getInfos()
+                        businessPhoto.getProfilePhoto()
+                    }
                 }
+
                 HStack {
                     BusinessProfileMenu(dark: $dark, show: $showMenu)
                         .preferredColorScheme(dark ? .dark : .light)

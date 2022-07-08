@@ -27,7 +27,11 @@ class BusinessInformationsViewModel : ObservableObject {
     @Published var businessEmailArray=[String]()
     @Published var annotationLongitude=Double()
     @Published var annotationLatitude=Double()
-    
+    @Published var parts=[String]()
+    @Published var features=[String]()
+    @Published var totalTable=""
+    @Published var getTotalTable=""
+    @Published var getTableName=[String]()
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -70,6 +74,7 @@ class BusinessInformationsViewModel : ObservableObject {
         }
     }
     
+    //business info for user
     func getInfoForUser(placeName:String){
         firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).getDocuments { (snapshot, error) in
             if error == nil {
@@ -99,7 +104,7 @@ class BusinessInformationsViewModel : ObservableObject {
             }
         }
     }
-    
+    //kullanıcı için lokasyonun koordinatlarını getiriyor
     func getLocation(placeName:String){
         firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).getDocuments { (snapshot, error) in
             if error == nil {
@@ -124,7 +129,7 @@ class BusinessInformationsViewModel : ObservableObject {
             }
         }
     }
-    
+    //navigasyon
     func navigationClicked(placeName:String,x:Double,y:Double){
         
         if x != 0 && y != 0 {
@@ -147,6 +152,7 @@ class BusinessInformationsViewModel : ObservableObject {
         }
     }
     
+    //adress güncelleme
     func updateInfo(){
         firestoreDatabase.collection("Business").document(currentUser!.uid).updateData(["Phone":phoneNumber,
                                                                                         "Village":village,
@@ -176,4 +182,74 @@ class BusinessInformationsViewModel : ObservableObject {
             }
         }
     }
+    
+    func setTables(placeName:String,city:String,town:String){
+        
+        if totalTable == "" && parts == nil {
+            self.alertTitle="Hata!"
+            self.alertMessage="Lütfen tüm bilgileri giriniz."
+            self.showAlert.toggle()
+        } else {
+            let firestoreUser=["User":Auth.auth().currentUser!.uid,
+                               "Email":Auth.auth().currentUser!.email!,
+                               "Place Name":placeName,
+                               "City":city,
+                               "Town":town,
+                               "Total Table":self.totalTable,
+                               "Parts":self.parts,
+                               "Date":FieldValue.serverTimestamp()] as [String:Any]
+            
+            self.firestoreDatabase.collection("Tables").document(placeName).setData(firestoreUser) { error in
+                if error != nil {
+                    self.alertTitle="Hata!"
+                    self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                    self.showAlert.toggle()
+                } else {
+                    self.alertTitle="Başarılı!"
+                    self.alertMessage="Kaydedildi."
+                    self.showAlert.toggle()
+                    self.parts=[String]()
+                    self.totalTable=""
+                }
+            }
+        }
+    }
+    
+    func setPartInfo(placeName:String,partName:String){
+        
+        let firestoreUser=["Total Table":self.totalTable,
+                           "Features":self.features,
+                           "Part Name":partName,
+                           "Date":FieldValue.serverTimestamp()] as [String:Any]
+        
+        self.firestoreDatabase.collection("Tables").document(placeName).collection("Parts").document(partName).setData(firestoreUser) { error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                self.alertTitle="Başarılı!"
+                self.alertMessage="Kaydedildi."
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
+    func getTables(placeName:String){
+        firestoreDatabase.collection("Tables").document(placeName).addSnapshotListener { (snapshot, error) in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                if let tableNumber = snapshot?.get("Total Table") as? String {
+                    self.getTotalTable=tableNumber
+                }
+                if let tableNames = snapshot?.get("Parts") as? [String] {
+                    self.getTableName=tableNames
+                }
+            }
+        }
+    }
+    
 }
