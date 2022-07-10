@@ -15,7 +15,8 @@ struct BusinessAccountView: View {
     init() {
         let NavBarAppearance = UINavigationBarAppearance()
         NavBarAppearance.configureWithOpaqueBackground()
-        NavBarAppearance.backgroundColor = .purple
+        NavBarAppearance.backgroundColor = UIColor(named: "logoColor")
+        UINavigationBar.appearance().tintColor = .white
         NavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         NavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                 
@@ -171,7 +172,7 @@ struct BusinessAccountView: View {
                         businessInfo.getInfos()
                         businessPhoto.getProfilePhoto()
                     }
-                }
+                }.accentColor(Color("logoColor"))
 
                 HStack {
                     BusinessProfileMenu(dark: $dark, show: $showMenu)

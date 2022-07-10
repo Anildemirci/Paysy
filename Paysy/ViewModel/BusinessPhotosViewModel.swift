@@ -191,6 +191,7 @@ class BusinessPhotoViewModel : ObservableObject {
         let storage=Storage.storage()
         
              indexSet.forEach { index in
+                 
                  getDataForStadium()
                  let delPhoto=imageUrl[index]
                  let delStorage=storageId[index]

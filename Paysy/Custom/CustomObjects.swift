@@ -103,3 +103,43 @@ struct CustomLoadingView : View {
     }
 }
 
+//alertTextField
+
+struct CustomAlertTFView: View {
+    let screenSize=UIScreen.main.bounds
+    @Binding var isShown: Bool
+    @Binding var text: String
+    var title:String = ""
+    var buttonName:String = ""
+    var hint:String
+    var onDone: (String) -> Void = { _ in }
+    var onCancel: () -> Void = { }
+    
+    
+    var body: some View {
+        VStack{
+            Text(title)
+            TextField(hint,text: $text)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            HStack{
+                Button(buttonName){
+                    isShown=false
+                    self.onDone(self.text)
+                }.padding()
+                Button("İptal") {
+                    isShown=false
+                    text=""
+                    self.onCancel()
+                }.padding()
+            }
+        }
+        .padding()
+        .frame(width: screenSize.width * 0.7, height: screenSize.height * 0.3)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 20,style: .continuous))
+        .offset(y: isShown ? 0 : screenSize.height)
+        .animation(.spring())
+        .shadow(color: Color.purple, radius: 6)
+    }
+}
+

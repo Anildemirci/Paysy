@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import Combine
 
 class MenuViewModel : ObservableObject {
     
@@ -22,8 +23,8 @@ class MenuViewModel : ObservableObject {
     @Published var subCategoryName=""
     @Published var allItems=[menuModel]()
     @Published var allItemsName=[String]()
-    private var placeName=""
     
+    var didChange=PassthroughSubject<Array<Any>,Never>()
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
     
@@ -56,6 +57,7 @@ class MenuViewModel : ObservableObject {
                 self.alertTitle="Hata!"
                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
                 self.showAlert.toggle()
+                
             } else {
                 self.alertTitle="Başarılı!"
                 self.alertMessage="Ürün eklendi."
@@ -110,6 +112,7 @@ class MenuViewModel : ObservableObject {
                 for document in snapshot!.documents {
                     self.subCategories.append(document.documentID)
                 }
+                self.didChange.send(self.subCategories)
             }
         }
     }
@@ -135,41 +138,22 @@ class MenuViewModel : ObservableObject {
                     self.allItemsName.append(itemName)
                     self.allItems.append(menuModel(id: document.documentID, statement: statement ?? "", price: price, itemName: itemName, MenuType: menuType, SubMenuType: subMenuType))
                 }
-                
+                self.didChange.send(self.allItems)
             }
         }
     }
-    
-    func getInfos(){
-        firestoreDatabase.collection("Business").document(currentUser!.uid).addSnapshotListener { (snapshot, error) in
-            
-            if error != nil {
-                self.alertTitle="Hata!"
-                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
-                self.showAlert.toggle()
-                
-            } else {
-                
-                if let placeName = snapshot?.get("Place Name") as? String {
-                    self.placeName=placeName
-                }
-               
-            }
-        }
-    }
-    
+
     func deleteItem(at indexSet: IndexSet) {
         
              indexSet.forEach { index in
-                 //placeName ata
-                 getItem(placeName: self.placeName)
+                 
+                 getItem(placeName: placeNameForDeleteItem)
                  let delItem=allItemsName[index]
-                 print(delItem)
-                 firestoreDatabase.collection("Menu").document(self.placeName).collection("All Items").whereField("ItemName", isEqualTo: delItem).getDocuments() { (query, error) in
+                 firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection("All Items").whereField("ItemName", isEqualTo: delItem).getDocuments() { (query, error) in
                      if error == nil {
                          for document in query!.documents{
                              let delDocID=document.documentID
-                             self.firestoreDatabase.collection("Menu").document(self.placeName).collection("All Items").document(delDocID).delete(){ error in
+                             self.firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection("All Items").document(delDocID).delete(){ error in
                                  if error == nil {
                                      self.alertTitle="Başarılı"
                                      self.alertMessage="Ürün silindi."
@@ -185,4 +169,35 @@ class MenuViewModel : ObservableObject {
                  }
              }
          }
+    
+    func deleteSubMenu(at indexSet: IndexSet) {
+        
+             indexSet.forEach { index in
+                 
+                 let delDoc=subCategories[index]
+                 firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection(menuNameForDelete).document(delDoc).delete(){ error in
+                     if error == nil {
+                         self.alertTitle="Başarılı"
+                         self.alertMessage="Ürün silindi."
+                         self.showAlert.toggle()
+                     }else {
+                         self.alertTitle="Hata"
+                         self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                         self.showAlert.toggle()
+                     }
+                 }
+                 
+             }
+         }
+    
+    func deleteMenu(at indexSet: IndexSet) {
+        
+             indexSet.forEach { index in
+                 let delField=categories[index]
+                 firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).updateData(["Categories" : FieldValue.arrayRemove([delField])])
+             }
+         }
 }
+
+var placeNameForDeleteItem=""
+var menuNameForDelete=""

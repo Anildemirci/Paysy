@@ -302,7 +302,6 @@ class LoginAndSignInViewModel : ObservableObject {
                  }
              }
              */
-            
         }
         
         let cancel = UIAlertAction(title: "İptal", style: .destructive, handler: nil)
