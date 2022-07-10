@@ -10,12 +10,14 @@
 		0412FDCD2810AD41003C4439 /* CustomPhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */; };
 		0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420239D2809F68D00C2824A /* CustomObjects.swift */; };
 		042119C6287640D6008B84B6 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042119C5287640D6008B84B6 /* CommentViewModel.swift */; };
+		04245864287A261F00D746F2 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04245863287A261F00D746F2 /* MenuViewModel.swift */; };
 		042F34A82811C6DF001FEC05 /* Login&SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */; };
 		0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */; };
 		0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A32809A1B2000D0CAD /* QRView.swift */; };
 		0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */; };
 		045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */; };
 		047101AD2875E09800F76A33 /* BusinessesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047101AC2875E09800F76A33 /* BusinessesViewModel.swift */; };
+		0481877F287A427100260697 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0481877E287A427100260697 /* MenuModel.swift */; };
 		048300C9285E62A80085AC62 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300C8285E62A80085AC62 /* Location.swift */; };
 		048300CB285E68E90085AC62 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CA285E68E90085AC62 /* PinView.swift */; };
 		048300CD285E69170085AC62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048300CC285E69170085AC62 /* MapView.swift */; };
@@ -110,6 +112,7 @@
 		0412FDCC2810AD41003C4439 /* CustomPhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPhoneTextField.swift; sourceTree = "<group>"; };
 		0420239D2809F68D00C2824A /* CustomObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObjects.swift; sourceTree = "<group>"; };
 		042119C5287640D6008B84B6 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		04245863287A261F00D746F2 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		042F34A72811C6DF001FEC05 /* Login&SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login&SignInViewModel.swift"; sourceTree = "<group>"; };
 		0433D1C0281897C80064CBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesView.swift; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardsView.swift; sourceTree = "<group>"; };
 		045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsViewModel.swift; sourceTree = "<group>"; };
 		047101AC2875E09800F76A33 /* BusinessesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessesViewModel.swift; sourceTree = "<group>"; };
+		0481877E287A427100260697 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		048300C8285E62A80085AC62 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		048300CA285E68E90085AC62 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		048300CC285E69170085AC62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 				04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */,
 				04C47FD5286208C7005BA7E4 /* PhotoModel.swift */,
 				04A9056928175F1D00999A5F /* PhoneTextModel.swift */,
+				0481877E287A427100260697 /* MenuModel.swift */,
 				04A9057528175FF600999A5F /* UserInformationsModel.swift */,
 				048300C8285E62A80085AC62 /* Location.swift */,
 			);
@@ -341,6 +346,7 @@
 				045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */,
 				047101AC2875E09800F76A33 /* BusinessesViewModel.swift */,
 				048300CE285E69410085AC62 /* MapViewModel.swift */,
+				04245863287A261F00D746F2 /* MenuViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -732,8 +738,10 @@
 				04C844732806100100DEE45E /* HomeView.swift in Sources */,
 				048300CD285E69170085AC62 /* MapView.swift in Sources */,
 				04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */,
+				0481877F287A427100260697 /* MenuModel.swift in Sources */,
 				04E4122D285BC88F0000C4EC /* CustomerHomeView.swift in Sources */,
 				0499557E28063D120085107B /* Login&SignInView.swift in Sources */,
+				04245864287A261F00D746F2 /* MenuViewModel.swift in Sources */,
 				04E4551B285CBC1300452B1F /* BusinessAccountView.swift in Sources */,
 				0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */,
 				04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */,
