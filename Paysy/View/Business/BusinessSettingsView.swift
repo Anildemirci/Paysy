@@ -22,30 +22,33 @@ struct BusinessSettingsView: View {
                         selected="menu"
                     }) {
                         Text("Menü Ayarları")
-                            .foregroundColor(selected=="menu" ? Color.black : Color.black.opacity(0.4))
+                            .foregroundColor(selected=="menu" ? Color.white : Color.black)
+                            .frame(width: 100, height: 50)
+                            .background(selected=="menu" ? Color("logoColor") : Color.white)
+                            .cornerRadius(10)
                     }
                     Button(action: {
                         selected="table"
                     }) {
                         Text("Masa Ayarları")
-                            .foregroundColor(selected=="table" ? Color.black : Color.black.opacity(0.4))
+                            .foregroundColor(selected=="table" ? Color.white : Color.black)
+                            .frame(width: 100, height: 50)
+                            .background(selected=="table" ? Color("logoColor") : Color.white)
+                            .cornerRadius(10)
                     }
-                }
-                ScrollView(.vertical, showsIndicators: false){
+                }.padding()
                     if selected == "menu" {
                         MenuSettingsView(placeName: tablesInfo.placeName)
                     } else if selected == "table" {
-                        TableSettingsView(placeName: tablesInfo.placeName)
+                        TableSettingsView(placeName: tablesInfo.placeName,city: tablesInfo.city,town: tablesInfo.town)
                     } else {
                         Text("Seçiniz")
                     }
-                }
+                Spacer()
             }
-            .padding()
             .navigationTitle("Ayarlar").navigationBarTitleDisplayMode(.inline)
             .onAppear{
                 tablesInfo.getInfos()
-                
             }
             .alert(isPresented: $tablesInfo.showAlert, content: {
                 Alert(title: Text(tablesInfo.alertTitle), message: Text(tablesInfo.alertMessage), dismissButton: .default(Text("Tamam")))
@@ -67,72 +70,55 @@ struct TableSettingsView: View {
     @State private var tableName=""
     @State private var enteredName=0
     @State var placeName=""
+    @State var city=""
+    @State var town=""
     
     var body: some View {
         VStack{
-            HStack{
-                Text("Toplam kaç masa")
-                    .font(.headline)
-                    .frame(height: 50)
-                TextField("örn 5", text: $tablesInfo.totalTable)
-                    .frame(width: 50, height: 50)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.center)
-                    .font(.system(size: 20,weight: .semibold))
-                    .foregroundColor(.black)
-                    .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-            }
-            Spacer(minLength: 25)
-            HStack{
-                Text("Mekan düzeniniz kaç bölümden oluşuyor(bahçe,katlar,vb.)")
-                    .font(.headline)
-                    .frame(height: 50)
-                TextField("örn 3", text: $partNumber)
-                    .frame(width: 50, height: 50)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.center)
-                    .font(.system(size: 20,weight: .semibold))
-                    .foregroundColor(.black)
-                    .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-            }
-            Spacer(minLength: 25)
-            if partNumber != "" {
-                HStack{
-                    Text("Bölümlere isim veriniz.")
-                        .scaledToFill()
-                        .font(.headline)
-                        .frame(height: 50)
-                    
-                    let intNumber=Int(partNumber)!
-                    TextField("isim girin", text: $tableName)
-                        .padding()
-                        .allowsHitTesting(enteredName==intNumber ? false : true)
-                        .frame(height: 50)
-                        .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-                        
-                    Button(action: {
-                        enteredName+=1
-                        tablesInfo.parts.append(tableName)
-                        tableName=""
-                    }) {
-                        Image(systemName: "plus")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width:25,height: 50)
-                            .foregroundColor(.green)
-                            //.overlay(Rectangle().stroke(Color.black,lineWidth:1))
+            Form{
+                Section(header: Text("Toplam masa sayısınız")) {
+                    TextField("50,100,150 vs", text: $tablesInfo.totalTable)
+                        .keyboardType(.numberPad)
+                }
+                Section(header: Text("Mekan düzeniniz kaç bölümden oluşuyor(bahçe,katlar,vb.)")){
+                    TextField("1,2,3 vs.", text: $partNumber)
+                        .keyboardType(.numberPad)
+                }
+                if partNumber != "" {
+                    Section(header: Text("Bölümlere isim veriniz.")){
+                        HStack{
+                            let intNumber=Int(partNumber)!
+                            TextField("isim girin", text: $tableName)
+                                .allowsHitTesting(enteredName==intNumber ? false : true)
+                            Button(action: {
+                                enteredName+=1
+                                tablesInfo.parts.append(tableName)
+                                tableName=""
+                            }) {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width:25)
+                                    .foregroundColor(.green)
+                                    //.overlay(Rectangle().stroke(Color.black,lineWidth:1))
+                            }
+                            .disabled(enteredName==intNumber ? true : false)
+                        }
                     }
-                    .disabled(enteredName==intNumber ? true : false)
+                        Section(header: Text("Eklediğiniz bölümler")) {
+                            ForEach(tablesInfo.parts,id:\.self){ i in
+                                    Text("\(i)")
+                            }
+                        }
                 }
-                
-                Spacer(minLength: 25)
-                ForEach(tablesInfo.parts,id:\.self){ i in
-                        Text("\(i)")
-                }
+            }.frame(maxHeight: (partNumber == "" ? 250 : UIScreen.main.bounds.height * 0.7))
+            if partNumber != "" {
                 Button(action: {
                     enteredName=0
                     partNumber=""
-                    tablesInfo.setTables(placeName: tablesInfo.placeName, city: tablesInfo.city, town: tablesInfo.town)
+                    print(tablesInfo.city)
+                    print(tablesInfo.town)
+                    tablesInfo.setTables(placeName: placeName, city: city, town: town)
                 }) {
                     Text("Onayla")
                         .font(.title2)
@@ -140,20 +126,18 @@ struct TableSettingsView: View {
                         .foregroundColor(Color.white)
                         .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
                         .background(Color.green)
-                        .cornerRadius(25)
+                        .cornerRadius(10)
                 }
             } else {
-                Text("Düzenlemek istediğiniz bölüme tıklayın")
-                    .font(.headline)
-                ForEach(tablesInfo.getTableName,id:\.self) { i in
-                    NavigationLink(destination: PartsView(selectedPart: i)) {
-                        Text(i)
-                            .padding()
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.05)
-                            .background(Color.green)
-                            .foregroundColor(Color.white)
+                List{
+                    Section(header: Text("Düzenlemek istediğiniz bölüme tıklayın")) {
+                        ForEach(tablesInfo.getTableName,id:\.self) { i in
+                            NavigationLink(destination: PartsView(selectedPart: i)) {
+                                Text(i)
+                            }
+                        }
                     }
-                }
+                }.listStyle(.plain)
             }
         }
         .onAppear{
@@ -171,37 +155,42 @@ struct MenuSettingsView: View {
     @State private var dark=false
     
     var body: some View {
-        VStack(spacing:10){
-            if menuViewModel.categories.isEmpty {
-                Text("Henüz menü eklenmedi.")
-            } else {
-                Text("Düzenlemek istediğiniz bölüme tıklayın")
-                    .font(.headline)
-                ForEach(menuViewModel.categories,id:\.self) { i in
-                    NavigationLink(destination: AddMenuItemView(menuName:i, placeName: placeName)) {
-                        Text(i)
-                            .foregroundColor(Color.black)
-                    }
-                    Divider()
+        ZStack {
+            VStack{
+                if menuViewModel.categories.isEmpty {
+                    Text("Henüz menü eklenmedi.")
+                        .font(.headline)
+                } else {
+                    List {
+                        Section (header: Text("Düzenlemek istediğiniz bölüme tıklayın").multilineTextAlignment(.center)) {
+                            ForEach(menuViewModel.categories,id:\.self) { i in
+                                NavigationLink(destination: AddMenuItemView(menuName:i, placeName: placeName)) {
+                                    Text(i)
+                                        .foregroundColor(Color.black)
+                                }
+                            }.onDelete(perform: menuViewModel.deleteMenu)
+                        }
+                    }.listStyle(.plain)
                 }
+                Spacer()
+                    .navigationTitle("Menüler").navigationBarTitleDisplayMode(.inline)
+                    .navigationBarItems(trailing:
+                                            Button(action: {
+                        showAlert.toggle()
+                    }){
+                        Text("Kategori Oluştur")
+                            .foregroundColor(.white)
+                    })
             }
-            Spacer()
-                .navigationTitle("Menüler").navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(trailing:
-                                        Button(action: {
-                    showAlert.toggle()
-                }){
-                    Text("Kategori Oluştur")
-                        .foregroundColor(.white)
-                })
-        }.padding()
-        .onAppear{
-            menuViewModel.getMenu(placeName: placeName)
-        }
-        CustomAlertTFView(isShown:$showAlert,text: $menuName,title: "Kategori Ekle", buttonName: "Ekle", hint: "Ana Yemekler, İçecekler") { menuName in
-            menuViewModel.categories.append(menuName)
-            menuViewModel.addMenu(placeName: placeName)
-            self.menuName=""
+            .onAppear{
+                menuViewModel.getMenu(placeName: placeName)
+                placeNameForDeleteItem=placeName
+            }
+            CustomAlertTFView(isShown:$showAlert,text: $menuName,title: "Kategori Ekle", buttonName: "Ekle", hint: "Ana Yemekler, İçecekler") { menuName in
+                menuViewModel.categories.append(menuName)
+                menuViewModel.addMenu(placeName: placeName)
+                self.menuName=""
+            }
         }
     }
 }
@@ -217,12 +206,12 @@ struct AddMenuItemView: View {
     
     var body: some View {
         ZStack {
-            VStack(spacing:10) {
+            VStack{
                 if menuViewModel.subCategories.isEmpty {
                     Text("Daha alt menü eklemedi.")
                 } else {
                     List{
-                        Section(header:Text("Ürün eklemek istediğiniz kategoriyi seçiniz")){
+                        Section(header:Text("Ürün eklemek istediğiniz kategoriyi seçiniz").multilineTextAlignment(.center)){
                             ForEach(menuViewModel.subCategories,id:\.self) { i in
                                     NavigationLink(destination:SubMenuView(placeName: placeName, menuName: menuName,subMenuName: i)) {
                                         Text(i)
@@ -240,7 +229,7 @@ struct AddMenuItemView: View {
                         Text("Alt Kategori Oluştur")
                             .foregroundColor(.white)
                     })
-            }.padding()
+            }
             .onAppear{
                 menuViewModel.getSubMenu(placeName: placeName, menuName: menuName)
                 //menuViewModel.getItem(placeName: placeName )
@@ -270,35 +259,40 @@ struct SubMenuView: View {
     @State var subMenuName=""
     
     var body: some View {
-        VStack(spacing:10){
-            Section(header:Text("Düzenlemek istediğiniz ürüne tıklayın silmek için sola kaydırın").multilineTextAlignment(.center)){
+        VStack{
+            if menuViewModel.allItems.isEmpty {
+                Text("Henüz ürün eklenmedi.")
+                    .font(.headline)
+            } else {
                 List{
-                    ForEach(menuViewModel.allItems){ item in
-                        if item.SubMenuType == subMenuName {
-                            HStack {
-                                Text(item.itemName)
-                                Spacer()
-                                Text(item.price)
-                            }.onTapGesture {
-                                selectedSubMenu=item.SubMenuType
-                                editName=item.itemName
-                                editPrice=item.price
-                                editStatement=item.statement
-                                print(editName)
-                                editShow.toggle()
+                    Section(header:Text("Düzenlemek istediğiniz ürüne tıklayın silmek için sola kaydırın").multilineTextAlignment(.center)){
+                        ForEach(menuViewModel.allItems){ item in
+                            if item.SubMenuType == subMenuName {
+                                HStack {
+                                    Text(item.itemName)
+                                    Spacer()
+                                    Text(item.price)
+                                }.onTapGesture {
+                                    selectedSubMenu=item.SubMenuType
+                                    editName=item.itemName
+                                    editPrice=item.price
+                                    editStatement=item.statement
+                                    print(editName)
+                                    editShow.toggle()
+                                }
                             }
-                        }
-                    }.onDelete(perform: menuViewModel.deleteItem)
+                        }.onDelete(perform: menuViewModel.deleteItem)
+                    }
                 }.listStyle(.plain)
+                .navigationTitle(subMenuName).navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(trailing:
+                                        Button(action: {
+                    show.toggle()
+                }){
+                    Text("Ürün Ekle")
+                        .foregroundColor(.white)
+                })
             }
-            .navigationTitle(subMenuName).navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                show.toggle()
-            }){
-                Text("Ürün Ekle")
-                    .foregroundColor(.white)
-            })
         }
         .onAppear{
             menuViewModel.getItem(placeName: placeName)
@@ -347,7 +341,7 @@ struct AddItemView: View{
                     .foregroundColor(Color.white)
                     .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
                     .background(Color.green)
-                    .cornerRadius(25)
+                    .cornerRadius(10)
                 }
                 Spacer()
                     .navigationTitle(subMenuName).navigationBarTitleDisplayMode(.inline)
@@ -367,22 +361,17 @@ struct PartsView: View {
     
     var body: some View{
         VStack{
-            HStack{
-                Text("Bu bölümde toplam kaç masa")
-                    .font(.headline)
-                    .frame(height: 50)
-                TextField("örn 50", text: $partsInfo.totalTable)
-                    .frame(width: 50, height: 50)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.center)
-                    .font(.system(size: 20,weight: .semibold))
-                    .foregroundColor(.black)
-                    .overlay(Rectangle().stroke(Color.black,lineWidth:1))
+            Form{
+                Section(header: Text("Bu bölümdeki masa sayısı")) {
+                    TextField("25,50,75 vb", text: $partsInfo.totalTable)
+                        .keyboardType(.numberPad)
+                }
+            }.frame(maxHeight: 150)
+            Section(header: Text("Bu bölümdeki özellikleri işaretleyin ve kaydedin")) {
+                List(features,id:\.self,selection: $selection) { i in
+                    Text(i)
+                }.listStyle(.plain).environment(\.editMode, $editMode)
             }
-            Text("Bu bölümdeki özellikleri işaretleyin ve kaydedin").font(.headline)
-            List(features,id:\.self,selection: $selection) { i in
-                Text(i)
-            }.listStyle(.plain).environment(\.editMode, $editMode)
             Button(action: {
                 partsInfo.features=[String](selection)
                 partsInfo.setPartInfo(placeName: partsInfo.placeName, partName: selectedPart)
@@ -394,7 +383,7 @@ struct PartsView: View {
                     .foregroundColor(Color.white)
                     .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
                     .background(Color.green)
-                    .cornerRadius(25)
+                    .cornerRadius(10)
             }
         }
         .navigationTitle(selectedPart).navigationBarTitleDisplayMode(.inline)

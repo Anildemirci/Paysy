@@ -182,8 +182,7 @@ struct BusinessAccountView: View {
                 }.background(Color.primary.opacity(showMenu ? (dark ? 0.05 : 0.25):0).edgesIgnoringSafeArea(.all))
             }
         }
-}
-    
+    }
 }
 
 struct BusinessAccountView_Previews: PreviewProvider {

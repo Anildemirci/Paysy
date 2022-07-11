@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ConnectToPlaceView: View {
     @State var show=false
-    @State private var selected="menu"
-    
+    @State private var selected="home"
+
     var body: some View {
         NavigationView {
             VStack{
@@ -20,25 +20,23 @@ struct ConnectToPlaceView: View {
                     }) {
                         Image(systemName: "house.fill")
                             .frame(width: UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height * 0.075)
-                            .foregroundColor(selected=="home" ? Color.black : Color.black.opacity(0.4))
+                            .foregroundColor(selected=="home" ? Color("logoColor") : Color.black.opacity(0.4))
                     }
                     Button(action: {
                         selected="menu"
                     }) {
-                        Image(systemName: "menucard")
+                        Image(systemName: "menucard.fill")
                             .frame(width: UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height * 0.075)
-                            .foregroundColor(selected=="menu" ? Color.black : Color.black.opacity(0.4))
+                            .foregroundColor(selected=="menu" ? Color("logoColor") : Color.black.opacity(0.4))
                     }
                     Button(action: {
                         selected="orders"
                     }) {
-                        Image(systemName: "creditcard.circle")
+                        Image(systemName: "creditcard.circle.fill")
                             .frame(width: UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height * 0.075)
-                            .foregroundColor(selected=="orders" ? Color.black : Color.black.opacity(0.4))
+                            .foregroundColor(selected=="orders" ? Color("logoColor") : Color.black.opacity(0.4))
                     }
                 }
-                .padding()
-                Spacer()
                 if selected == "home" {
                     RequestConfirmed()
                 } else if selected == "orders" {
@@ -46,7 +44,6 @@ struct ConnectToPlaceView: View {
                 } else if selected == "menu" {
                     MenuView()
                 }
-                Spacer()
             }.navigationTitle("Bausta Masa 5").navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -59,25 +56,48 @@ struct ConnectToPlaceView_Previews: PreviewProvider {
 }
 
 struct RequestConfirmed: View{
+    
+    @StateObject private var userInfo=UserInformationsViewModel()
+    @StateObject var timerManager = TimerManager()
+    @State var people=["Ali","Ahmet","Anıl","Funda"]
     var body: some View {
             VStack{
-                Text("Hoş geldin Anıl")
+                Text("Hoş geldin \(userInfo.firstName)")
                     .font(.title)
-                Spacer()
-                Text("Masa şifreniz: abc123")
-                Text("Toplam Hesap = 500₺")
-                Text("Sizin hesabınız = 100₺")
-                HStack{
-                    Text("Masanızdaki kişiler: 4")
-                    Button(action: {
-                        
-                    }) {
-                        Image(systemName: "info.circle.fill")
-                    }
+                //Text("\(timerManager.hour) saat \(timerManager.min) dakikadır masadasınız")
+                Group{
+                    Text("Masa şifreniz : abc123")
+                    Text("Toplam Hesap : 500₺")
+                    Text("Sizin hesabınız : 100₺")
                 }
+                .frame(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.05)
+                .background(Color("logoColor"))
+                .foregroundColor(.white)
+                .font(.headline)
+                List{
+                    Section(header: Text("Masanızdaki kişiler: 4").foregroundColor((Color("logoColor")))){
+                        ForEach(people,id:\.self) { i in
+                            HStack{
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    Text(i)
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                    Text(i)
+                                        .font(.footnote)
+                                        .fontWeight(.thin)
+                                    Text(i)
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
+                            }
+                        }
+                    }
+                }.listStyle(.plain)
                 Spacer()
                 Button(action: {
-                    
+                    timerManager.start()
                 }) {
                     Text("Sipariş Ver")
                 }
@@ -87,171 +107,108 @@ struct RequestConfirmed: View{
                     Text("Öde")
                 }
             }
+            .onAppear{
+                userInfo.getInfos()
+            }
     }
 }
 
 struct MenuView: View {
-    
-    @State var show=false
-    @State private var selected="food"
-    
-    var body: some View {
-        VStack{
-            if selected == "drink" {
-                DrinkMenuView()
-            } else if selected == "food" {
-                FoodMenuView()
-            }
-            Spacer()
-            HStack{
-                Button(action: {
-                    selected="drink"
-                }) {
-                    VStack{
-                        Image(systemName: "menucard.fill")
-                            .frame(width: UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height * 0.075)
-                            .foregroundColor(selected=="drink" ? Color.black : Color.black.opacity(0.4))
-                        Text("İçecekler")
-                    }
-                }
-                Button(action: {
-                    selected="food"
-                }) {
-                    VStack{
-                        Image(systemName: "menucard.fill")
-                            .frame(width: UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height * 0.075)
-                            .foregroundColor(selected=="food" ? Color.black : Color.black.opacity(0.4))
-                        Text("Yiyecekler")
-                    }
-                }
-            }
-            .padding()
-            Spacer()
-        }
-    }
-}
-
-struct DrinkMenuView: View{
+    //mekan ismini düzelt
+    @StateObject private var menuViewModel=MenuViewModel()
+    @State var selectedPlaceName="DorockXL"
     
     var body: some View {
         VStack{
             List{
-                Section(header: Text("Biralar")){
-                    HStack{
-                        Text("Efes 55₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Tuborg 50₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Heineken 75₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Carlsberg 60₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
+                Section(header: Text("Menüler")){
+                    ForEach(menuViewModel.categories,id:\.self){ i in
+                        NavigationLink(destination: SelectedMenuForUserView(placeName: selectedPlaceName, menuName: i)) {
+                            HStack(spacing:10){
+                                Image(systemName: "menucard.fill")
+                                Text(i)
+                                    .foregroundColor(Color.black)
+                            }
+                        }
                     }
                 }
-                Section(header: Text("Şaraplar")){
-                    HStack{
-                        Text("Dlc 255₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Yakut 250₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Sarafin 275₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Anfora 230₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                }
-            }
+            }.listStyle(.plain)
+        }
+        .onAppear{
+            menuViewModel.getMenu(placeName: "DorockXL")
         }
     }
 }
 
-struct FoodMenuView: View{
+struct SelectedMenuForUserView: View{
+    
+    @StateObject private var menuViewModel=MenuViewModel()
+    @State var placeName=""
+    @State var menuName=""
+    @State private var selectedSubMenu=""
+    @State var count=0
     
     var body: some View {
         VStack{
-            List{
-                Section(header: Text("Kırmızı Etler")){
-                    HStack{
-                        Text("Pirzola 175₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack {
+                    ForEach(menuViewModel.subCategories,id:\.self) { i in
+                        Button(action: {
+                            selectedSubMenu=i
+                            menuViewModel.getItem(placeName: placeName)
+                        }) {
+                            Text(i)
+                                .padding()
+                                .foregroundColor(selectedSubMenu==i ? Color.white : Color.black)
+                                .frame(height: 50)
+                                .background(selectedSubMenu==i ? Color("logoColor") : Color.white)
+                                .cornerRadius(10)
+                        }
                     }
-                    HStack{
-                        Text("Antrikot 150₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Steak 175₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Bonfile 140₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                }
-                Section(header: Text("Beyaz Etler")){
-                    HStack{
-                        Text("Tavuk Pirzola 85₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Barbekü Soslu Tavuk 75₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Şinitzel 55₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                    HStack{
-                        Text("Tavuk Kanat 70₺")
-                        Spacer()
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.blue)
-                    }
-                }
+                }.padding()
             }
+            List{
+                Section{
+                    ForEach(menuViewModel.allItems) { item in
+                        if item.SubMenuType == selectedSubMenu{
+                            HStack() {
+                                Image("antrikot")
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                    .cornerRadius(20)
+                                Spacer()
+                                VStack(spacing:20){
+                                    Text(item.itemName)
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                    Text(item.statement)
+                                        .font(.footnote)
+                                        .fontWeight(.thin)
+                                    Text(item.price)
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
+                                }
+                                Spacer()
+                                Button(action: {
+                                    count+=1
+                                    print(item.itemName)
+                                }) {
+                                    Image(systemName: "plus")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(Color.green)
+                                }
+                            }
+                        }
+                    }
+                }
+            }.listStyle(.plain)
         }
+        .navigationTitle(menuName).navigationBarTitleDisplayMode(.inline)
+        .onAppear{
+            menuViewModel.getSubMenu(placeName: placeName, menuName: menuName)
+            menuViewModel.getItem(placeName: placeName)
+    }
     }
 }
 
@@ -283,7 +240,6 @@ struct OrdersView: View {
                 Text("Öde")
                     .padding()
             }
-            Spacer(minLength: 10)
         }
     }
 }

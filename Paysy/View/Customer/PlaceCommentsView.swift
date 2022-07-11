@@ -159,7 +159,7 @@ struct AddComment: View {
                     .foregroundColor(Color.white)
                     .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
                     .background(Color.green)
-                    .cornerRadius(25)
+                    .cornerRadius(10)
             }
             Spacer()
         }

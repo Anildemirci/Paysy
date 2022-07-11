@@ -29,7 +29,7 @@ struct HomeView: View {
                             .resizable()
                             .frame(width:UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.height * 0.25)
                             .cornerRadius(20)
-                            .shadow(color: .purple, radius: 4)
+                            .shadow(color: Color("logoColor"), radius: 4)
                             //.padding()
                     }
                     
@@ -40,7 +40,7 @@ struct HomeView: View {
                             .resizable()
                             .frame(width:UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.height * 0.25)
                             .cornerRadius(20)
-                            .shadow(color: .purple, radius: 4)
+                            .shadow(color: Color("logoColor"), radius: 4)
                             //.padding()
                     }
                 }

@@ -10,45 +10,50 @@ import CodeScanner
 
 struct QRView: View {
     
-    @State var isShowingScanner = false
-    @State var scannedCode: String = "Scan a QR code to get started"
-    @State var txt="test"
-    @State var showPage=false
-    @State var tableNumber=""
-    @State var showAlert=false
-    //@State var showingPlace=false
-    @State var connected=false
+    @State private var isShowingScanner = false
+    @State private var scannedCode: String = "Mekana bağlanmak için QR kodu okut"
+    @State private var txt="test"
+    
+    @State private var showPage=false
+    @State private var showAlert=false
+    @State private var connected=true
+    @State private var tablePassword=""
     
     var body: some View {
         if connected == false {
             if showPage==false {
-                VStack(spacing:10){
-                    Text(scannedCode)
-                    
-                    Button(action: {
-                        isShowingScanner=true
-                    }) {
-                        Image(systemName: "qrcode.viewfinder")
-                        Text("Scan QR Code")
+                ZStack {
+                    VStack(spacing:10){
+                        Text(scannedCode)
+                        
+                        Button(action: {
+                            isShowingScanner=true
+                        }) {
+                            Image(systemName: "qrcode.viewfinder")
+                            Text("Qr kodu okut")
+                        }
+                        .sheet(isPresented: $isShowingScanner) {
+                            CodeScannerView(codeTypes: [.qr], completion: handleScan)
+                        }
+                        Text("Ya da şifre ile direkt arkadaşlarının masasına bağlan")
+                        Button(action: {
+                            showAlert.toggle()
+                        }) {
+                            Text("Masaya Bağlan")
+                        }
                     }
-                    .sheet(isPresented: $isShowingScanner) {
-                        CodeScannerView(codeTypes: [.qr], completion: handleScan)
-                    }
-                    Text("Ya da şifre ile direkt arkadaşlarının masasına bağlan")
-                    Button(action: {
-                        showAlert.toggle()
-                        enterTable(title: "Masaya Bağlan", Message: "Lütfen arkadaşlarınızın ekranında oluşturulan şifreyi giriniz.")
-                    }) {
-                        Text("Masaya Bağlan")
+                    CustomAlertTFView(isShown:$showAlert, text: $tablePassword, title: "Masaya Bağlan", buttonName: "Ekle", hint: "masa şifresi") { menuName in
+                        print(tablePassword)
                     }
                 }
+                
             } else {
                 VStack{
                     //qr okunduktan sonra gösterilcek ekran.
                     if showPage == true {
                         Button(action: {
                             showAlert.toggle()
-                            enterTable(title: "Masa Numarası", Message: "Lütfen QR kod altında yazan masa numarasını giriniz.")
+                            
                         }) {
                             Text("Masaya Bağlan")
                         }
@@ -58,7 +63,6 @@ struct QRView: View {
         } else {
             ConnectToPlaceView()
         }
-        
     }
     
     func handleScan(result: Result<ScanResult, ScanError>) {
@@ -76,26 +80,6 @@ struct QRView: View {
         case .failure(let error):
             print("Hata: \(error.localizedDescription)")
         }
-    }
-    
-    
-    func enterTable(title: String, Message: String){
-        let alert = UIAlertController(title: title, message: Message, preferredStyle: .alert)
-        alert.addTextField{ (number) in
-            number.placeholder = "Masa numarası"
-        }
-        let proceed=UIAlertAction(title: "Tamam", style: .default) { (_) in
-            //action
-            tableNumber=alert.textFields![0].text!
-            showAlert.toggle()
-            connected.toggle()
-        }
-        
-        let cancel = UIAlertAction(title: "İptal", style: .destructive, handler: nil)
-        alert.addAction(cancel)
-        alert.addAction(proceed)
-        
-        UIApplication.shared.windows.first?.rootViewController?.present(alert,animated: true)
     }
 }
 

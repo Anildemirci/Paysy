@@ -147,7 +147,7 @@ struct EditAddressInformations: View {
                     .foregroundColor(Color.white)
                     .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
                     .background(Color.green)
-                    .cornerRadius(25)
+                    .cornerRadius(10)
             }
         }
         .onAppear{
@@ -213,7 +213,7 @@ struct EditWorkingHour: View {
                     .clipShape(Capsule())
             }
         }.frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.30).background(Color.white)
-            .cornerRadius(25)
+            .cornerRadius(10)
     }
 }
 
