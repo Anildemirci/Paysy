@@ -15,6 +15,8 @@
 		0445F1A228099EF5000D0CAD /* FavoritePlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */; };
 		0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A32809A1B2000D0CAD /* QRView.swift */; };
 		0445F1A62809A1E7000D0CAD /* CreditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */; };
+		04516F76287DD04500CC7178 /* ConnectToPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04516F75287DD04500CC7178 /* ConnectToPlaceViewModel.swift */; };
+		04516F78287E13CA00CC7178 /* GetConnectionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04516F77287E13CA00CC7178 /* GetConnectionInfoViewModel.swift */; };
 		045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */; };
 		047101AD2875E09800F76A33 /* BusinessesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047101AC2875E09800F76A33 /* BusinessesViewModel.swift */; };
 		0481877F287A427100260697 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0481877E287A427100260697 /* MenuModel.swift */; };
@@ -119,6 +121,8 @@
 		0445F1A128099EF5000D0CAD /* FavoritePlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePlacesView.swift; sourceTree = "<group>"; };
 		0445F1A32809A1B2000D0CAD /* QRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRView.swift; sourceTree = "<group>"; };
 		0445F1A52809A1E7000D0CAD /* CreditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardsView.swift; sourceTree = "<group>"; };
+		04516F75287DD04500CC7178 /* ConnectToPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToPlaceViewModel.swift; sourceTree = "<group>"; };
+		04516F77287E13CA00CC7178 /* GetConnectionInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConnectionInfoViewModel.swift; sourceTree = "<group>"; };
 		045624E928177B11006FA2C9 /* UserInformationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsViewModel.swift; sourceTree = "<group>"; };
 		047101AC2875E09800F76A33 /* BusinessesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessesViewModel.swift; sourceTree = "<group>"; };
 		0481877E287A427100260697 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 				047101AC2875E09800F76A33 /* BusinessesViewModel.swift */,
 				048300CE285E69410085AC62 /* MapViewModel.swift */,
 				04245863287A261F00D746F2 /* MenuViewModel.swift */,
+				04516F75287DD04500CC7178 /* ConnectToPlaceViewModel.swift */,
+				04516F77287E13CA00CC7178 /* GetConnectionInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -740,6 +746,7 @@
 				047101AD2875E09800F76A33 /* BusinessesViewModel.swift in Sources */,
 				04C844732806100100DEE45E /* HomeView.swift in Sources */,
 				048300CD285E69170085AC62 /* MapView.swift in Sources */,
+				04516F76287DD04500CC7178 /* ConnectToPlaceViewModel.swift in Sources */,
 				04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */,
 				0481877F287A427100260697 /* MenuModel.swift in Sources */,
 				04E4122D285BC88F0000C4EC /* CustomerHomeView.swift in Sources */,
@@ -757,6 +764,7 @@
 				048300C9285E62A80085AC62 /* Location.swift in Sources */,
 				04CAD7C02808D5EE005D13AB /* PlacePhotosView.swift in Sources */,
 				04C47FD6286208C7005BA7E4 /* PhotoModel.swift in Sources */,
+				04516F78287E13CA00CC7178 /* GetConnectionInfoViewModel.swift in Sources */,
 				04C844792806111400DEE45E /* closeKeyboard.swift in Sources */,
 				04E45527285CE6E400452B1F /* ImagePicker.swift in Sources */,
 				04A9057228175FA300999A5F /* CreditCardModel.swift in Sources */,

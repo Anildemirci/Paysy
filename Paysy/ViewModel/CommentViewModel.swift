@@ -31,7 +31,6 @@ class CommentViewModel : ObservableObject {
     var didChange=PassthroughSubject<Array<Any>,Never>()
     
     func getCurrentTime(){
-        
         let date=Date()
         let formatter=DateFormatter()
         formatter.dateFormat="dd-MM-yyyy HH:mm:ss"

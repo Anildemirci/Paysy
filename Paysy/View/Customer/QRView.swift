@@ -11,20 +11,21 @@ import CodeScanner
 struct QRView: View {
     
     @State private var isShowingScanner = false
-    @State private var scannedCode: String = "Mekana bağlanmak için QR kodu okut"
     @State private var txt="test"
     
-    @State private var showPage=false
+    @State private var enterWithPass=false
     @State private var showAlert=false
-    @State private var connected=true
     @State private var tablePassword=""
+    @State private var selectedPlace=""
+    
+    @StateObject private var connectToPlaceViewModel=ConnectToPlaceViewModel()
+    @StateObject private var userInfo=UserInformationsViewModel()
     
     var body: some View {
-        if connected == false {
-            if showPage==false {
+        if connectToPlaceViewModel.checkUser == "" {
                 ZStack {
                     VStack(spacing:10){
-                        Text(scannedCode)
+                        Text("Mekana bağlanmak için QR kodu okut")
                         
                         Button(action: {
                             isShowingScanner=true
@@ -37,30 +38,27 @@ struct QRView: View {
                         }
                         Text("Ya da şifre ile direkt arkadaşlarının masasına bağlan")
                         Button(action: {
-                            showAlert.toggle()
+                            enterWithPass.toggle()
                         }) {
-                            Text("Masaya Bağlan")
+                            Text("Masaya Şifre ile Bağlan")
                         }
                     }
-                    CustomAlertTFView(isShown:$showAlert, text: $tablePassword, title: "Masaya Bağlan", buttonName: "Ekle", hint: "masa şifresi") { menuName in
-                        print(tablePassword)
+                    CustomAlertTFView(isShown:$enterWithPass, text: $tablePassword, title: "Masaya Bağlan", buttonName: "Bağlan", hint: "masa şifresi") { tablePass in
+                        connectToPlaceViewModel.connectToPlaceWithPass(placeName: "DorockXL", userFullName: userInfo.firstName+" "+userInfo.lastName, tableID: tablePassword)
                     }
-                }
-                
-            } else {
-                VStack{
-                    //qr okunduktan sonra gösterilcek ekran.
-                    if showPage == true {
-                        Button(action: {
-                            showAlert.toggle()
-                            
-                        }) {
-                            Text("Masaya Bağlan")
-                        }
+                    CustomAlertTFView(isShown:$showAlert, text: $connectToPlaceViewModel.tableNumber, title: "\(selectedPlace) Bağlan", buttonName: "Bağlan", hint: "masa numarası") { tableNumber in
+                        connectToPlaceViewModel.requestToPlace(placeName: selectedPlace, userFullName: userInfo.firstName+" "+userInfo.lastName)
+                        connectToPlaceViewModel.connectToPlace(placeName: selectedPlace, userFullName: userInfo.firstName+" "+userInfo.lastName)
                     }
+                    
+                    .alert(isPresented: $connectToPlaceViewModel.showAlert, content: {
+                        Alert(title: Text(connectToPlaceViewModel.alertTitle), message: Text(connectToPlaceViewModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
+                    })
+                }.onAppear{
+                    userInfo.getInfos()
+                    connectToPlaceViewModel.checkUserInPlace()
                 }
-            }
-        } else {
+        } else if connectToPlaceViewModel.checkUser == "Onaylandı" || connectToPlaceViewModel.checkUser == "Onay bekliyor" {
             ConnectToPlaceView()
         }
     }
@@ -72,9 +70,8 @@ struct QRView: View {
         case .success(let result):
             let details = result.string
             txt=details
-            //showAlert.toggle()
-            showPage.toggle()
-            print(txt)
+            selectedPlace=txt
+            showAlert.toggle()
             guard details.count == 2 else { return }
             
         case .failure(let error):
@@ -89,5 +86,5 @@ struct QRView_Previews: PreviewProvider {
     }
 }
 
-
+var selectionTab=0
 

@@ -58,12 +58,17 @@ struct ConnectToPlaceView_Previews: PreviewProvider {
 struct RequestConfirmed: View{
     
     @StateObject private var userInfo=UserInformationsViewModel()
+    @StateObject private var connectToPlaceViewModel=ConnectToPlaceViewModel()
     @StateObject var timerManager = TimerManager()
+    
     @State var people=["Ali","Ahmet","Anıl","Funda"]
+    
     var body: some View {
             VStack{
                 Text("Hoş geldin \(userInfo.firstName)")
                     .font(.title)
+                Text("Masa ID: \(connectToPlaceViewModel.tableID)")
+                Text("Masa Durumu: \(connectToPlaceViewModel.status)")
                 //Text("\(timerManager.hour) saat \(timerManager.min) dakikadır masadasınız")
                 Group{
                     Text("Masa şifreniz : abc123")
@@ -109,6 +114,7 @@ struct RequestConfirmed: View{
             }
             .onAppear{
                 userInfo.getInfos()
+                
             }
     }
 }

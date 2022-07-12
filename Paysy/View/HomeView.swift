@@ -16,7 +16,7 @@ struct HomeView: View {
 
     var body: some View {
             VStack(spacing: 25){
-                    Image("PLOGO")
+                    Image("Paysy_Logo")
                         .resizable()
                         .frame(width:UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.55)
                         .cornerRadius(20)

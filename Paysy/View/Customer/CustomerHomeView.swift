@@ -14,7 +14,9 @@ struct CustomerHomeView: View {
     @State var show = false
     @State var userLogin=true
     var currentUser=Auth.auth().currentUser
-    @State var connected=false
+   // @State var connected=false
+    @StateObject private var checkUser=ConnectToPlaceViewModel()
+    @State var selection=selectionTab
     
     init() {
         let NavBarAppearance = UINavigationBarAppearance()
@@ -38,7 +40,7 @@ struct CustomerHomeView: View {
         ZStack(alignment: .leading) {
             GeometryReader{_ in
                 VStack{
-                    TabView {
+                    TabView(selection: $selection) {
                         NavigationView{
                             VStack{
                                 ScrollView(.vertical,showsIndicators: false) {
@@ -81,7 +83,7 @@ struct CustomerHomeView: View {
                         }
                         .tag(1)
                         if currentUser != nil {
-                            if connected == false {
+                            if checkUser.checkUser == "" {
                                 QRView().tabItem {
                                     Image(systemName: "qrcode.viewfinder")
                                 }.tag(2)
@@ -131,9 +133,10 @@ struct CustomerHomeView: View {
                             .offset(x: show ? 0 : -UIScreen.main.bounds.width / 1.4)
                         Spacer(minLength: 0)
                     }
-                        
                 }.background(Color.primary.opacity(show ? (dark ? 0.05 : 0.25):0).edgesIgnoringSafeArea(.all))
             }
+        }.onAppear{
+            checkUser.checkUserInPlace()
         }
     }
 }
@@ -206,7 +209,7 @@ struct PlacesCell: View {
         //.background(Color("back"))
         .cornerRadius(20)
         //.shadow(color: .purple, radius: 2)
-        .padding()
+        //.padding()
        
     }
 }
