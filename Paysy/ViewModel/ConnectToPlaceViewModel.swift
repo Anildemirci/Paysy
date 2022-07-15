@@ -27,16 +27,20 @@ class ConnectToPlaceViewModel : ObservableObject {
     @Published var alertTitle=""
     @Published var alertMessage=""
     @Published var showAlert=false
-    @Published var checkUser=""
     @Published var tableNumber=""
     @Published var tableID=""
-    @Published var placeNameForConnect=""
+    @Published var placeNameWithPass=""
+    @Published var tableNumberWithPass=""
+    
+    @Published var orderArray = [orderModel]()
+
     
     func randomPassword(){
         let len=6
         let char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let rndPswd = String((0..<len).compactMap{ _ in char.randomElement() })
         tableID=rndPswd
+        tableIDFromPass=rndPswd
     }
     
     func getCurrentTime(){
@@ -49,9 +53,12 @@ class ConnectToPlaceViewModel : ObservableObject {
     
     func requestToPlace(placeName: String, userFullName: String){
         
+        randomPassword()
         let firestoreUser2=["User":Auth.auth().currentUser!.uid,
                             "Email":Auth.auth().currentUser!.email!,
                             "Place Name":placeName,
+                            "TableID":self.tableID,
+                            "Table Number":self.tableNumber,
                             "Status":"Onay Bekliyor",
                             "Date":currentTime] as [String:Any]
         firestoreDatabase.collection("ConnectToPlaceForUser").document(currentUser!.uid).setData(firestoreUser2) { error in
@@ -70,7 +77,15 @@ class ConnectToPlaceViewModel : ObservableObject {
         
         getCurrentTime()
         people.append(userFullName)
-        randomPassword()
+        
+        let firestoreUser2=["User":Auth.auth().currentUser!.uid,
+                            "Email":Auth.auth().currentUser!.email!,
+                            "Place Name":placeName,
+                            "Table Number":self.tableNumber,
+                            "TableID":self.tableID,
+                            "Date":currentTime] as [String:Any]
+        
+        firestoreDatabase.collection("CheckTable").document(self.tableID).setData(firestoreUser2) 
         
         let firestoreUser=["User":Auth.auth().currentUser!.uid,
                            "Email":Auth.auth().currentUser!.email!,
@@ -86,6 +101,16 @@ class ConnectToPlaceViewModel : ObservableObject {
                            "Status":"Onay Bekliyor",
                            "Date":currentTime] as [String:Any]
         
+        firestoreDatabase.collection("ConnectToPlaceForBusiness").document(placeName).collection(placeName).document(tableID).setData(firestoreUser) { error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+            } else {
+                self.alertTitle="Başarılı!"
+                self.alertMessage="Masa isteği gönderildi."
+            }
+        }
+        
         firestoreDatabase.collection("ConnectToPlaceForUser").document(currentUser!.uid).collection(placeName).document(currentTime).setData(firestoreUser) { error in
             if error != nil {
                 self.alertTitle="Hata!"
@@ -98,100 +123,112 @@ class ConnectToPlaceViewModel : ObservableObject {
                 selectionTab=2
             }
         }
-        
-        firestoreDatabase.collection("ConnectToPlaceForBusiness").document(placeName).collection(placeName).document(tableID).setData(firestoreUser) { error in
-            if error != nil {
-                self.alertTitle="Hata!"
-                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
-                self.showAlert.toggle()
-            } else {
-                self.alertTitle="Başarılı!"
-                self.alertMessage="Masa isteği gönderildi."
-                self.showAlert.toggle()
-            }
-        }
     }
     
     //şifre ile direkt masaya giriş
-    func connectToPlaceWithPass(placeName: String, userFullName: String, tableID: String) {
+    func connectToPlaceWithPass(userFullName: String, tableID: String) {
         getCurrentTime()
-        //düzelt
-        let firestoreUser=["User":Auth.auth().currentUser!.uid,
-                           "Email":Auth.auth().currentUser!.email!,
-                           "UserFullName":userFullName,
-                           "Place Name":placeName,
-                           "Table Number":self.tableNumber,
-                           "TableID":tableID,
-                           "Customer Note":self.customerNote,
-                           "Orders":self.orders,
-                           "People":self.people,
-                           "Total Price":self.totalPrice,
-                           "Payment Details":"",
-                           "Status":"Onay Bekliyor",
-                           "Date":currentTime] as [String:Any]
-        
-        let addPerson=["People":self.people] as [String:Any]
-        
-        firestoreDatabase.collection("ConnectToPlaceForBusiness").document(placeName).collection(placeName).document(tableID).updateData(addPerson) { error in
-            if error != nil {
-                self.alertTitle="Hata!"
-                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
-                self.showAlert.toggle()
-            } else {
-                self.alertTitle="Başarılı!"
-                self.alertMessage="Masa isteği gönderildi."
-                self.showAlert.toggle()
-            }
-        }
-        
-    }
-    
-    
-    //kullanıcı şu an masada mı değil mi?
-    func checkUserInPlace(){
-        
-        firestoreDatabase.collection("ConnectToPlaceForUser").document(currentUser!.uid).addSnapshotListener { (snapshot, error) in
-            if error != nil {
-                self.alertTitle="Hata!"
-                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
-                self.showAlert.toggle()
-            } else {
-                if let status = snapshot?.get("Status") as? String {
-                    self.checkUser=status
+        //tableid ile eşleşen mekanın ismini buluyor
+        firestoreDatabase.collection("CheckTable").whereField("TableID", isEqualTo: tableID).getDocuments { (snapshot, error) in
+            if error == nil {
+                for document in snapshot!.documents {
+                    if let placeName=document.get("Place Name") as? String {
+                        self.placeNameWithPass=placeName
+                    }
+                    if let tableNum=document.get("Table Number") as? String {
+                        self.tableNumberWithPass=tableNum
+                    }
                 }
             }
+            //o mekandaki insanları alıyor
+            self.firestoreDatabase.collection("ConnectToPlaceForBusiness").document(self.placeNameWithPass).collection(self.placeNameWithPass).document(tableID).getDocument { (snapshot, error) in
+                if error == nil {
+                    self.people.removeAll(keepingCapacity: false)
+                        if let peopleArray=snapshot?.get("People") as? [String]{
+                            self.people=peopleArray
+                        }
+                }
+                //şifre ile katılan kullanıcıyı o insanlara ekliyor
+                self.people.append(userFullName)
+                let addPerson=["People":self.people] as [String:Any]
+                self.firestoreDatabase.collection("ConnectToPlaceForBusiness").document(self.placeNameWithPass).collection(self.placeNameWithPass).document(tableID).setData(addPerson, merge: true) { error in
+                    if error != nil {
+                        self.alertTitle="Hata!"
+                        self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                        self.showAlert.toggle()
+                    } else {
+                        
+                    }
+                }
+                
+                //şifre ile katılan insan için ayrıca kayıt alıyor
+                let firestoreUser=["User":Auth.auth().currentUser!.uid,
+                                   "Email":Auth.auth().currentUser!.email!,
+                                   "UserFullName":userFullName,
+                                   "Place Name":self.placeNameWithPass,
+                                   "Table Number":self.tableNumberWithPass,
+                                   "TableID":tableID,
+                                   "Customer Note":self.customerNote,
+                                   "Orders":self.orders,
+                                   "People":self.people,
+                                   "Total Price":self.totalPrice,
+                                   "Payment Details":"",
+                                   "Status":"Onay Bekliyor",
+                                   "Date":self.currentTime] as [String:Any]
+                
+                self.firestoreDatabase.collection("ConnectToPlaceForUser").document(self.currentUser!.uid).collection(self.placeNameWithPass).document(self.currentTime).setData(firestoreUser) { error in
+                    if error != nil {
+                        self.alertTitle="Hata!"
+                        self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                        self.showAlert.toggle()
+                    } else {
+                        self.alertTitle="Başarılı!"
+                        self.alertMessage="Masa isteği gönderildi."
+                        self.showAlert.toggle()
+                        selectionTab=2
+                    }
+                }
+                
+                let firestoreUser2=["User":Auth.auth().currentUser!.uid,
+                                    "Email":Auth.auth().currentUser!.email!,
+                                    "Place Name":self.placeNameWithPass,
+                                    "TableID":tableID,
+                                    "Table Number":self.tableNumberWithPass,
+                                    "Status":"Onaylandı",
+                                    "Date":self.currentTime] as [String:Any]
+                self.firestoreDatabase.collection("ConnectToPlaceForUser").document(self.currentUser!.uid).setData(firestoreUser2) { error in
+                    
+                    if error != nil {
+                        self.alertTitle="Hata!"
+                        self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                    } else {
+                        
+                    }
+                }
+                
+            }
         }
     }
+    
     
     
     
     //kullanılmadı
-    func orderItem(placeName: String,tableID: String){
+    func orderItem(){
         
-        let firestoreUser=["User":Auth.auth().currentUser!.uid,
-                           "Email":Auth.auth().currentUser!.email!,
-                           "Place Name":placeName,
-                           "TableID":tableID,
-                           "Categories":self.categories,
-                           "SubCategories":self.subCategories,
-                           "Item Name":self.itemName,
-                           "Item Price":self.itemPrice,
-                           "Statement":self.statement,
-                           "Customer Note":self.customerNote,
-                           "Status":self.status,
-                           "Date":FieldValue.serverTimestamp()] as [String:Any]
-        
-        firestoreDatabase.collection("Orders").document(currentUser!.uid).collection(tableID).document(placeName).setData(firestoreUser) { error in
-            if error != nil {
-                self.alertTitle="Hata!"
-                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
-                self.showAlert.toggle()
-            } else {
-                self.alertTitle="Başarılı!"
-                self.alertMessage="Ürün sipariş edildi."
-                self.showAlert.toggle()
-            }
-        }
+        /*
+         let order = orderArray[orderModel(statement: "asd",
+                                           price: "asd",
+                                           itemName: "asd",
+                                           status: "asd",
+                                           amount: 2)]
+         
+         do {
+             try firestoreDatabase.collection("Deneme").document("dada").setData(order)
+         } catch let error {
+             print("hataaaaa")
+         }
+         */
     }
     
     

@@ -23,7 +23,7 @@ struct TownsView: View {
                         .padding(.horizontal)
                         .background(Color.primary.opacity(0.05))
                         .cornerRadius(8)
-                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.contains(searchText)}, id: \.self){ towns in
+                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.contains(searchText.lowercased())}, id: \.self){ towns in
                         NavigationLink(destination: PlacesView(town: towns)) {
                             Text(towns)
                         }

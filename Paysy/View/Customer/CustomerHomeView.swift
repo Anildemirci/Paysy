@@ -15,7 +15,7 @@ struct CustomerHomeView: View {
     @State var userLogin=true
     var currentUser=Auth.auth().currentUser
    // @State var connected=false
-    @StateObject private var checkUser=ConnectToPlaceViewModel()
+    @StateObject private var checkUser=GetConnectionInfoViewModel()
     @State var selection=selectionTab
     
     init() {
@@ -88,7 +88,7 @@ struct CustomerHomeView: View {
                                     Image(systemName: "qrcode.viewfinder")
                                 }.tag(2)
                             } else {
-                                ConnectToPlaceView().tabItem {
+                                ConnectToPlaceView(selectedPlace:checkUser.placeNameFromCheck, tableID: checkUser.tableIDFromCheck,tableNum: checkUser.tableNumber).tabItem {
                                     Image(systemName: "person.3")
                                 }.tag(2)
                             }

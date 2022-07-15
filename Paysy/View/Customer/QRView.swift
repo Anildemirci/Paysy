@@ -16,13 +16,13 @@ struct QRView: View {
     @State private var enterWithPass=false
     @State private var showAlert=false
     @State private var tablePassword=""
-    @State private var selectedPlace=""
     
+    @StateObject private var checkUser=GetConnectionInfoViewModel()
     @StateObject private var connectToPlaceViewModel=ConnectToPlaceViewModel()
     @StateObject private var userInfo=UserInformationsViewModel()
     
     var body: some View {
-        if connectToPlaceViewModel.checkUser == "" {
+        if checkUser.checkUser == "" {
                 ZStack {
                     VStack(spacing:10){
                         Text("Mekana bağlanmak için QR kodu okut")
@@ -43,12 +43,16 @@ struct QRView: View {
                             Text("Masaya Şifre ile Bağlan")
                         }
                     }
+                    
                     CustomAlertTFView(isShown:$enterWithPass, text: $tablePassword, title: "Masaya Bağlan", buttonName: "Bağlan", hint: "masa şifresi") { tablePass in
-                        connectToPlaceViewModel.connectToPlaceWithPass(placeName: "DorockXL", userFullName: userInfo.firstName+" "+userInfo.lastName, tableID: tablePassword)
+                        tableIDFromPass=tablePassword
+                        connectToPlaceViewModel.connectToPlaceWithPass( userFullName: userInfo.firstName+" "+userInfo.lastName, tableID: tablePassword)
                     }
-                    CustomAlertTFView(isShown:$showAlert, text: $connectToPlaceViewModel.tableNumber, title: "\(selectedPlace) Bağlan", buttonName: "Bağlan", hint: "masa numarası") { tableNumber in
-                        connectToPlaceViewModel.requestToPlace(placeName: selectedPlace, userFullName: userInfo.firstName+" "+userInfo.lastName)
-                        connectToPlaceViewModel.connectToPlace(placeName: selectedPlace, userFullName: userInfo.firstName+" "+userInfo.lastName)
+                    
+                    CustomAlertTFView(isShown:$showAlert, text: $connectToPlaceViewModel.tableNumber, title: "\(selectedPlaceFromQR) Bağlan", buttonName: "Bağlan", hint: "masa numarası") { tableNumber in
+                        
+                        connectToPlaceViewModel.requestToPlace(placeName: selectedPlaceFromQR, userFullName: userInfo.firstName+" "+userInfo.lastName)
+                        connectToPlaceViewModel.connectToPlace(placeName: selectedPlaceFromQR, userFullName: userInfo.firstName+" "+userInfo.lastName)
                     }
                     
                     .alert(isPresented: $connectToPlaceViewModel.showAlert, content: {
@@ -56,9 +60,9 @@ struct QRView: View {
                     })
                 }.onAppear{
                     userInfo.getInfos()
-                    connectToPlaceViewModel.checkUserInPlace()
+                    checkUser.checkUserInPlace()
                 }
-        } else if connectToPlaceViewModel.checkUser == "Onaylandı" || connectToPlaceViewModel.checkUser == "Onay bekliyor" {
+        } else if checkUser.checkUser == "Onaylandı" || checkUser.checkUser == "Onay bekliyor" {
             ConnectToPlaceView()
         }
     }
@@ -70,7 +74,7 @@ struct QRView: View {
         case .success(let result):
             let details = result.string
             txt=details
-            selectedPlace=txt
+            selectedPlaceFromQR=txt
             showAlert.toggle()
             guard details.count == 2 else { return }
             
@@ -87,4 +91,5 @@ struct QRView_Previews: PreviewProvider {
 }
 
 var selectionTab=0
-
+var selectedPlaceFromQR=""
+var tableIDFromPass=""
