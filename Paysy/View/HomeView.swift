@@ -10,10 +10,9 @@ import Firebase
 
 struct HomeView: View {
     
-    @State var showCustomer=false
-    @State var showBusiness=false
+    @State private var showCustomer=false
+    @State private var showBusiness=false
     
-
     var body: some View {
             VStack(spacing: 25){
                     Image("Paysy_Logo")

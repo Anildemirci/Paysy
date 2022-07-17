@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritePlacesView: View {
-    @State var searchPlace=""
+    @State private var searchPlace=""
     @StateObject private var favPlace=UserInformationsViewModel()
     var body: some View {
         
@@ -20,6 +20,7 @@ struct FavoritePlacesView: View {
                     Image(systemName: "magnifyingglass")//.font(.system(size: 23,weight: .bold))
                         .foregroundColor(.gray)
                     TextField("Mekan ara",text: $searchPlace)
+                        .autocapitalization(.words)
                 }.padding(.vertical,10)
                     .padding(.horizontal)
                     .background(Color.primary.opacity(0.05))

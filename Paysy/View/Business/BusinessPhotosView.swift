@@ -13,13 +13,13 @@ struct BusinessPhotosView: View {
     @State private var showEdit=false
     @State private var show=false
     @State private var url=""
-    @StateObject var photosInfo=BusinessPhotoViewModel()
+    @StateObject private var photosInfo=BusinessPhotoViewModel()
     var placeName=""
     
     var body: some View {
         VStack(alignment: .center){
             if photosInfo.posts.isEmpty {
-                Text("Saha tarafından henüz fotoğraf yüklenmedi.").fontWeight(.heavy)
+                Text("İş yeri tarafından henüz fotoğraf yüklenmedi.").fontWeight(.heavy)
             } else {
                 List {
                     ForEach(photosInfo.posts){ i in
@@ -80,13 +80,12 @@ struct PhotosStructView : View {
 
 struct PhotoUploadView : View {
     
-    @State var image:UIImage?
-    @State var isShowCamera=false
-    @State var isShowPhotoLibrary=false
-    @State var statement=""
-    @State var show=false
-    @StateObject var businessPhoto=BusinessPhotoViewModel()
-    @StateObject var businessInfo=BusinessInformationsViewModel()
+    @State private var image:UIImage?
+    @State private var isShowCamera=false
+    @State private var isShowPhotoLibrary=false
+    @State private var show=false
+    @StateObject private var businessPhoto=BusinessPhotoViewModel()
+    @StateObject private var businessInfo=BusinessInformationsViewModel()
     
     var body: some View {
         VStack{
@@ -143,9 +142,10 @@ struct PhotoUploadView : View {
             Spacer()
             TextField("Açıklama", text: $businessPhoto.statement)
                 .font(.title3)
+                .autocapitalization(.sentences)
                 .multilineTextAlignment(.center)
-                .padding()
                 .foregroundColor(Color.black)
+                .padding()
             Spacer()
             if image != nil{
                 Button(action: {
@@ -201,8 +201,8 @@ struct statusView:View{
 //düzelt
 struct ThePhotoView : View {
     
-    @State var url=""
-    @StateObject var photoInfo=BusinessPhotoViewModel()
+    @State private var url=""
+    @StateObject private var photoInfo=BusinessPhotoViewModel()
 
     var body: some View {
         GeometryReader { proxy in

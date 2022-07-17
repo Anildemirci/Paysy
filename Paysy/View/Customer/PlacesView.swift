@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PlacesView: View {
     
-    @State var searchPlace=""
-    @State var show=false
+    @State private var searchPlace=""
+    //@State private var show=false
     @StateObject private var businessInfo=BusinessesViewModel()
     var type=""
     var town=""
@@ -21,6 +21,7 @@ struct PlacesView: View {
                 Image(systemName: "magnifyingglass")//.font(.system(size: 23,weight: .bold))
                     .foregroundColor(.gray)
                 TextField("Mekan ara",text: $searchPlace)
+                    .autocapitalization(.words)
             }.padding(.vertical,10)
                 .padding(.horizontal)
                 .background(Color.primary.opacity(0.05))

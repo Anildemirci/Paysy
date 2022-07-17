@@ -89,6 +89,7 @@ struct TableSettingsView: View {
                         HStack{
                             let intNumber=Int(partNumber)!
                             TextField("isim girin", text: $tableName)
+                                .autocapitalization(.words)
                                 .allowsHitTesting(enteredName==intNumber ? false : true)
                             Button(action: {
                                 enteredName+=1
@@ -323,12 +324,15 @@ struct AddItemView: View{
                 Form{
                     Section(header: Text("Ürün Adı")){
                         TextField("Hamburger,Pizza,Bira", text: $menuViewModel.itemName)
+                            .autocapitalization(.words)
                     }
                     Section(header: Text("Fiyatı")){
-                        TextField("100 ₺", text: $menuViewModel.price)
+                        TextField("100", text: $menuViewModel.price)
+                            .keyboardType(.numberPad)
                     }
-                    Section(header: Text("Fiyatı")){
-                        TextField("içerik", text: $editName)
+                    Section(header: Text("Ürün açıklaması")){
+                        TextField("içerik", text: $menuViewModel.statement)
+                            .autocapitalization(.sentences)
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.4)
@@ -352,12 +356,12 @@ struct AddItemView: View{
 struct PartsView: View {
     
     @State var selectedPart=""
-    @State var numberTable=""
-    @State var selection=Set<String>()
-    @State var editMode: EditMode = .active
+    @State private var numberTable=""
+    @State private var selection=Set<String>()
+    @State private var editMode: EditMode = .active
     @StateObject private var partsInfo=BusinessInformationsViewModel()
     
-    @State var features=["Full bar mevcut","İç Mekan","Sigara İçme Alanı","Kokteyl servisi mevcut","Rezervasyon önerilir","Vegan Seçenekler Mevcut","Dış Mekan","Wifi"]
+    @State private var features=["Full bar mevcut","İç Mekan","Sigara İçme Alanı","Kokteyl servisi mevcut","Rezervasyon önerilir","Vegan Seçenekler Mevcut","Dış Mekan","Wifi"]
     
     var body: some View{
         VStack{

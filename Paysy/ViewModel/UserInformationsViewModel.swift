@@ -23,9 +23,10 @@ class UserInformationsViewModel : ObservableObject {
     @Published var notificationCheck=false
     @Published var SMSCheck=false
     @Published var phoneCheck=false
-    @Published var userArray=[String]()
+    @Published var userEmailArray=[String]()
     @Published var favCheck=false
     @Published var userFavPlaces=[String]()
+    @Published var userIDArray=[String]()
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -100,7 +101,7 @@ class UserInformationsViewModel : ObservableObject {
 
     //kullanıcılar arrayi
     func users(){
-        firestoreDatabase.collection("Users").getDocuments { snapshot, error in
+        firestoreDatabase.collection("Users").addSnapshotListener { snapshot, error in
             if error != nil {
                 self.alertTitle="Hata!"
                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
@@ -108,8 +109,12 @@ class UserInformationsViewModel : ObservableObject {
             } else {
                 for document in snapshot!.documents {
                     if let userEmail=document.get("Email") as? String {
-                        self.userArray.append(userEmail)
+                        self.userEmailArray.append(userEmail)
                     }
+                    if let userID=document.get("User") as? String {
+                        self.userIDArray.append(userID)
+                    }
+
                 }
             }
         }
@@ -130,7 +135,7 @@ class UserInformationsViewModel : ObservableObject {
                                 if error == nil {
                                     self.favCheck.toggle()
                                     self.alertTitle="Başarılı"
-                                    self.alertMessage="Saha favorilerinize eklenmiştir."
+                                    self.alertMessage="Mekan favorilerinize eklenmiştir."
                                     self.showAlert.toggle()
                                 }
                             }
@@ -140,7 +145,7 @@ class UserInformationsViewModel : ObservableObject {
                         self.firestoreDatabase.collection("Users").document(documentId).setData(addFavPlace, merge: true)
                         self.favCheck.toggle()
                         self.alertTitle="Başarılı"
-                        self.alertMessage="Saha favorilerinize eklenmiştir."
+                        self.alertMessage="Mekan favorilerinize eklenmiştir."
                         self.showAlert.toggle()
                     }
                 }
@@ -152,7 +157,7 @@ class UserInformationsViewModel : ObservableObject {
         firestoreDatabase.collection("Users").document(currentUser!.uid).updateData(["FavoritePlaces":FieldValue.arrayRemove([placeName])])
         self.favCheck.toggle()
         self.alertTitle="Başarılı"
-        self.alertMessage="Saha favorilerinizden çıkartılmıştır."
+        self.alertMessage="Mekan favorilerinizden çıkartılmıştır."
         self.showAlert.toggle()
     }
     

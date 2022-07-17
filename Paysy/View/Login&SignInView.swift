@@ -10,7 +10,7 @@ import Firebase
 
 struct Login_SignInView: View {
     
-    @State var showLogin=false
+    @State private var showLogin=false
     
     var body: some View {
         
@@ -50,12 +50,12 @@ struct Login_SignInView_Previews: PreviewProvider {
 
 struct SignIn: View {
     
-    @State var shownPass=false
-    @State var shownPass2=false
-    @State var show=false
+    @State private var shownPass=false
+    @State private var shownPass2=false
+    @State private var show=false
     var showDismissButton="0"
     
-    @StateObject var signInModel=LoginAndSignInViewModel()
+    @StateObject private var signInModel=LoginAndSignInViewModel()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -99,6 +99,7 @@ struct SignIn: View {
                         TextField("E-mail adresi", text: $signInModel.email)
                                 .font(.system(size: 20,weight: .semibold))
                                 .autocapitalization(.none)
+                                .textCase(.lowercase)
                                 .keyboardType(.emailAddress)
                         Divider()
                     }
@@ -198,13 +199,14 @@ struct SignIn: View {
 
 struct Login: View {
     
-    @State var email=""
-    @State var password=""
-    @State var shownPass=false
-    @State var show=false
+    @State private var showTFAlert=false
+    @State private var showAlert=false
+    @State private var shownPass=false
+    @State private var show=false
     var showDismissButton="0"
     
-    @StateObject var loginModel=LoginAndSignInViewModel()
+    @StateObject private var loginModel=LoginAndSignInViewModel()
+    @StateObject private var userInfo=UserInformationsViewModel()
     
     var body: some View {
         
@@ -237,6 +239,7 @@ struct Login: View {
                     .frame(maxWidth: .infinity,alignment: .leading)
                 TextField("E-mail adresi", text: $loginModel.email)
                     .font(.system(size: 20,weight: .semibold))
+                    .textCase(.lowercase)
                     .autocapitalization(.none)
                     .keyboardType(.emailAddress)
                     .foregroundColor(.black)
@@ -272,7 +275,7 @@ struct Login: View {
                 Divider()
                 Group{
                     Button(action: {
-                        loginModel.forgotPassword()
+                        showTFAlert.toggle()
                     }, label: {
                         Text("Şifremi unuttum?")
                             .fontWeight(.semibold)
@@ -305,26 +308,29 @@ struct Login: View {
                     return CustomerHomeView()
                 }
             }
+            .padding()
+            
+            .alert(isPresented: $loginModel.showAlert, content: {
+                Alert(title: Text(loginModel.alertTitle), message: Text(loginModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
+            })
+            
+            CustomAlertTFView(isShown:$showTFAlert, text: $loginModel.sendResetPassword, title: "Şifre Sıfırlama", buttonName: "Gönder", hint: "email") { resPass in
+                loginModel.forgotUserPassword()
+            }
             
             if loginModel.isLoading {
                 CustomLoadingView()
             }
         }
-        .padding()
-        
-        .alert(isPresented: $loginModel.showAlert, content: {
-            Alert(title: Text(loginModel.alertTitle), message: Text(loginModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
-        })
-        
     }
 }
 
 struct SignInForBusiness: View {
     
-    @State var shownPass=false
-    @State var shownPass2=false
-    @State var show=false
-    @StateObject var signInModel=LoginAndSignInViewModel()
+    @State private var shownPass=false
+    @State private var shownPass2=false
+    @State private var show=false
+    @StateObject private var signInModel=LoginAndSignInViewModel()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -358,6 +364,7 @@ struct SignInForBusiness: View {
                         TextField("Şirket İsmi", text: $signInModel.businessName)
                                 .font(.system(size: 20,weight: .semibold))
                                 .autocapitalization(.words)
+                                .textCase(.uppercase)
                         Divider()
                         TextField("İsim Soyisim", text: $signInModel.ownerName)
                                 .font(.system(size: 20,weight: .semibold))
@@ -366,6 +373,7 @@ struct SignInForBusiness: View {
                         TextField("E-mail adresi", text: $signInModel.email)
                                 .font(.system(size: 20,weight: .semibold))
                                 .autocapitalization(.none)
+                                .textCase(.lowercase)
                                 .keyboardType(.emailAddress)
                         Divider()
                     }
@@ -499,7 +507,7 @@ struct BusinessLocationInfo: View {
 }
 
 struct BusinessPhoneInfo: View {
-    @StateObject var businessInfo=BusinessInformationsViewModel()
+    @StateObject private var businessInfo=BusinessInformationsViewModel()
     var body: some View{
         VStack{
             CustomPhoneTextField()
@@ -520,13 +528,12 @@ struct BusinessPhoneInfo: View {
 
 struct LoginForBusiness: View {
     
-    @State var email=""
-    @State var password=""
-    @State var shownPass=false
-    @State var show=false
+    @State private var shownPass=false
+    @State private var show=false
+    @State private var showAlertTF=false
     
-    @StateObject var loginModel=LoginAndSignInViewModel()
-    @StateObject var businessArray=BusinessInformationsViewModel()
+    @StateObject private var loginModel=LoginAndSignInViewModel()
+    @StateObject private var businessArray=BusinessInformationsViewModel()
     
     var body: some View {
         
@@ -558,6 +565,7 @@ struct LoginForBusiness: View {
                 TextField("E-mail adresi", text: $loginModel.email)
                     .font(.system(size: 20,weight: .semibold))
                     .autocapitalization(.none)
+                    .textCase(.lowercase)
                     .keyboardType(.emailAddress)
                     .foregroundColor(.black)
                     .padding(.top,10)
@@ -592,7 +600,7 @@ struct LoginForBusiness: View {
                 Divider()
                 Group{
                     Button(action: {
-                        loginModel.forgotPassword()
+                        showAlertTF.toggle()
                     }, label: {
                         Text("Şifremi unuttum?")
                             .fontWeight(.semibold)
@@ -610,9 +618,7 @@ struct LoginForBusiness: View {
                     .padding(.top,10)
                 Spacer()
                 Button(action: {
-                    if businessArray.businessEmailArray.contains(loginModel.email) {
-                        loginModel.loginForBusiness()
-                    }
+                    loginModel.loginForBusiness()
                 }, label: {
                     Text("Giriş Yap")
                         .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.075)
@@ -627,19 +633,20 @@ struct LoginForBusiness: View {
                     return BusinessAccountView()
                 }
             }
+            .padding()
+            
+            .alert(isPresented: $loginModel.showAlert, content: {
+                Alert(title: Text(loginModel.alertTitle), message: Text(loginModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
+            })
+            
+            CustomAlertTFView(isShown:$showAlertTF, text: $loginModel.sendResetPassword, title: "Şifre Sıfırlama", buttonName: "Gönder", hint: "email") { resPass in
+                loginModel.forgotBusinessPassword()
+            }
             
             if loginModel.isLoading {
                 CustomLoadingView()
             }
         }
-        .onAppear{
-            businessArray.businesses()
-        }
-        .padding()
-        
-        .alert(isPresented: $loginModel.showAlert, content: {
-            Alert(title: Text(loginModel.alertTitle), message: Text(loginModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
-        })
-        
+
     }
 }

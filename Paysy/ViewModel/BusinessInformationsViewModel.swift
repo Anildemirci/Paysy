@@ -23,7 +23,7 @@ class BusinessInformationsViewModel : ObservableObject {
     @Published var alertTitle=""
     @Published var alertMessage=""
     @Published var showAlert=false
-    @Published var businessArray=[String]()
+    @Published var businessIDArray=[String]()
     @Published var businessEmailArray=[String]()
     @Published var annotationLongitude=Double()
     @Published var annotationLatitude=Double()
@@ -147,7 +147,7 @@ class BusinessInformationsViewModel : ObservableObject {
             }
         } else {
             self.alertTitle="Hata"
-            self.alertMessage="Saha tarafından konum bilgisi henüz kaydedilmedi."
+            self.alertMessage="İş yeri tarafından konum bilgisi henüz kaydedilmedi."
             self.showAlert.toggle()
         }
     }
@@ -176,7 +176,7 @@ class BusinessInformationsViewModel : ObservableObject {
                         self.businessEmailArray.append(userEmail)
                     }
                     if let userID=document.get("User") as? String {
-                        self.businessArray.append(userID)
+                        self.businessIDArray.append(userID)
                     }
                 }
             }

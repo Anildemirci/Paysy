@@ -121,6 +121,7 @@ struct CustomAlertTFView: View {
             Text(title)
             TextField(hint,text: $text)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(.none)
             HStack{
                 Button(buttonName){
                     isShown=false

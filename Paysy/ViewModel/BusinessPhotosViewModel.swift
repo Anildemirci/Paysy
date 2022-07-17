@@ -16,7 +16,6 @@ class BusinessPhotoViewModel : ObservableObject {
     @Published var showingAlert=false
     @Published var statement=""
     @Published var placeName=""
-    //@Published var businessInfo=BusinessInformationsViewModel()
     @Published var show=false
     @Published var showProfile=false
     @Published var posts = [dataType]()

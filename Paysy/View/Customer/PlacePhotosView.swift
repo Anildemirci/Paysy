@@ -17,7 +17,7 @@ struct PlacePhotosView: View {
     var body: some View {
         VStack(alignment: .center){
             if photoInfo.posts.isEmpty==true {
-                Text("Saha tarafından henüz fotoğraf yüklenmedi.").fontWeight(.heavy)
+                Text("İş yeri tarafından henüz fotoğraf yüklenmedi.").fontWeight(.heavy)
             } else {
                 List {
                     ForEach(photoInfo.posts){ i in

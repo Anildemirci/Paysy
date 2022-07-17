@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ConnectToPlaceView: View {
-    @State var show=false
+    @State private var show=false
     @State private var selected="home"
     @State var selectedPlace=""
     @State var tableID=""
     @StateObject private var connectToPlaceViewModel=GetConnectionInfoViewModel()
     @State var tableNum=""
-    @State var orderArray=[orderModel]()
-    @State var totalPrice=""
-    @State var totalDoublePrice=0.0
+    @State private var orderArray=[orderModel]()
+    @State private var totalPrice=""
+    @State private var totalDoublePrice=0.0
     
     var body: some View {
         NavigationView {
@@ -66,7 +67,7 @@ struct RequestConfirmed: View{
     
     @StateObject private var userInfo=UserInformationsViewModel()
     @StateObject private var connectToPlaceViewModel=GetConnectionInfoViewModel()
-    @StateObject var timerManager = TimerManager()
+    @StateObject private var timerManager = TimerManager()
     @State var selectedPlace=""
     @State var tableID=""
     
@@ -76,7 +77,7 @@ struct RequestConfirmed: View{
                     .font(.title)
                 Text("Masa ID: \(connectToPlaceViewModel.tableID)")
                 Text("Masa Durumu: \(connectToPlaceViewModel.status)")
-                //Text("\(timerManager.hour) saat \(timerManager.min) dakikadır masadasınız")
+                Text("\(timerManager.hour) saat \(timerManager.min) dakikadır masadasınız")
                 Group{
                     Text("Toplam Hesap : \(connectToPlaceViewModel.totalPrice)")
                     Text("Sizin hesabınız : \(connectToPlaceViewModel.userPrice)")
@@ -163,7 +164,7 @@ struct SelectedMenuForUserView: View{
     @State var placeName=""
     @State var menuName=""
     @State private var selectedSubMenu=""
-    @State var showOrder=false
+    @State private var showOrder=false
     @Binding var orderArray : [orderModel]
     @Binding var totalDoublePrice : Double
     @Binding var totalPrice : String
@@ -259,11 +260,9 @@ struct SelectedMenuForUserView: View{
     }
 }
 
-
-
 struct ConfirmOrdersView: View {
     
-    @StateObject var orderViewModel=ConnectToPlaceViewModel()
+    @StateObject private var orderViewModel=ConnectToPlaceViewModel()
     @Binding var orderArray : [orderModel]
     @Binding var totalPrice : String
     @Binding var totalDoublePrice : Double
@@ -354,6 +353,7 @@ struct ConfirmOrdersView: View {
                 .padding([.top,.horizontal])
                 Button(action: {
                     
+                    //database kaydet
                     
                 }) {
                     Text("Siparişi ver")

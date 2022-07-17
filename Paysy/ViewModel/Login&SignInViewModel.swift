@@ -26,11 +26,12 @@ class LoginAndSignInViewModel : ObservableObject {
     @Published var newEmail2=""
     @Published var newPassword=""
     @Published var newPassword2=""
-    @Published var sendResetPassword=false
+    @Published var sendResetPassword=""
     @Published var sendVerify=false
     @Published var isLoading=false
     @Published var showHome=false
-    
+    @Published var userEmailArray=[String]()
+    @Published var businessEmailArray=[String]()
     
     var currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -43,33 +44,60 @@ class LoginAndSignInViewModel : ObservableObject {
                 self.isLoading.toggle()
             }
             
-            Auth.auth().signIn(withEmail: email, password: password) { (result,error) in
+            Auth.auth().signIn(withEmail: self.email, password: self.password) { (result,error) in
                 
                 withAnimation{
                     self.isLoading.toggle()
                 }
                 
                 if error != nil {
-                    // database'den kontrol ettir sonra giriş yaptır.
+                    //türkçe uyarı ver
+
                     self.alertTitle = "Hata!"
                     self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
                     self.showAlert.toggle()
                     
                 } else {
-                    
-                    if self.currentUser?.isEmailVerified == false {
-                        
-                        self.alertTitle = "Hata!"
-                        self.alertMessage = "Giriş yapabilmek için lütfen email adresinizi doğrulayınız."
-                        self.showAlert.toggle()
-                        
-                        try! Auth.auth().signOut()
-                        
-                    } else {
-                        self.showHome.toggle()
+                    self.firestoreDatabase.collection("Users").addSnapshotListener { snapshot, error in
+                        if error != nil {
+                            self.alertTitle="Hata!"
+                            self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                            self.showAlert.toggle()
+                        } else {
+                            for document in snapshot!.documents {
+                                if let userEmail=document.get("Email") as? String {
+                                    self.userEmailArray.append(userEmail)
+                                }
+                            }
+                            if self.userEmailArray.contains(self.email) {
+                                /*
+                                 if self.currentUser?.isEmailVerified == false {
+                                     
+                                     self.alertTitle = "Hata!"
+                                     self.alertMessage = "Giriş yapabilmek için lütfen email adresinizi doğrulayınız."
+                                     self.showAlert.toggle()
+                                     
+                                     try! Auth.auth().signOut()
+                                     
+                                 } else {
+                                     self.showHome.toggle()
+                                 }
+                                 */
+                                
+                                self.showHome.toggle()
+                            }
+                            else {
+                               self.alertTitle="Hata!"
+                               self.alertMessage=error?.localizedDescription ?? "Email adresinizi kontrol ediniz."
+                               try! Auth.auth().signOut()
+                               self.showAlert.toggle()
+                           }
+                        }
                     }
                 }
             }
+            
+            
         } else {
             self.alertTitle = "Hata!"
             self.alertMessage = "Lütfen tüm bilgileri giriniz."
@@ -147,35 +175,72 @@ class LoginAndSignInViewModel : ObservableObject {
         }
     }
     
-    func forgotPassword(){
+    func forgotBusinessPassword(){
         
-        //custom alert
-        let alert = UIAlertController(title: "Şifre sıfırlama", message: "Şifrenizi sıfırlamamız için e-posta adresinizi giriniz.", preferredStyle: .alert)
-        alert.addTextField{ (password) in
-            password.placeholder = "E-posta"
-        }
-        let proceed=UIAlertAction(title: "Reset", style: .default) { (_) in
-            self.email=alert.textFields![0].text!
-            self.sendResetPassword.toggle()
-            //reset password
-            Auth.auth().sendPasswordReset(withEmail: self.email) { error in
-                if error != nil {
-                    self.alertTitle="Hata!"
-                    self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
-                    self.showAlert.toggle()
+        firestoreDatabase.collection("Business").getDocuments { snapshot, error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                for document in snapshot!.documents {
+                    if let userEmail=document.get("Email") as? String {
+                        self.businessEmailArray.append(userEmail)
+                    }
+                }
+                if self.businessEmailArray.contains(self.sendResetPassword) {
+                    Auth.auth().sendPasswordReset(withEmail: self.sendResetPassword) { error in
+                        if error != nil {
+                            self.alertTitle="Hata!"
+                            self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                            self.showAlert.toggle()
+                        } else {
+                            self.alertTitle="Başarılı!"
+                            self.alertMessage="E-posta adresinize şifrenizi resetlemek için link yollanmıştır."
+                            self.showAlert.toggle()
+                        }
+                    }
                 } else {
-                    self.alertTitle="Başarılı!"
-                    self.alertMessage="E-posta adresinize şifrenizi resetlemek için link yollanmıştır."
+                    self.alertTitle="Hata!"
+                    self.alertMessage=error?.localizedDescription ?? "Email adresini kontrol ediniz."
                     self.showAlert.toggle()
                 }
             }
         }
+    }
+    
+    func forgotUserPassword(){
         
-        let cancel = UIAlertAction(title: "İptal", style: .destructive, handler: nil)
-        alert.addAction(cancel)
-        alert.addAction(proceed)
-        
-        UIApplication.shared.windows.first?.rootViewController?.present(alert,animated: true)
+        firestoreDatabase.collection("Users").addSnapshotListener { snapshot, error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                for document in snapshot!.documents {
+                    if let userEmail=document.get("Email") as? String {
+                        self.userEmailArray.append(userEmail)
+                    }
+                }
+                if self.userEmailArray.contains(self.sendResetPassword) {
+                    Auth.auth().sendPasswordReset(withEmail: self.sendResetPassword) { error in
+                        if error != nil {
+                            self.alertTitle="Hata!"
+                            self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                            self.showAlert.toggle()
+                        } else {
+                            self.alertTitle="Başarılı!"
+                            self.alertMessage="E-posta adresinize şifrenizi resetlemek için link yollanmıştır."
+                            self.showAlert.toggle()
+                        }
+                    }
+                } else {
+                    self.alertTitle="Hata!"
+                    self.alertMessage=error?.localizedDescription ?? "Email adresini kontrol ediniz."
+                    self.showAlert.toggle()
+                }
+            }
+        }
     }
     
     func changePassword(){
@@ -400,23 +465,46 @@ class LoginAndSignInViewModel : ObservableObject {
                 }
                 
                 if error != nil {
-                    // database'den kontrol ettir sonra giriş yaptır.
+                    //türkçe uyarı ver
                     self.alertTitle = "Hata!"
                     self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
                     self.showAlert.toggle()
                     
                 } else {
                     
-                    if self.currentUser?.isEmailVerified == false {
-                        
-                        self.alertTitle = "Hata!"
-                        self.alertMessage = "Giriş yapabilmek için lütfen email adresinizi doğrulayınız."
-                        self.showAlert.toggle()
-                        
-                        try! Auth.auth().signOut()
-                        
-                    } else {
-                        self.showHome.toggle()
+                    self.firestoreDatabase.collection("Business").getDocuments { snapshot, error in
+                        if error != nil {
+                            self.alertTitle="Hata!"
+                            self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                            self.showAlert.toggle()
+                        } else {
+                            for document in snapshot!.documents {
+                                if let userEmail=document.get("Email") as? String {
+                                    self.businessEmailArray.append(userEmail)
+                                }
+                            }
+                            if self.businessEmailArray.contains(self.email) {
+                                /*
+                                 if self.currentUser?.isEmailVerified == false {
+                                     
+                                     self.alertTitle = "Hata!"
+                                     self.alertMessage = "Giriş yapabilmek için lütfen email adresinizi doğrulayınız."
+                                     self.showAlert.toggle()
+                                     
+                                     try! Auth.auth().signOut()
+                                     
+                                 } else {
+                                     self.showHome.toggle()
+                                 }
+                                 */
+                                self.showHome.toggle()
+                            } else {
+                                self.alertTitle="Hata!"
+                                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                                try! Auth.auth().signOut()
+                                self.showAlert.toggle()
+                            }
+                        }
                     }
                 }
             }
@@ -426,4 +514,5 @@ class LoginAndSignInViewModel : ObservableObject {
             self.showAlert.toggle()
         }
     }
+
 }

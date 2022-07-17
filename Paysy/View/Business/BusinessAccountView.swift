@@ -7,7 +7,6 @@
 
 
 import SwiftUI
-import Firebase
 import SDWebImageSwiftUI
 
 struct BusinessAccountView: View {
@@ -30,18 +29,18 @@ struct BusinessAccountView: View {
         //TabBarAppearance.isHidden=false
         }
     
-    @State var selected=1
-    @State var showAddPhoto=false
-    @State var isShowPhotoLibrary=false
-    @State var isShowCamera=false
-    @State var image:UIImage?
-    @State var showProfile=false
-    @State var show=false
-    @State var dark = false
-    @State var showMenu = false
+    @State private var selected=1
+    @State private var showAddPhoto=false
+    @State private var isShowPhotoLibrary=false
+    @State private var isShowCamera=false
+    @State private var image:UIImage?
+    //@State private var showProfile=false
+    //@State private var show=false
+    @State private var dark = false
+    @State private var showMenu = false
     
-    @StateObject var businessInfo=BusinessInformationsViewModel()
-    @StateObject var businessPhoto=BusinessPhotoViewModel()
+    @StateObject private var businessInfo=BusinessInformationsViewModel()
+    @StateObject private var businessPhoto=BusinessPhotoViewModel()
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -195,14 +194,14 @@ struct BusinessProfileMenu : View {
     
     @Binding var dark : Bool
     @Binding var show : Bool
-    @State var showPersonalInfo = false
-    @State var showLoginInfo = false
-    @State var showAppInfo=false
-    @State var showInvite=false
-    @State var showHelp=false
+    //@State private var showPersonalInfo = false
+    @State private var showLoginInfo = false
+    @State private var showAppInfo=false
+    //@State private var showInvite=false
+    @State private var showHelp=false
     
-    @StateObject var model=LoginAndSignInViewModel()
-    @StateObject var businessInfo=BusinessInformationsViewModel()
+    @StateObject private var model=LoginAndSignInViewModel()
+    @StateObject private var businessInfo=BusinessInformationsViewModel()
     
     var body: some View {
         VStack{

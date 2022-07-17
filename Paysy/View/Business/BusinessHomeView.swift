@@ -10,9 +10,10 @@ import Firebase
 
 struct BusinessHomeView: View {
     
-    var currentUser=Auth.auth().currentUser
-    @State var showSignIn=false
-    @State var showLogin=false
+    private var currentUser=Auth.auth().currentUser
+    @State private var showSignIn=false
+    @State private var showLogin=false
+    
     var body: some View {
         if currentUser != nil {
             BusinessAccountView()

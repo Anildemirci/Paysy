@@ -43,8 +43,8 @@
 		04C47FD82862131A005BA7E4 /* BusinessInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C47FD72862131A005BA7E4 /* BusinessInformationsView.swift */; };
 		04C47FDA2862133F005BA7E4 /* BusinessCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C47FD92862133F005BA7E4 /* BusinessCommentsView.swift */; };
 		04C47FDC28621372005BA7E4 /* BusinessPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C47FDB28621372005BA7E4 /* BusinessPhotosView.swift */; };
+		04C8237F28847AE900E97F9A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8237E28847AE900E97F9A /* LaunchScreenView.swift */; };
 		04C8444928060FE300DEE45E /* PaysyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8444828060FE300DEE45E /* PaysyApp.swift */; };
-		04C8444B28060FE300DEE45E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8444A28060FE300DEE45E /* ContentView.swift */; };
 		04C8444D28060FE400DEE45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C8444C28060FE400DEE45E /* Assets.xcassets */; };
 		04C8445028060FE400DEE45E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C8444F28060FE400DEE45E /* Preview Assets.xcassets */; };
 		04C8445A28060FE400DEE45E /* PaysyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C8445928060FE400DEE45E /* PaysyTests.swift */; };
@@ -151,9 +151,9 @@
 		04C47FD72862131A005BA7E4 /* BusinessInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessInformationsView.swift; sourceTree = "<group>"; };
 		04C47FD92862133F005BA7E4 /* BusinessCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCommentsView.swift; sourceTree = "<group>"; };
 		04C47FDB28621372005BA7E4 /* BusinessPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessPhotosView.swift; sourceTree = "<group>"; };
+		04C8237E28847AE900E97F9A /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		04C8444528060FE300DEE45E /* Paysy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paysy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C8444828060FE300DEE45E /* PaysyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaysyApp.swift; sourceTree = "<group>"; };
-		04C8444A28060FE300DEE45E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		04C8444C28060FE400DEE45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04C8444F28060FE400DEE45E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		04C8445528060FE400DEE45E /* PaysyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaysyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,7 +276,7 @@
 				0433D1C0281897C80064CBB1 /* Info.plist */,
 				04A905772817681900999A5F /* Paysy.entitlements */,
 				04C8444828060FE300DEE45E /* PaysyApp.swift */,
-				04C8444A28060FE300DEE45E /* ContentView.swift */,
+				04C8237E28847AE900E97F9A /* LaunchScreenView.swift */,
 				042023982809F5B500C2824A /* Custom */,
 				04C84477280610D000DEE45E /* Extension */,
 				04C844752806104500DEE45E /* View */,
@@ -772,10 +772,10 @@
 				045624EA28177B11006FA2C9 /* UserInformationsViewModel.swift in Sources */,
 				0412FDCD2810AD41003C4439 /* CustomPhoneTextField.swift in Sources */,
 				04A9056C28175F3700999A5F /* PlaceInformationsModel.swift in Sources */,
-				04C8444B28060FE300DEE45E /* ContentView.swift in Sources */,
 				048300CB285E68E90085AC62 /* PinView.swift in Sources */,
 				04E310302863742A003C63F3 /* BusinessPhotosViewModel.swift in Sources */,
 				04C47FDC28621372005BA7E4 /* BusinessPhotosView.swift in Sources */,
+				04C8237F28847AE900E97F9A /* LaunchScreenView.swift in Sources */,
 				04CAD7BE2808C77D005D13AB /* SelectedPlaceView.swift in Sources */,
 				04E4551D285CCE3D00452B1F /* BusinessHomeView.swift in Sources */,
 				04A6305D2808C16700F4088C /* PlacesView.swift in Sources */,

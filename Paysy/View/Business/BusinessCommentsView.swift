@@ -38,7 +38,7 @@ struct BusinessCommentsView_Previews: PreviewProvider {
 
 struct CommentStructView:View {
     
-    @StateObject var placeCommentViewModel=CommentViewModel()
+    @StateObject private var placeCommentViewModel=CommentViewModel()
     @State var placeName=""
     
     var body: some View {

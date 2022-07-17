@@ -33,7 +33,14 @@ class ConnectToPlaceViewModel : ObservableObject {
     @Published var tableNumberWithPass=""
     
     @Published var orderArray = [orderModel]()
-
+    
+    @Published var orderArray2 = [orderModel]()
+    @Published var statement2=""
+    @Published var itemName2=""
+    @Published var price=""
+    @Published var status2=""
+    @Published var amount2=""
+    
     
     func randomPassword(){
         let len=6
@@ -216,19 +223,20 @@ class ConnectToPlaceViewModel : ObservableObject {
     //kullanılmadı
     func orderItem(){
         
-        /*
-         let order = orderArray[orderModel(statement: "asd",
-                                           price: "asd",
-                                           itemName: "asd",
-                                           status: "asd",
-                                           amount: 2)]
-         
-         do {
-             try firestoreDatabase.collection("Deneme").document("dada").setData(order)
-         } catch let error {
-             print("hataaaaa")
-         }
-         */
+        orderArray2=[orderModel(statement: self.statement2, price: self.price, itemName: self.itemName2, status: self.status2, amount: 4)]
+
+        
+        do {
+            let jsonData = try JSONEncoder().encode(orderArray2)
+            let jsonString = String(data: jsonData, encoding: .utf8)!
+            print(jsonString)
+            
+
+            let decodedSentences = try JSONDecoder().decode([orderModel].self, from: jsonData)
+                print(decodedSentences)
+        } catch {
+            print("hataaaaa")
+        }
     }
     
     

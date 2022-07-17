@@ -10,7 +10,7 @@ import SwiftUI
 struct BusinessInformationsView: View {
     
     @State private var showEdit=false
-    @StateObject var businessInfo=BusinessInformationsViewModel()
+    @StateObject private var businessInfo=BusinessInformationsViewModel()
     
     var body: some View {
         VStack{
@@ -105,7 +105,7 @@ struct EditBusinessInformations: View {
 struct EditAddressInformations: View {
     
     @StateObject var businessInfo=BusinessInformationsViewModel()
-    @StateObject var addressInfo=MapViewModel()
+    //@StateObject var addressInfo=MapViewModel()
     
     var body: some View {
         VStack{
@@ -115,23 +115,28 @@ struct EditAddressInformations: View {
                 .fontWeight(.medium)
             Group {
                 TextField("telefon", text: $businessInfo.phoneNumber)
+                    .keyboardType(.numberPad)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 TextField("mahalle", text: $businessInfo.village)
+                    .autocapitalization(.words)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 TextField("cadde,sokak,no", text: $businessInfo.street)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
+                    .autocapitalization(.words)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 HStack{
                     TextField("ilçe", text: $businessInfo.town)
+                        .autocapitalization(.words)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                     TextField("İl", text: $businessInfo.city)
+                        .autocapitalization(.words)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
@@ -157,11 +162,11 @@ struct EditAddressInformations: View {
 }
 
 struct EditLocation: View {
-    @State private var text=""
+    //@State private var text=""
     
     var body: some View {
         VStack{
-            Text("Navigasyon için sahanın konumunu ekleyin.")
+            Text("Navigasyon için iş yerinizin konumunu ekleyin.")
                 .font(.headline)
                 .foregroundColor(Color.white)
                 .textFieldStyle(.roundedBorder)
@@ -194,9 +199,11 @@ struct EditWorkingHour: View {
                 .foregroundColor(Color.black)
             HStack{
                 TextField("Açılış saati", text: $openingTime)
+                    .keyboardType(.numbersAndPunctuation)
                     .padding()
                     .border(Color.black, width: 2)
                 TextField("Kapanış saati", text: $closingTime)
+                    .keyboardType(.numbersAndPunctuation)
                     .padding()
                     .border(Color.black, width: 2)
             }

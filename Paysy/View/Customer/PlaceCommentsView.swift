@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaceCommentsView: View {
     
     @State var placeName=""
-    @StateObject var placeCommentViewModel=CommentViewModel()
+    @StateObject private var placeCommentViewModel=CommentViewModel()
     
     var body: some View {
         VStack{

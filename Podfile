@@ -7,8 +7,8 @@ target 'Paysy' do
 
 pod 'Firebase/Analytics'
 pod 'Firebase/Auth'
-pod 'Firebase/Core'
 pod 'Firebase/Firestore'
+pod 'Firebase/Core'
 pod 'Firebase/Storage'
 pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
 

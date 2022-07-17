@@ -8,26 +8,11 @@
 import SwiftUI
 import Firebase
 
-struct UserInformationsView: View {
-    var body: some View {
-        VStack{
-            Text("Hello World!")
-        }
-    }
-}
-
-struct UserInformationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        UserInformationsView()
-    }
-}
-
 struct PersonalInformationView: View{
     
     @Binding var show: Bool
     
-    @StateObject var personalInfoModel=UserInformationsViewModel()
+    @StateObject private var personalInfoModel=UserInformationsViewModel()
     
     var body: some View {
         VStack{
@@ -53,19 +38,23 @@ struct PersonalInformationView: View{
                         .background(Color.secondary)
                 }
                 TextField("telefon numarası", text: $personalInfoModel.phoneNumber)
+                    .keyboardType(.numberPad)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 TextField("doğum tarihi", text: $personalInfoModel.birthDay)
+                    .keyboardType(.numbersAndPunctuation)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 HStack{
                     TextField("şehir", text: $personalInfoModel.city)
+                        .autocapitalization(.words)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                     TextField("ilçe", text: $personalInfoModel.town)
+                        .autocapitalization(.words)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
@@ -95,15 +84,11 @@ struct PersonalInformationView: View{
 
 struct LoginInformationView: View {
     @Binding var show: Bool
-    @State var password=""
-    @State var password2=""
-    @State var email=""
-    @State var email2=""
-    @State var showFaceID=false
-    @State var showFingerID=false
+    @State private var showFaceID=false
+    @State private var showFingerID=false
     
-    @StateObject var model=LoginAndSignInViewModel()
-    @StateObject var business=BusinessInformationsViewModel()
+    @StateObject private var model=LoginAndSignInViewModel()
+    @StateObject private var business=BusinessInformationsViewModel()
     
     var body: some View{
         VStack{
@@ -115,17 +100,21 @@ struct LoginInformationView: View {
             ScrollView(.vertical, showsIndicators: false){
                 Section(header: Text("Email Değiştir")){
                     TextField("yeni email", text: $model.newEmail)
+                        .keyboardType(.emailAddress)
+                        .textCase(.lowercase)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                         .background(Color.white)
                     TextField("yeni email tekrarı", text: $model.newEmail2)
+                        .keyboardType(.emailAddress)
+                        .textCase(.lowercase)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                         .background(Color.white)
                     Button(action: {
-                        if business.businessArray.contains(Auth.auth().currentUser!.uid) {
+                        if business.businessIDArray.contains(Auth.auth().currentUser!.uid) {
                             model.changeEmailForBusiness()
                         } else {
                             model.changeEmailForUser()
@@ -143,12 +132,12 @@ struct LoginInformationView: View {
                 }
                 Section(header: Text("Şifre Değiştir")){
                     
-                    TextField("yeni şifre", text: $model.newPassword)
+                    SecureField("yeni şifre", text: $model.newPassword)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                         .background(Color.white)
-                    TextField("yeni şifre tekrarı", text: $model.newPassword2)
+                    SecureField("yeni şifre tekrarı", text: $model.newPassword2)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
                         .overlay(Rectangle().stroke(Color.black,lineWidth:1))
@@ -190,12 +179,12 @@ struct LoginInformationView: View {
 }
 
 struct AppInformationView: View {
-    @State var language=false
-    @State var nightMode=false
-    @State var sendEmail=false
-    @State var sendNotification=false
-    @State var sendSms=false
-    @State var callPhone=false
+    @State private var language=false
+    @State private var nightMode=false
+    @State private var sendEmail=false
+    @State private var sendNotification=false
+    @State private var sendSms=false
+    @State private var callPhone=false
     @Binding var show: Bool
     
     var body: some View {

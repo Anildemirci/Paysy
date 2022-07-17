@@ -10,7 +10,7 @@ import SwiftUI
 struct TownsView: View {
     
     @State private var searchText=""
-    @StateObject var businessViewModel=BusinessesViewModel()
+    @StateObject private var businessViewModel=BusinessesViewModel()
     
     var body: some View {
             NavigationView{
@@ -19,6 +19,7 @@ struct TownsView: View {
                         Image(systemName: "magnifyingglass")//.font(.system(size: 23,weight: .bold))
                             .foregroundColor(.gray)
                         TextField("İlçe ara",text: $searchText)
+                            .autocapitalization(.sentences)
                     }.padding(.vertical,10)
                         .padding(.horizontal)
                         .background(Color.primary.opacity(0.05))

@@ -10,13 +10,13 @@ import Firebase
 
 struct CustomerHomeView: View {
     
-    @State var dark = false
-    @State var show = false
-    @State var userLogin=true
-    var currentUser=Auth.auth().currentUser
+    @State private var dark = false
+    @State private var show = false
+    //@State private var userLogin=true
+    private var currentUser=Auth.auth().currentUser
    // @State var connected=false
     @StateObject private var checkUser=GetConnectionInfoViewModel()
-    @State var selection=selectionTab
+    @State private var selection=selectionTab
     
     init() {
         let NavBarAppearance = UINavigationBarAppearance()
@@ -62,7 +62,7 @@ struct CustomerHomeView: View {
                                         .foregroundColor(.white)
                                 })
                                 .navigationBarItems(trailing: Button(action: {
-                                    //print(Auth.auth().currentUser?.uid)
+                                    print(Auth.auth().currentUser?.uid)
                                 }) {
                                     Image(systemName: "envelope")
                                         .foregroundColor(.white)
@@ -136,7 +136,9 @@ struct CustomerHomeView: View {
                 }.background(Color.primary.opacity(show ? (dark ? 0.05 : 0.25):0).edgesIgnoringSafeArea(.all))
             }
         }.onAppear{
-            checkUser.checkUserInPlace()
+            if currentUser?.uid != nil {
+                checkUser.checkUserInPlace()
+            }
         }
     }
 }
@@ -283,14 +285,14 @@ struct CampaignCell: View {
 struct ProfileMenu : View {
     @Binding var dark : Bool
     @Binding var show : Bool
-    @State var showPersonalInfo = false
-    @State var showLoginInfo = false
-    @State var showAppInfo=false
-    @State var showInvite=false
-    @State var showHelp=false
+    @State private var showPersonalInfo = false
+    @State private var showLoginInfo = false
+    @State private var showAppInfo=false
+    @State private var showInvite=false
+    @State private var showHelp=false
     
-    @StateObject var model=LoginAndSignInViewModel()
-    @StateObject var userInfo=UserInformationsViewModel()
+    @StateObject private var model=LoginAndSignInViewModel()
+    @StateObject private var userInfo=UserInformationsViewModel()
     
     var body: some View {
         VStack{
@@ -457,11 +459,11 @@ struct ProfileMenuNotLogin : View {
     
     @Binding var dark : Bool
     @Binding var show : Bool
-    @State var showLogin=false
-    @State var showSignIn=false
-    @State var showAppInfo=false
-    @State var showInvite=false
-    @State var showHelp=false
+    @State private var showLogin=false
+    @State private var showSignIn=false
+    @State private var showAppInfo=false
+    @State private var showInvite=false
+    @State private var showHelp=false
     
     var body: some View {
         VStack(spacing:25){
