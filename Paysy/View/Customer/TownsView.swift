@@ -19,12 +19,12 @@ struct TownsView: View {
                         Image(systemName: "magnifyingglass")//.font(.system(size: 23,weight: .bold))
                             .foregroundColor(.gray)
                         TextField("İlçe ara",text: $searchText)
-                            .autocapitalization(.sentences)
+                            .autocapitalization(.words)
                     }.padding(.vertical,10)
                         .padding(.horizontal)
                         .background(Color.primary.opacity(0.05))
                         .cornerRadius(8)
-                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.contains(searchText.lowercased())}, id: \.self){ towns in
+                    List(searchText == "" ? businessViewModel.townArray : businessViewModel.townArray.filter{$0.localizedCaseInsensitiveContains(searchText.lowercased())}, id: \.self){ towns in
                         NavigationLink(destination: PlacesView(town: towns)) {
                             Text(towns)
                         }

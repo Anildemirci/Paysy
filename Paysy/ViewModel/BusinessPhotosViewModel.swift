@@ -136,8 +136,7 @@ class BusinessPhotoViewModel : ObservableObject {
                                 let firestoreProfile=["imageUrl":imageUrl!,
                                                       "ID":Auth.auth().currentUser!.uid,
                                                       "User":Auth.auth().currentUser!.email!,
-                                                      "Date":FieldValue.serverTimestamp(),
-                                                      "StadiumName":self.placeName] as [String:Any]
+                                                      "Date":FieldValue.serverTimestamp()] as [String:Any]
                                 self.firebaseDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).setData(firestoreProfile) { (error) in
                                     if error != nil {
                                         self.titleInput="Hata"
@@ -254,6 +253,80 @@ class BusinessPhotoViewModel : ObservableObject {
             }
     }
     
+    func addMenuPhotos(selectPhoto:UIImage){
+            
+        let storage=Storage.storage()
+        let storageReference=storage.reference()
+        let mediaFolder=storageReference.child("BusinessPhotos").child(placeName)
+            
+        if let data=selectPhoto.jpegData(compressionQuality: 0.75) {
+            let uuid=UUID().uuidString
+                
+            let imageReference=mediaFolder.child("\(uuid).jpg")
+            imageReference.putData(data,metadata: nil) { (metadata,error) in
+                if error != nil {
+                    self.titleInput="Hata"
+                    self.messageInput=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                    self.showingAlert.toggle()
+                } else {
+                    imageReference.downloadURL { (url, error) in
+                        if error == nil {
+                            let imageUrl=url?.absoluteString
+                                
+                            let firestorePhotos=["photoUrl": imageUrl!,
+                                                 "ID": Auth.auth().currentUser!.uid,
+                                                 "User": Auth.auth().currentUser!.email!,
+                                                 "Date": FieldValue.serverTimestamp(),
+                                                 "Statement":self.statement,
+                                                 "Name":self.placeName,
+                                                 "StorageID": uuid] as [String:Any]
+                            Firestore.firestore().collection("BusinessPhotos").document(self.placeName).collection("MenuPhotos").addDocument(data: firestorePhotos) { (error )in
+                                if error !=  nil {
+                                    self.titleInput="Hata"
+                                    self.messageInput=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                                    self.showingAlert.toggle()
+                                    
+                                } else {
+                                    self.titleInput="Başarılı"
+                                    self.messageInput="Fotoğraf yüklendi."
+                                    self.showingAlert.toggle()
+                                    self.statement=""
+                                    self.show.toggle()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func getBusinessMenuPhotoForUser(){
+        firebaseDatabase.collection("BusinessPhotos").document("DorockXL").collection("MenuPhotos").order(by: "Date", descending: true).addSnapshotListener { (snapshot, error) in
+                if error != nil {
+                    print((error?.localizedDescription)!)
+                    return
+                } else {
+                    
+                    self.storageId.removeAll(keepingCapacity: false)
+                    self.imageUrl.removeAll(keepingCapacity: false)
+                    self.posts.removeAll(keepingCapacity: false)
+                    
+                    for document in snapshot!.documents{
+                        
+                        let documentID=document.documentID
+                        let statement=document.get("Statement") as! String
+                        let image=document.get("photoUrl") as! String
+                        let storageID=document.get("StorageID") as! String
+                        self.posts.append((dataType(id: documentID, statement: statement, image: image)))
+                        self.imageUrl.append(image)
+                        self.storageId.append(storageID)
+                        
+                    }
+                    self.didChange.send(self.posts)
+                }
+            }
+    }
 }
 
 var placeNameFromUser=""

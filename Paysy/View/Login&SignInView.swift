@@ -466,29 +466,33 @@ struct SignInForBusiness: View {
             .alert(isPresented: $signInModel.showAlert, content: {
                 Alert(title: Text(signInModel.alertTitle), message: Text(signInModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
         })
+            .fullScreenCover(isPresented: $signInModel.showBusinessLocation) { () -> BusinessLocationInfoView in
+                BusinessLocationInfoView()
+            }
         }
     }
 }
 
-struct BusinessLocationInfo: View {
+struct BusinessLocationInfoView: View {
     
-    @StateObject private var businessInfo=BusinessInformationsViewModel()
+    @StateObject private var signIn=LoginAndSignInViewModel()
     @State private var show=false
+    
     var body: some View{
-        VStack{
-            TextField("İlçe", text: $businessInfo.town)
+        VStack(spacing:10){
+            TextField("İlçe", text: $signIn.businessTown)
                     .font(.system(size: 20,weight: .semibold))
                     .autocapitalization(.words)
             Divider()
-            TextField("İl", text: $businessInfo.city)
+            TextField("İl", text: $signIn.businessCity)
                     .font(.system(size: 20,weight: .semibold))
                     .autocapitalization(.words)
             Divider()
-            TextField("Adres(isteğe bağlı)", text: $businessInfo.address)
+            TextField("Adres(isteğe bağlı)", text: $signIn.businessAddress)
                     .font(.system(size: 20,weight: .semibold))
                     .autocapitalization(.words)
             Button(action: {
-                //action
+                signIn.businessAddressInfo()
             }, label: {
                 Text("İlerle")
                     .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.075)
@@ -499,14 +503,18 @@ struct BusinessLocationInfo: View {
                     .shadow(color: Color.red.opacity(0.6), radius: 5, x: 0, y: 0)
             })
         }.padding()
-        .fullScreenCover(isPresented: $show) { () -> BusinessPhoneInfo in
-            BusinessPhoneInfo()
+        
+            .alert(isPresented: $signIn.showAlert, content: {
+                Alert(title: Text(signIn.alertTitle), message: Text(signIn.alertMessage), dismissButton: .destructive(Text("Tamam")))
+        })
+            .fullScreenCover(isPresented: $signIn.showHome ) { () -> BusinessHomeView in
+            BusinessHomeView()
         }
 
     }
 }
 
-struct BusinessPhoneInfo: View {
+struct BusinessPhoneInfoView: View {
     @StateObject private var businessInfo=BusinessInformationsViewModel()
     var body: some View{
         VStack{

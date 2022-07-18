@@ -17,50 +17,37 @@ struct PersonalInformationView: View{
     var body: some View {
         VStack{
             CustomDismissButton(show: $show)
-            Spacer()
             Text("Kişisel Bilgiler")
                 .font(.title)
                 .fontWeight(.medium)
-            Group {
-                HStack{
+            Form{
+                Section(header: Text("İsim")) {
                     TextField("İsim", text: $personalInfoModel.firstName)
-                        .frame(height: UIScreen.main.bounds.height * 0.020)
-                        .padding()
-                        .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                         .allowsHitTesting(false)
-                        .background(Color.secondary)
-                    Spacer()
-                    TextField("Soyisim", text: $personalInfoModel.lastName)
-                        .frame(height: UIScreen.main.bounds.height * 0.020)
-                        .padding()
-                        .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-                        .allowsHitTesting(false)
-                        .background(Color.secondary)
+                        //.background(Color.secondary)
                 }
-                TextField("telefon numarası", text: $personalInfoModel.phoneNumber)
-                    .keyboardType(.numberPad)
-                    .frame(height: UIScreen.main.bounds.height * 0.020)
-                    .padding()
-                    .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-                TextField("doğum tarihi", text: $personalInfoModel.birthDay)
-                    .keyboardType(.numbersAndPunctuation)
-                    .frame(height: UIScreen.main.bounds.height * 0.020)
-                    .padding()
-                    .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-                HStack{
+                Section(header: Text("Soyisim")) {
+                    TextField("Soyisim", text: $personalInfoModel.lastName)
+                        //.background(Color.secondary)
+                        .allowsHitTesting(false)
+                }
+                Section(header: Text("Telefon")) {
+                    TextField("telefon numarası", text: $personalInfoModel.phoneNumber)
+                        .keyboardType(.numberPad)
+                }
+                Section(header: Text("Doğum tarihi")) {
+                    TextField("doğum tarihi", text: $personalInfoModel.birthDay)
+                        .keyboardType(.numbersAndPunctuation)
+                }
+                Section(header: Text("İl")) {
                     TextField("şehir", text: $personalInfoModel.city)
                         .autocapitalization(.words)
-                        .frame(height: UIScreen.main.bounds.height * 0.020)
-                        .padding()
-                        .overlay(Rectangle().stroke(Color.black,lineWidth:1))
+                }
+                Section(header: Text("İlçe")) {
                     TextField("ilçe", text: $personalInfoModel.town)
                         .autocapitalization(.words)
-                        .frame(height: UIScreen.main.bounds.height * 0.020)
-                        .padding()
-                        .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 }
             }
-            .background(Color.white)
             Spacer()
             Button(action: {
                 personalInfoModel.updateInfo()
@@ -74,8 +61,9 @@ struct PersonalInformationView: View{
                     .cornerRadius(10)
             }
         }
-        .padding()
-        .background(Color("back"))
+        .alert(isPresented: $personalInfoModel.showAlert, content: {
+            Alert(title: Text(personalInfoModel.alertTitle), message: Text(personalInfoModel.alertMessage), dismissButton: .default(Text("Tamam")))
+    })
         .onAppear{
             personalInfoModel.getInfos()
         }
@@ -93,14 +81,15 @@ struct LoginInformationView: View {
     var body: some View{
         VStack{
             CustomDismissButton(show: $show)
-            Text("Giriş Bilgileri")
-                .font(.title)
-                .fontWeight(.medium)
-            Spacer(minLength: 25)
             ScrollView(.vertical, showsIndicators: false){
+                Text("Giriş Bilgileri")
+                    .font(.title)
+                    .fontWeight(.medium)
+                Spacer(minLength: 25)
                 Section(header: Text("Email Değiştir")){
                     TextField("yeni email", text: $model.newEmail)
                         .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
                         .textCase(.lowercase)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
@@ -108,6 +97,7 @@ struct LoginInformationView: View {
                         .background(Color.white)
                     TextField("yeni email tekrarı", text: $model.newEmail2)
                         .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
                         .textCase(.lowercase)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
@@ -195,13 +185,15 @@ struct AppInformationView: View {
                 .fontWeight(.medium)
             Section{
                 Toggle("Gece Modu", isOn: $nightMode)
-                    .frame(height: UIScreen.main.bounds.height * 0.070)
+                    .frame(height: UIScreen.main.bounds.height * 0.050)
+                    .padding(.horizontal)
                     .background(Color.white)
                 Toggle("English", isOn: $language)
-                    .frame(height: UIScreen.main.bounds.height * 0.070)
+                    .frame(height: UIScreen.main.bounds.height * 0.050)
+                    .padding(.horizontal)
                     .background(Color.white)
                
-            }
+            }.padding()
             List {
                 Section(header: Text("İletişim Tercihleri")){
                     Toggle("E-posta", isOn: $sendEmail)
@@ -213,11 +205,8 @@ struct AppInformationView: View {
                     Toggle("Telefon", isOn: $callPhone)
                         .background(Color.white)
                 }
-            }.frame(height: UIScreen.main.bounds.height * 0.4)
-                .listStyle(.plain)
-            Spacer()
+            }.listStyle(.plain)
         }
-        .padding()
         .background(Color("back"))
     }
 }

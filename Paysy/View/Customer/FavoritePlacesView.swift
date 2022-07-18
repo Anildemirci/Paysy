@@ -26,7 +26,7 @@ struct FavoritePlacesView: View {
                     .background(Color.primary.opacity(0.05))
                     .cornerRadius(8)
                 List{
-                    ForEach(searchPlace == "" ? favPlace.userFavPlaces : favPlace.userFavPlaces.filter{$0.contains(searchPlace)},id:\.self) { i in
+                    ForEach(searchPlace == "" ? favPlace.userFavPlaces : favPlace.userFavPlaces.filter{$0.localizedCaseInsensitiveContains(searchPlace)},id:\.self) { i in
                         NavigationLink(destination: SelectedPlaceView(name: i)) {
                             VStack{
                                     HStack{

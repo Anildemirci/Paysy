@@ -26,7 +26,7 @@ struct PlacesView: View {
                 .padding(.horizontal)
                 .background(Color.primary.opacity(0.05))
                 .cornerRadius(8)
-            List(searchPlace == "" ? businessInfo.businessArray : businessInfo.businessArray.filter{$0.contains(searchPlace)},id: \.self){ i in
+            List(searchPlace == "" ? businessInfo.businessArray : businessInfo.businessArray.filter{$0.localizedCaseInsensitiveContains(searchPlace)},id: \.self){ i in
                     NavigationLink(destination: SelectedPlaceView(name: i)) {
                         VStack{
                                 HStack{

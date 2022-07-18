@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import SDWebImageSwiftUI
 
 struct CustomerHomeView: View {
     
@@ -78,10 +79,17 @@ struct CustomerHomeView: View {
                             Image(systemName: "house.fill")
                         }
                         .tag(0)
-                        FavoritePlacesView().tabItem {
-                            Image(systemName: "star.fill")
+                        if currentUser != nil {
+                            FavoritePlacesView().tabItem {
+                                Image(systemName: "star.fill")
+                            }
+                            .tag(1)
+                        } else {
+                            Login_SignInView().tabItem{
+                                Image(systemName: "star.fill")
+                            }.tag(2)
                         }
-                        .tag(1)
+                        
                         if currentUser != nil {
                             if checkUser.checkUser == "" {
                                 QRView().tabItem {
@@ -283,6 +291,7 @@ struct CampaignCell: View {
 }
 
 struct ProfileMenu : View {
+    
     @Binding var dark : Bool
     @Binding var show : Bool
     @State private var showPersonalInfo = false
@@ -290,6 +299,10 @@ struct ProfileMenu : View {
     @State private var showAppInfo=false
     @State private var showInvite=false
     @State private var showHelp=false
+    @State private var image:UIImage?
+    @State private var showAddPhoto=false
+    @State private var isShowPhotoLibrary=false
+    @State private var isShowCamera=false
     
     @StateObject private var model=LoginAndSignInViewModel()
     @StateObject private var userInfo=UserInformationsViewModel()
@@ -311,10 +324,63 @@ struct ProfileMenu : View {
             }.padding(.top)
                 .padding(.bottom,5)
             
-            Image(systemName: "person")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .clipShape(Circle())
+            ZStack(alignment: .topTrailing ){
+                if image != nil {
+                    VStack{
+                        HStack{
+                            Button(action: {
+                                image=nil
+                            }) {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.blue)
+                            }
+                            Spacer()
+                            Button(action: {
+                                userInfo.uploadProfilePhoto(selectPhoto: image!)
+                            }) {
+                                Image(systemName: "checkmark")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        Image(uiImage: image!)
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                    }
+                } else if userInfo.profilePhoto != "" {
+                    AnimatedImage(url: URL(string: userInfo.profilePhoto))
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .clipShape(Circle())
+                    Button(action: {
+                        userInfo.trashClicked()
+                    }) {
+                        Image(systemName: "trash")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.blue)
+                    }
+                } else if userInfo.profilePhoto == "" {
+                    VStack{
+                        Image(systemName: "person")
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                        Button(action: {
+                            showAddPhoto.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
+            }
             
             VStack(spacing: 12){
                 Text(userInfo.firstName)
@@ -443,6 +509,34 @@ struct ProfileMenu : View {
             }
             
             Spacer()
+        }
+        .onAppear{
+            userInfo.getProfilePhoto()
+        }
+        .alert(isPresented: $userInfo.showAlert, content: {
+            Alert(title: Text(userInfo.alertTitle), message: Text(userInfo.alertMessage), dismissButton: .default(Text("Tamam")))
+        })
+        .actionSheet(isPresented: $showAddPhoto){
+            ActionSheet(title: Text("Fotoğraf Yükle"),
+                        buttons: [
+                            .default(Text("Kamera")) {
+                                isShowCamera.toggle()
+                            },
+                            .default(Text("Galeri")) {
+                                isShowPhotoLibrary.toggle()
+                            },
+                            .destructive(Text("İptal")) {
+                                
+                            },
+                        ])
+        }
+        .sheet(isPresented: $isShowPhotoLibrary) {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $image)
+        }.sheet(isPresented: $isShowCamera) {
+            ImagePicker(sourceType: .camera, selectedImage: $image)
+        }
+        .fullScreenCover(isPresented: $userInfo.showHome) { () -> CustomerHomeView in
+            return CustomerHomeView()
         }
         .foregroundColor(.primary)
         .padding(.horizontal,20)

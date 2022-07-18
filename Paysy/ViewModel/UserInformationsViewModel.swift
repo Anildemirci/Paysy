@@ -27,6 +27,8 @@ class UserInformationsViewModel : ObservableObject {
     @Published var favCheck=false
     @Published var userFavPlaces=[String]()
     @Published var userIDArray=[String]()
+    @Published var profilePhoto=""
+    @Published var showHome=false
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -36,7 +38,13 @@ class UserInformationsViewModel : ObservableObject {
                                                                                         "DateofBirth":birthDay,
                                                                                         "City":city,
                                                                                         "Town":town
-                                                                                       ])
+                                                                                    ]) { error in
+            if error == nil {
+                self.alertTitle="Başarılı"
+                self.alertMessage="Bilgiler güncellenmiştir."
+                self.showAlert.toggle()
+            }
+        }
     }
     
     func getInfos(){
@@ -161,4 +169,87 @@ class UserInformationsViewModel : ObservableObject {
         self.showAlert.toggle()
     }
     
+    
+    func getProfilePhoto(){
+        
+        self.firestoreDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).addSnapshotListener { (snapshot, error) in
+                if error == nil {
+                    if let imageUrl=snapshot?.get("imageUrl") as? String {
+                        self.profilePhoto=imageUrl
+                    }
+                }
+            }
+        }
+    
+    func uploadProfilePhoto(selectPhoto : UIImage){
+        
+            let storage=Storage.storage()
+            let storageReference=storage.reference()
+            let mediaFolder=storageReference.child("Profile")
+            if let data=selectPhoto.jpegData(compressionQuality: 0.75) {
+                let uuid=Auth.auth().currentUser!.uid
+                
+                let imageReference=mediaFolder.child("\(uuid).jpg")
+                imageReference.putData(data, metadata: nil) { (metadata, error) in
+                    if error != nil {
+                        self.alertTitle="Hata"
+                        self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                        self.showAlert.toggle()
+                    } else {
+                        imageReference.downloadURL { (url, error) in
+                            if error == nil {
+                                let imageUrl=url?.absoluteString
+                                
+                                let firestoreProfile=["imageUrl":imageUrl!,
+                                                      "ID":Auth.auth().currentUser!.uid,
+                                                      "User":Auth.auth().currentUser!.email!,
+                                                      "Date":FieldValue.serverTimestamp()] as [String:Any]
+                                self.firestoreDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).setData(firestoreProfile) { (error) in
+                                    if error != nil {
+                                        self.alertTitle="Hata"
+                                        self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                                        self.showAlert.toggle()
+                                    } else {
+                                        self.alertTitle="Başarılı"
+                                        self.alertMessage="Fotoğraf yüklendi."
+                                        self.showHome.toggle()
+                                        self.showAlert.toggle()
+                                        
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+    func trashClicked(){
+        let storage=Storage.storage()
+        
+        self.firestoreDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).delete { error in
+                if error != nil {
+                    self.alertTitle="Hata"
+                    self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                    self.showAlert.toggle()
+                } else {
+                    let storageRef=storage.reference()
+                    let uuid=Auth.auth().currentUser!.uid
+                    let deleteRef=storageRef.child("Profile").child("\(uuid).jpg")
+                    deleteRef.delete { error in
+                        if error != nil {
+                            self.alertTitle="Hata"
+                            self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                            self.showAlert.toggle()
+                        } else {
+                            self.alertTitle="Başarılı"
+                            self.alertMessage="Profil fotoğrafınız silinmiştir."
+                            self.profilePhoto=""
+                            self.showAlert.toggle()
+                        }
+                    }
+                }
+            }
+        }
 }

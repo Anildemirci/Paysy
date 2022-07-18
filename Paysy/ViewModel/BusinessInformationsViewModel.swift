@@ -32,6 +32,8 @@ class BusinessInformationsViewModel : ObservableObject {
     @Published var totalTable=""
     @Published var getTotalTable=""
     @Published var getTableName=[String]()
+    @Published var openingTime=""
+    @Published var closingTime=""
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -69,6 +71,12 @@ class BusinessInformationsViewModel : ObservableObject {
                 }
                 if let phone = snapshot?.get("Phone") as? String {
                     self.phoneNumber=phone
+                }
+                if let closeHour = snapshot?.get("Closed") as? String {
+                    self.closingTime=closeHour
+                }
+                if let openHour = snapshot?.get("Opened") as? String {
+                    self.openingTime=openHour
                 }
             }
         }
@@ -252,4 +260,31 @@ class BusinessInformationsViewModel : ObservableObject {
         }
     }
     
+    func businessWorkingHour(){
+        if openingTime != "" && closingTime != "" {
+            firestoreDatabase.collection("Business").whereField("User", isEqualTo: currentUser!.uid).getDocuments { (snapshot, error) in
+                if error == nil {
+                    for document in snapshot!.documents{
+                        let documentId=document.documentID
+                        if document.get("Opened") != nil && document.get("Closed") != nil {
+                            self.firestoreDatabase.collection("Business").document(documentId).updateData(["Opened":self.openingTime])
+                            self.firestoreDatabase.collection("Business").document(documentId).updateData(["Closed":self.closingTime])
+                            }
+                        else {
+                            let addOpened=["Opened":self.openingTime,
+                                           "Closed":self.closingTime] as [String:Any]
+                            self.firestoreDatabase.collection("Business").document(documentId).setData(addOpened, merge: true)
+                            self.alertTitle="Başarılı"
+                            self.alertMessage="Çalışma saatleri değiştirilmiştir."
+                            self.showAlert.toggle()
+                        }
+                    }
+                }
+            }
+        } else {
+            self.alertTitle="Hata"
+            self.alertMessage="Lütfen tüm bilgileri giriniz."
+            self.showAlert.toggle()
+        }
+    }
 }

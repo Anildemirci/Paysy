@@ -32,6 +32,11 @@ class LoginAndSignInViewModel : ObservableObject {
     @Published var showHome=false
     @Published var userEmailArray=[String]()
     @Published var businessEmailArray=[String]()
+    @Published var showBusinessLocation=false
+    @Published var businessTown=""
+    @Published var businessCity=""
+    @Published var businessAddress=""
+    
     
     var currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -410,7 +415,6 @@ class LoginAndSignInViewModel : ObservableObject {
                                            "Village":"",
                                            "Street":"",
                                            "Address":"",
-                                           "WorkingHour":"",
                                            "Type":"Business",
                                            "Date":FieldValue.serverTimestamp()] as [String:Any]
                         
@@ -426,11 +430,13 @@ class LoginAndSignInViewModel : ObservableObject {
                                          self.alertMessage=error2?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
                                          self.showAlert.toggle()
                                      } else {
-                                         self.alertTitle="Başarılı!"
-                                         self.alertMessage="Üyelik oluşturuldu e-posta adresinize mail gönderildi."
-                                         self.showAlert.toggle()
+                                         /*
+                                          self.alertTitle="Başarılı!"
+                                          self.alertMessage="Üyelik oluşturuldu e-posta adresinize mail gönderildi."
+                                          self.showAlert.toggle()
+                                          */
                                          
-                                         try! Auth.auth().signOut()
+                                         self.showBusinessLocation.toggle()
                                      }
                                  })
                             }
@@ -497,6 +503,7 @@ class LoginAndSignInViewModel : ObservableObject {
                                      self.showHome.toggle()
                                  }
                                  */
+                                
                                 self.showHome.toggle()
                             } else {
                                 self.alertTitle="Hata!"
@@ -515,4 +522,23 @@ class LoginAndSignInViewModel : ObservableObject {
         }
     }
 
+    func businessAddressInfo(){
+        
+        if businessTown != "" && businessCity != "" && businessAddress != "" {
+            firestoreDatabase.collection("Business").document(Auth.auth().currentUser!.uid).updateData(["City":businessCity,"Town":businessTown,"Address":businessAddress]) { error in
+                if error != nil {
+                    self.alertTitle="Hata"
+                    self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                } else {
+                    //try! Auth.auth().signOut()
+                    self.showHome.toggle()
+                }
+            }
+        } else {
+            self.alertTitle="Hata"
+            self.alertMessage="Lütfen tüm bilgileri giriniz."
+            self.showAlert.toggle()
+        }
+    }
+    
 }
