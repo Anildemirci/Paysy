@@ -29,6 +29,7 @@ class UserInformationsViewModel : ObservableObject {
     @Published var userIDArray=[String]()
     @Published var profilePhoto=""
     @Published var showHome=false
+    @Published var placeModels = [placeModel]()
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -73,6 +74,22 @@ class UserInformationsViewModel : ObservableObject {
                 }
                 if let favPlaces=snapshot?.get("FavoritePlaces") as? [String]{
                     self.userFavPlaces=favPlaces
+                }
+                
+                for i in self.userFavPlaces {
+                    self.placeModels.removeAll(keepingCapacity: false)
+                    self.firestoreDatabase.collection("ProfilePhoto").whereField("Place Name", isEqualTo: i).addSnapshotListener { (snapshot, error) in
+                            if error == nil {
+                                
+                                for document in snapshot!.documents{
+                                    let placePhoto=document.get("imageUrl") as? String
+                                    let placeName=document.get("Place Name") as? String
+
+                                    self.placeModels.append(placeModel(name: placeName ?? "", imageUrl: placePhoto ?? ""))
+                                }
+                                
+                            }
+                        }
                 }
             }
         }
@@ -129,7 +146,7 @@ class UserInformationsViewModel : ObservableObject {
     }
     
     func addFavorite(placeName:String){
-        self.firestoreDatabase.collection("Users").whereField("User", isEqualTo: self.currentUser?.uid).getDocuments { (snapshot, error) in
+        self.firestoreDatabase.collection("Users").whereField("User", isEqualTo: self.currentUser?.uid).addSnapshotListener { (snapshot, error) in
             if error == nil {
                 for document in snapshot!.documents{
                     let documentId=document.documentID

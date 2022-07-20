@@ -192,27 +192,50 @@ struct CategoriesCell: View {
 
 struct PlacesCell: View {
     
+    //@StateObject private var businessArray=BusinessesViewModel()
+    @StateObject private var businessPhotos=BusinessPhotoViewModel()
+    
     var body: some View {
         VStack(alignment: .leading,spacing: 10){
             Text("Mekanlar")
                 .font(.largeTitle)
             ScrollView(.horizontal,showsIndicators: false){
                 HStack(spacing:10){
-                    ForEach(places,id:\.self) { i in
-                        NavigationLink(destination: SelectedPlaceView(name: i)) {
-                            VStack{
-                                Image(i)
-                                    .resizable()
-                                    .frame(width:UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.225)
-                                    .cornerRadius(20)
-                                Text(i)
-                                    .font(.title)
-                                    .foregroundColor(Color.black)
+                    ForEach(businessPhotos.placeModels) { i in
+                        if Auth.auth().currentUser?.uid == nil {
+                            NavigationLink(destination: Login_SignInView()) {
+                                VStack{
+                                    AnimatedImage(url: URL(string: i.imageUrl))
+                                    //Image(i)
+                                        .resizable()
+                                        .frame(width:UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.225)
+                                        .cornerRadius(20)
+                                    Text(i.name)
+                                        .font(.title)
+                                        .foregroundColor(Color.black)
+                                }
+                            }
+                        } else {
+                            NavigationLink(destination: SelectedPlaceView(name: i.name)) {
+                                VStack{
+                                    AnimatedImage(url: URL(string: i.imageUrl))
+                                    //Image(i)
+                                        .resizable()
+                                        .frame(width:UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.225)
+                                        .cornerRadius(20)
+                                    Text(i.name)
+                                        .font(.title)
+                                        .foregroundColor(Color.black)
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+        .onAppear{
+            //businessArray.getAllBusinesses()
+            businessPhotos.getProfilePhotoForUser(placeName: "")
         }
         //.padding()
         .frame(width: UIScreen.main.bounds.width * 0.9)

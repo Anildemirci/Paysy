@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
+import Firebase
 
 struct PlacesView: View {
     
     @State private var searchPlace=""
     //@State private var show=false
     @StateObject private var businessInfo=BusinessesViewModel()
+    @StateObject private var businessPhotos=BusinessPhotoViewModel()
     var type=""
     var town=""
     
@@ -26,28 +29,48 @@ struct PlacesView: View {
                 .padding(.horizontal)
                 .background(Color.primary.opacity(0.05))
                 .cornerRadius(8)
-            List(searchPlace == "" ? businessInfo.businessArray : businessInfo.businessArray.filter{$0.localizedCaseInsensitiveContains(searchPlace)},id: \.self){ i in
-                    NavigationLink(destination: SelectedPlaceView(name: i)) {
-                        VStack{
-                                HStack{
-                                    Text(i)
-                                        .font(.title)
-                                    Spacer()
-                                    //Text("Puan: \(i.point,specifier: "%.2f")")
-                                }
-                            Image(i)
-                                    .resizable()
-                                    .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.25)
-                                    .cornerRadius(20)
-                            //Text(i.location)
+            List(searchPlace == "" ? businessInfo.placeModels : businessInfo.placeModels.filter{$0.name.localizedCaseInsensitiveContains(searchPlace)}){ i in
+                if Auth.auth().currentUser?.uid == nil {
+                    NavigationLink(destination: Login_SignInView()) {
+                            VStack{
+                                    HStack{
+                                        Text(i.name)
+                                            .font(.title)
+                                        Spacer()
+                                        //Text("Puan: \(i.point,specifier: "%.2f")")
+                                    }
+                                AnimatedImage(url: URL(string: i.imageUrl))
+                                //Image(i)
+                                        .resizable()
+                                        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.25)
+                                        .cornerRadius(20)
+                                //Text(i.location)
+                            }
                         }
-                    }
+                } else {
+                    NavigationLink(destination: SelectedPlaceView(name: i.name)) {
+                            VStack{
+                                    HStack{
+                                        Text(i.name)
+                                            .font(.title)
+                                        Spacer()
+                                        //Text("Puan: \(i.point,specifier: "%.2f")")
+                                    }
+                                AnimatedImage(url: URL(string: i.imageUrl))
+                                //Image(i)
+                                        .resizable()
+                                        .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.25)
+                                        .cornerRadius(20)
+                                //Text(i.location)
+                            }
+                        }
+                }
                 
             }.listStyle(.plain)
                 .navigationBarTitle(town,displayMode: .inline)
         }
         .onAppear{
-            businessInfo.getBusinesses(town: town)
+            businessInfo.businessesForTown(town: town)
         }
     }
 }

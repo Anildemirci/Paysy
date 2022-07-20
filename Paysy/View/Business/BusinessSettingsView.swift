@@ -245,7 +245,7 @@ struct AddMenuItemView: View {
         }
     }
 }
-//ürün ekleyince anlık güncelle ve silince
+
 struct SubMenuView: View {
     
     @StateObject private var menuViewModel=MenuViewModel()
@@ -272,13 +272,12 @@ struct SubMenuView: View {
                                 HStack {
                                     Text(item.itemName)
                                     Spacer()
-                                    Text(item.price)
+                                    Text(item.price+" ₺" )
                                 }.onTapGesture {
                                     selectedSubMenu=item.SubMenuType
                                     editName=item.itemName
                                     editPrice=item.price
                                     editStatement=item.statement
-                                    print(editName)
                                     editShow.toggle()
                                 }
                             }
@@ -303,8 +302,55 @@ struct SubMenuView: View {
             AddItemView(menuName: menuName, subMenuName: subMenuName, placeName: placeName)
         }
         .sheet(isPresented: $editShow) {
-            AddItemView(menuName: menuName, subMenuName: subMenuName, placeName: placeName,editName:editName,editPrice:editPrice,editStatement: editStatement)
+            EditItemView(menuName: menuName, subMenuName: subMenuName, placeName: placeName,editName:$editName, editPrice:$editPrice,editStatement: $editStatement)
         }
+    }
+}
+
+struct EditItemView: View{
+    
+    @StateObject private var menuViewModel=MenuViewModel()
+    @State var menuName=""
+    @State var subMenuName=""
+    @State var placeName=""
+    @Binding var editName: String
+    @Binding var editPrice: String
+    @Binding var editStatement: String
+    
+    var body: some View {
+        Spacer()
+            VStack{
+                Form{
+                    Section(header: Text("Ürün Adı")){
+                        TextField("Hamburger,Pizza,Bira", text: $editName)
+                            .autocapitalization(.words)
+                    }
+                    Section(header: Text("Fiyatı")){
+                        TextField("100", text: $editPrice)
+                            .keyboardType(.numberPad)
+                    }
+                    Section(header: Text("Ürün açıklaması")){
+                        TextField("içerik", text: $editStatement)
+                            .autocapitalization(.sentences)
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.4)
+                Button(action: {
+                    menuViewModel.editItem(itemName: menuViewModel.editItemName, newItemName: editName, newPrice: editPrice, newStatement: editStatement, placeName: placeName, menuName: menuName, subCategories: subMenuName)
+                }) {
+                    Text("Ekle")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(Color.white)
+                    .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
+                    .background(Color.green)
+                    .cornerRadius(10)
+                }
+                Spacer()
+                    .navigationTitle(subMenuName).navigationBarTitleDisplayMode(.inline)
+            }.onAppear{
+                menuViewModel.getItemForEdit(placeName: placeName, itemName: editName)
+            }
     }
 }
 
@@ -396,3 +442,4 @@ struct PartsView: View {
         }
     }
 }
+

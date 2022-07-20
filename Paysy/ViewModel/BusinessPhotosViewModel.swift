@@ -21,7 +21,10 @@ class BusinessPhotoViewModel : ObservableObject {
     @Published var posts = [dataType]()
     @Published var storageId=[String]()
     @Published var imageUrl=[String]()
-    @Published var profilPhoto=""
+    @Published var profilPhotoArray=[String]()
+    @Published var placeProilPhoto=""
+    @Published var placeModels = [placeModel]()
+    
     
     var didChange=PassthroughSubject<Array<Any>,Never>()
     var firebaseDatabase=Firestore.firestore()
@@ -62,7 +65,7 @@ class BusinessPhotoViewModel : ObservableObject {
         
         if let data=selectPhoto.jpegData(compressionQuality: 0.75) {
             let uuid=UUID().uuidString
-            
+
             let imageReference=mediaFolder.child("\(uuid).jpg")
             imageReference.putData(data,metadata: nil) { (metadata,error) in
                 if error != nil {
@@ -108,19 +111,21 @@ class BusinessPhotoViewModel : ObservableObject {
         self.firebaseDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).addSnapshotListener { (snapshot, error) in
                 if error == nil {
                     if let imageUrl=snapshot?.get("imageUrl") as? String {
-                        self.profilPhoto=imageUrl
+                        self.placeProilPhoto=imageUrl
                     }
                 }
             }
         }
     
-    func uploadProfilePhoto(selectPhoto : UIImage){
+    func uploadProfilePhoto(selectPhoto : UIImage, placeName: String){
         
             let storage=Storage.storage()
             let storageReference=storage.reference()
             let mediaFolder=storageReference.child("Profile")
             if let data=selectPhoto.jpegData(compressionQuality: 0.75) {
                 let uuid=Auth.auth().currentUser!.uid
+                
+                //firebaseDatabase.collection("Business").document(Auth.auth().currentUser!.uid).setData( ["ImageUrl":imageUr], merge: true)
                 
                 let imageReference=mediaFolder.child("\(uuid).jpg")
                 imageReference.putData(data, metadata: nil) { (metedata, error) in
@@ -133,8 +138,13 @@ class BusinessPhotoViewModel : ObservableObject {
                             if error == nil {
                                 let imageUrl=url?.absoluteString
                                 
+                                let pp=["ImageUrl":imageUrl!] as [String:Any]
+                                
+                                self.firebaseDatabase.collection("Business").document(Auth.auth().currentUser!.uid).updateData(pp)
+                                
                                 let firestoreProfile=["imageUrl":imageUrl!,
                                                       "ID":Auth.auth().currentUser!.uid,
+                                                      "Place Name":placeName,
                                                       "User":Auth.auth().currentUser!.email!,
                                                       "Date":FieldValue.serverTimestamp()] as [String:Any]
                                 self.firebaseDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).setData(firestoreProfile) { (error) in
@@ -160,6 +170,12 @@ class BusinessPhotoViewModel : ObservableObject {
     func trashClicked(){
         let storage=Storage.storage()
         
+        self.firebaseDatabase.collection("Business").document(Auth.auth().currentUser!.uid).updateData(["ImageUrl":""]) { error in
+            if error == nil {
+                
+            }
+        }
+        
         self.firebaseDatabase.collection("ProfilePhoto").document(Auth.auth().currentUser!.uid).delete { error in
                 if error != nil {
                     self.titleInput="Hata"
@@ -177,7 +193,7 @@ class BusinessPhotoViewModel : ObservableObject {
                         } else {
                             self.titleInput="Başarılı"
                             self.messageInput="Profil fotoğrafınız silinmiştir."
-                            self.profilPhoto=""
+                            self.placeProilPhoto=""
                             self.showingAlert.toggle()
                         }
                     }
@@ -194,7 +210,7 @@ class BusinessPhotoViewModel : ObservableObject {
                  let delPhoto=imageUrl[index]
                  let delStorage=storageId[index]
                  
-                 self.firebaseDatabase.collection("BusinessPhotos").document(self.placeName).collection("Photos").whereField("photoUrl", isEqualTo: delPhoto).getDocuments() { (query, error) in
+                 self.firebaseDatabase.collection("BusinessPhotos").document(self.placeName).collection("Photos").whereField("photoUrl", isEqualTo: delPhoto).addSnapshotListener() { (query, error) in
                      if error == nil {
                          for document in query!.documents{
                              let delDocID=document.documentID
@@ -327,6 +343,29 @@ class BusinessPhotoViewModel : ObservableObject {
                 }
             }
     }
+    
+    func getProfilePhotoForUser(placeName: String){
+        
+        self.firebaseDatabase.collection("ProfilePhoto").addSnapshotListener { (snapshot, error) in
+                if error == nil {
+                    self.placeModels.removeAll(keepingCapacity: false)
+                    
+                    for document in snapshot!.documents {
+                        if placeName==document.get("Place Name") as? String {
+                            if let profilPhoto=document.get("imageUrl") as? String {
+                                self.placeProilPhoto=profilPhoto
+                            }
+                        }
+                        
+                        let placePhoto=document.get("imageUrl") as? String
+                        let placeName=document.get("Place Name") as? String
+
+                        self.placeModels.append(placeModel(name: placeName ?? "", imageUrl: placePhoto ?? ""))
+                    }
+                }
+            }
+        }
+    
 }
 
 var placeNameFromUser=""

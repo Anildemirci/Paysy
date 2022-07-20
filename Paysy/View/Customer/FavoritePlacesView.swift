@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct FavoritePlacesView: View {
     @State private var searchPlace=""
     @StateObject private var favPlace=UserInformationsViewModel()
+    
     var body: some View {
-        
-        //eğer giriş yapılmadan basılırsa çöküyor uygulama. fav mekan yoksa yazı göster.
         
         NavigationView {
             VStack{
@@ -26,16 +26,17 @@ struct FavoritePlacesView: View {
                     .background(Color.primary.opacity(0.05))
                     .cornerRadius(8)
                 List{
-                    ForEach(searchPlace == "" ? favPlace.userFavPlaces : favPlace.userFavPlaces.filter{$0.localizedCaseInsensitiveContains(searchPlace)},id:\.self) { i in
-                        NavigationLink(destination: SelectedPlaceView(name: i)) {
+                    ForEach(searchPlace == "" ? favPlace.placeModels : favPlace.placeModels.filter{$0.name.localizedCaseInsensitiveContains(searchPlace)}) { i in
+                        NavigationLink(destination: SelectedPlaceView(name: i.name)) {
                             VStack{
                                     HStack{
-                                        Text(i)
+                                        Text(i.name)
                                             .font(.title)
                                         Spacer()
                                         //Text("Puan: \(i.point,specifier: "%.2f")")
                                     }
-                                Image(i)
+                                AnimatedImage(url: URL(string: i.imageUrl))
+                                //Image(i.imageUrl)
                                         .resizable()
                                         .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.25)
                                         .cornerRadius(20)

@@ -19,6 +19,8 @@ class BusinessesViewModel : ObservableObject {
     //@Published var nameArray=[String]()
     @Published var townArray=[String]()
     @Published var businessArray=[String]()
+    @Published var placeModels=[placeModel]()
+    
     var didChange=PassthroughSubject<Array<Any>,Never>()
     
     func getTowns(){
@@ -47,7 +49,33 @@ class BusinessesViewModel : ObservableObject {
         }
     }
     
-    func getBusinesses(town:String){
+    /*
+     func getBusinesses(town:String){
+         
+         firestoreDatabase.collection("Business").order(by: "Place Name",descending: false).addSnapshotListener { (snapshot, error) in
+             if error != nil {
+                 self.alertTitle="Hata!"
+                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                 self.showAlert.toggle()
+             } else {
+                 if snapshot?.isEmpty != true && snapshot != nil {
+                     self.businessArray.removeAll(keepingCapacity: false)
+                     
+                     for document in snapshot!.documents {
+                         if let Name=document.get("Town") as? String {
+                             if Name==town {
+                                 let businessName=document.get("Place Name") as! String
+                                 self.businessArray.append(businessName)
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+     }
+     */
+    
+    func getAllBusinesses(){
         
         firestoreDatabase.collection("Business").order(by: "Place Name",descending: false).addSnapshotListener { (snapshot, error) in
             if error != nil {
@@ -59,16 +87,30 @@ class BusinessesViewModel : ObservableObject {
                     self.businessArray.removeAll(keepingCapacity: false)
                     
                     for document in snapshot!.documents {
-                        if let Name=document.get("Town") as? String {
-                            if Name==town {
-                                let businessName=document.get("Place Name") as! String
-                                self.businessArray.append(businessName)
-                            }
-                        }
+                        let businessName=document.get("Place Name") as! String
+                        self.businessArray.append(businessName)
+                        
                     }
                 }
             }
         }
     }
     
+    func businessesForTown(town: String){
+        firestoreDatabase.collection("Business").whereField("Town", isEqualTo: town).addSnapshotListener{ snapshot, error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                self.placeModels.removeAll(keepingCapacity: false)
+                for document in snapshot!.documents {
+                    let placeName=document.get("Place Name") as? String
+                    let imageUrl=document.get("ImageUrl") as? String
+                    
+                    self.placeModels.append(placeModel(name: placeName ?? "", imageUrl: imageUrl ?? ""))
+                }
+            }
+        }
+    }
 }

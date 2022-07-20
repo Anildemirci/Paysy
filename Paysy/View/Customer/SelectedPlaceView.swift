@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SelectedPlaceView: View {
     var name=""
     @State private var selected=1
     @StateObject private var favPlace=UserInformationsViewModel()
+    @StateObject private var businessPhotos=BusinessPhotoViewModel()
     
     var body: some View {
         VStack{
-            Image(name)
+            AnimatedImage(url: URL(string: businessPhotos.placeProilPhoto))
+            //Image(name)
                 .resizable()
                 .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
             HStack{
@@ -69,6 +72,7 @@ struct SelectedPlaceView: View {
                     }
         }.onAppear{
             favPlace.getInfos()
+            businessPhotos.getProfilePhotoForUser(placeName: name)
         }
     }
 }

@@ -8,4 +8,3 @@
 import Foundation
 
 var categories=["Bar","Kahve","Eğlence"]
-var places=["DorockXL","Fil","Ayı","Viktor Levi"]

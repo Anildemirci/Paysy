@@ -23,6 +23,7 @@ class MenuViewModel : ObservableObject {
     @Published var subCategoryName=""
     @Published var allItems=[menuModel]()
     @Published var allItemsName=[String]()
+    @Published var editItemName=""
     
     var didChange=PassthroughSubject<Array<Any>,Never>()
     let currentUser=Auth.auth().currentUser
@@ -118,7 +119,7 @@ class MenuViewModel : ObservableObject {
     }
     
     func getItem(placeName:String) {
-        firestoreDatabase.collection("Menu").document(placeName).collection("All Items").getDocuments { (snapshot,error)  in
+        firestoreDatabase.collection("Menu").document(placeName).collection("All Items").addSnapshotListener { (snapshot,error)  in
             if error != nil {
                 self.alertTitle="Hata!"
                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
@@ -142,6 +143,22 @@ class MenuViewModel : ObservableObject {
             }
         }
     }
+    
+    func getItemForEdit(placeName:String, itemName: String) {
+        firestoreDatabase.collection("Menu").document(placeName).collection("All Items").whereField("ItemName", isEqualTo: itemName).getDocuments { (snapshot,error)  in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                for document in snapshot!.documents {
+                    let itemName=document.get("ItemName") as! String
+                    self.editItemName=itemName
+                }
+            
+            }
+        }
+    }
 
     func deleteItem(at indexSet: IndexSet) {
         
@@ -149,7 +166,7 @@ class MenuViewModel : ObservableObject {
                  
                  getItem(placeName: placeNameForDeleteItem)
                  let delItem=allItemsName[index]
-                 firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection("All Items").whereField("ItemName", isEqualTo: delItem).getDocuments() { (query, error) in
+                 firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection("All Items").whereField("ItemName", isEqualTo: delItem).addSnapshotListener() { (query, error) in
                      if error == nil {
                          for document in query!.documents{
                              let delDocID=document.documentID
@@ -197,6 +214,40 @@ class MenuViewModel : ObservableObject {
                  firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).updateData(["Categories" : FieldValue.arrayRemove([delField])])
              }
          }
+    
+    func editItem(itemName:String,newItemName:String,newPrice:String,newStatement:String,placeName:String, menuName:String, subCategories:String){
+        
+        self.firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection("All Items").document(itemName).delete(){ error in
+            if error == nil {
+                self.alertTitle="Başarılı"
+                self.alertMessage="Ürün silindi."
+                self.showAlert.toggle()
+            }else {
+                self.alertTitle="Hata"
+                self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            }
+        }
+        
+        let firestoreUser=["Price":newPrice,
+                           "ItemName":newItemName,
+                           "MenuType":menuName,
+                           "SubMenuType":subCategories,
+                           "Statement":newStatement,
+                           "Date":FieldValue.serverTimestamp()] as [String:Any]
+        
+        firestoreDatabase.collection("Menu").document(placeName).collection("All Items").document(newItemName).setData(firestoreUser) { error in
+            if error != nil {
+                self.alertTitle="Hata!"
+                self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                self.showAlert.toggle()
+            } else {
+                self.alertTitle="Başarılı!"
+                self.alertMessage="Ürün eklendi."
+                self.showAlert.toggle()
+            }
+        }
+    }
 }
 
 var placeNameForDeleteItem=""

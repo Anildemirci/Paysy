@@ -136,7 +136,7 @@ class ConnectToPlaceViewModel : ObservableObject {
     func connectToPlaceWithPass(userFullName: String, tableID: String) {
         getCurrentTime()
         //tableid ile eşleşen mekanın ismini buluyor
-        firestoreDatabase.collection("CheckTable").whereField("TableID", isEqualTo: tableID).getDocuments { (snapshot, error) in
+        firestoreDatabase.collection("CheckTable").whereField("TableID", isEqualTo: tableID).addSnapshotListener { (snapshot, error) in
             if error == nil {
                 for document in snapshot!.documents {
                     if let placeName=document.get("Place Name") as? String {

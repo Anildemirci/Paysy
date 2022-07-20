@@ -182,7 +182,7 @@ class LoginAndSignInViewModel : ObservableObject {
     
     func forgotBusinessPassword(){
         
-        firestoreDatabase.collection("Business").getDocuments { snapshot, error in
+        firestoreDatabase.collection("Business").addSnapshotListener { snapshot, error in
             if error != nil {
                 self.alertTitle="Hata!"
                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
@@ -414,6 +414,7 @@ class LoginAndSignInViewModel : ObservableObject {
                                            "Phone":"",
                                            "Village":"",
                                            "Street":"",
+                                           "ImageUrl":"",
                                            "Address":"",
                                            "Type":"Business",
                                            "Date":FieldValue.serverTimestamp()] as [String:Any]
@@ -478,7 +479,7 @@ class LoginAndSignInViewModel : ObservableObject {
                     
                 } else {
                     
-                    self.firestoreDatabase.collection("Business").getDocuments { snapshot, error in
+                    self.firestoreDatabase.collection("Business").addSnapshotListener { snapshot, error in
                         if error != nil {
                             self.alertTitle="Hata!"
                             self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."

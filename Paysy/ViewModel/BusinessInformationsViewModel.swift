@@ -34,6 +34,7 @@ class BusinessInformationsViewModel : ObservableObject {
     @Published var getTableName=[String]()
     @Published var openingTime=""
     @Published var closingTime=""
+    @Published var placeModels=[placeModel]()
     
     let currentUser=Auth.auth().currentUser
     let firestoreDatabase=Firestore.firestore()
@@ -84,7 +85,7 @@ class BusinessInformationsViewModel : ObservableObject {
     
     //business info for user
     func getInfoForUser(placeName:String){
-        firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).getDocuments { (snapshot, error) in
+        firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).addSnapshotListener { (snapshot, error) in
             if error == nil {
                 for document in snapshot!.documents{
                     if let address=document.get("Address") as? String {
@@ -114,7 +115,7 @@ class BusinessInformationsViewModel : ObservableObject {
     }
     //kullanıcı için lokasyonun koordinatlarını getiriyor
     func getLocation(placeName:String){
-        firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).getDocuments { (snapshot, error) in
+        firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).addSnapshotListener { (snapshot, error) in
             if error == nil {
                 for document in snapshot!.documents {
                     let documentId=document.documentID
@@ -173,7 +174,7 @@ class BusinessInformationsViewModel : ObservableObject {
     
     //business arrayi
     func businesses(){
-        firestoreDatabase.collection("Business").getDocuments { snapshot, error in
+        firestoreDatabase.collection("Business").addSnapshotListener { snapshot, error in
             if error != nil {
                 self.alertTitle="Hata!"
                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
@@ -262,7 +263,7 @@ class BusinessInformationsViewModel : ObservableObject {
     
     func businessWorkingHour(){
         if openingTime != "" && closingTime != "" {
-            firestoreDatabase.collection("Business").whereField("User", isEqualTo: currentUser!.uid).getDocuments { (snapshot, error) in
+            firestoreDatabase.collection("Business").whereField("User", isEqualTo: currentUser!.uid).addSnapshotListener { (snapshot, error) in
                 if error == nil {
                     for document in snapshot!.documents{
                         let documentId=document.documentID
@@ -287,4 +288,5 @@ class BusinessInformationsViewModel : ObservableObject {
             self.showAlert.toggle()
         }
     }
+
 }

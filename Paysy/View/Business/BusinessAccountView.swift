@@ -53,11 +53,11 @@ struct BusinessAccountView: View {
                                     Image(uiImage: image!)
                                         .resizable()
                                         .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
-                                } else if businessPhoto.profilPhoto != "" {
-                                    AnimatedImage(url: URL(string: businessPhoto.profilPhoto))
+                                } else if businessPhoto.placeProilPhoto != "" {
+                                    AnimatedImage(url: URL(string: businessPhoto.placeProilPhoto))
                                         .resizable()
                                         .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.3)
-                                } else if businessPhoto.profilPhoto == "" {
+                                } else if businessPhoto.placeProilPhoto == "" {
                                     Button(action: {
                                         showAddPhoto.toggle()
                                     }) {
@@ -116,19 +116,19 @@ struct BusinessAccountView: View {
                                 
                                     .navigationBarItems(trailing:
                                                             Button(action: {
-                                        if businessPhoto.profilPhoto == "" && image == nil {
+                                        if businessPhoto.placeProilPhoto == "" && image == nil {
                                             showAddPhoto.toggle()
                                         } else if image != nil {
-                                            businessPhoto.uploadProfilePhoto(selectPhoto: image!)
-                                        } else if businessPhoto.profilPhoto != "" {
+                                            businessPhoto.uploadProfilePhoto(selectPhoto: image!, placeName: businessInfo.placeName)
+                                        } else if businessPhoto.placeProilPhoto != "" {
                                             businessPhoto.trashClicked()
                                         }
                                     }){
                                         if image != nil {
                                             Image(systemName: "checkmark").resizable().frame(width: 25, height: 25).foregroundColor(Color.white)
-                                        } else if businessPhoto.profilPhoto == "" && image == nil {
+                                        } else if businessPhoto.placeProilPhoto == "" && image == nil {
                                             Image(systemName: "plus").resizable().frame(width: 25, height: 25).foregroundColor(Color.white)
-                                        } else if businessPhoto.profilPhoto != "" {
+                                        } else if businessPhoto.placeProilPhoto != "" {
                                             Image(systemName: "trash").resizable().frame(width: 25, height: 25).foregroundColor(Color.white)
                                         }
                                     })

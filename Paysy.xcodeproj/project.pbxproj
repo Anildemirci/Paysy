@@ -32,7 +32,6 @@
 		04A9056A28175F1D00999A5F /* PhoneTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056928175F1D00999A5F /* PhoneTextModel.swift */; };
 		04A9056C28175F3700999A5F /* PlaceInformationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */; };
 		04A9056E28175F6E00999A5F /* PlaceCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056D28175F6E00999A5F /* PlaceCommentModel.swift */; };
-		04A9057028175F8500999A5F /* PlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9056F28175F8500999A5F /* PlacesViewModel.swift */; };
 		04A9057228175FA300999A5F /* CreditCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9057128175FA300999A5F /* CreditCardModel.swift */; };
 		04A9057428175FAE00999A5F /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9057328175FAE00999A5F /* HomeModel.swift */; };
 		04A9057628175FF600999A5F /* UserInformationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A9057528175FF600999A5F /* UserInformationsModel.swift */; };
@@ -66,6 +65,7 @@
 		04E4552C285CE9FC00452B1F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 04E4552B285CE9FC00452B1F /* SDWebImageSwiftUI */; };
 		04E916D42829CD20009A4DA3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 04E916D32829CD20009A4DA3 /* CodeScanner */; };
 		04E916DC2829D7B6009A4DA3 /* ConnectToPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */; };
+		04F141B52887F8B10043949F /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F141B42887F8B10043949F /* PlaceModel.swift */; };
 		04F35D60287CC4FB00EBE67A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F35D5F287CC4FB00EBE67A /* Timer.swift */; };
 		0CC0A39379EAE427F9689EA9 /* Pods_Paysy_PaysyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1702A9D21853497D0DADA2 /* Pods_Paysy_PaysyUITests.framework */; };
 		1BCAEA90B53D05088590EC56 /* Pods_Paysy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9FDFBABB80184A0472D34B1 /* Pods_Paysy.framework */; };
@@ -138,7 +138,6 @@
 		04A9056928175F1D00999A5F /* PhoneTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextModel.swift; sourceTree = "<group>"; };
 		04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInformationsModel.swift; sourceTree = "<group>"; };
 		04A9056D28175F6E00999A5F /* PlaceCommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCommentModel.swift; sourceTree = "<group>"; };
-		04A9056F28175F8500999A5F /* PlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewModel.swift; sourceTree = "<group>"; };
 		04A9057128175FA300999A5F /* CreditCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardModel.swift; sourceTree = "<group>"; };
 		04A9057328175FAE00999A5F /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		04A9057528175FF600999A5F /* UserInformationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationsModel.swift; sourceTree = "<group>"; };
@@ -175,6 +174,7 @@
 		04E45526285CE6E400452B1F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		04E45528285CE70400452B1F /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		04E916DB2829D7B6009A4DA3 /* ConnectToPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToPlaceView.swift; sourceTree = "<group>"; };
+		04F141B42887F8B10043949F /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		04F35D5F287CC4FB00EBE67A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		1BB8F1BA49CE080B2BA37BEB /* Pods-Paysy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.debug.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.debug.xcconfig"; sourceTree = "<group>"; };
 		3C2E9A2FA98CA4D7A313EC60 /* Pods-Paysy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Paysy.release.xcconfig"; path = "Target Support Files/Pods-Paysy/Pods-Paysy.release.xcconfig"; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 			children = (
 				04A9057328175FAE00999A5F /* HomeModel.swift */,
 				04A9057128175FA300999A5F /* CreditCardModel.swift */,
-				04A9056F28175F8500999A5F /* PlacesViewModel.swift */,
+				04F141B42887F8B10043949F /* PlaceModel.swift */,
 				04A9056D28175F6E00999A5F /* PlaceCommentModel.swift */,
 				04A9056B28175F3700999A5F /* PlaceInformationsModel.swift */,
 				04C47FD5286208C7005BA7E4 /* PhotoModel.swift */,
@@ -757,6 +757,7 @@
 				04CAD7C42808D60B005D13AB /* PlaceCommentsView.swift in Sources */,
 				048300D1285E69BF0085AC62 /* BusinessInformationsViewModel.swift in Sources */,
 				04C47FD82862131A005BA7E4 /* BusinessInformationsView.swift in Sources */,
+				04F141B52887F8B10043949F /* PlaceModel.swift in Sources */,
 				0420239E2809F68D00C2824A /* CustomObjects.swift in Sources */,
 				04A9056A28175F1D00999A5F /* PhoneTextModel.swift in Sources */,
 				04A6305B2808C10800F4088C /* TownsView.swift in Sources */,
@@ -782,7 +783,6 @@
 				04F35D60287CC4FB00EBE67A /* Timer.swift in Sources */,
 				048300CF285E69410085AC62 /* MapViewModel.swift in Sources */,
 				04C8444928060FE300DEE45E /* PaysyApp.swift in Sources */,
-				04A9057028175F8500999A5F /* PlacesViewModel.swift in Sources */,
 				04A9057428175FAE00999A5F /* HomeModel.swift in Sources */,
 				0445F1A42809A1B2000D0CAD /* QRView.swift in Sources */,
 				04CAD7C22808D600005D13AB /* PlaceInformationsView.swift in Sources */,
