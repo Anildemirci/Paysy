@@ -29,7 +29,7 @@ struct BusinessAccountView: View {
         //TabBarAppearance.isHidden=false
         }
     
-    @State private var selected=1
+    @State private var selected=0
     @State private var showAddPhoto=false
     @State private var isShowPhotoLibrary=false
     @State private var isShowCamera=false
@@ -86,8 +86,8 @@ struct BusinessAccountView: View {
                                 .padding()
                                 VStack{
                                     if selected == 1 {
-                                        BusinessInformationsView()
-                                    } else {
+                                        BusinessInformationsView(placeName: businessInfo.placeName)
+                                    } else if selected == 2 {
                                         BusinessCommentsView(placeName:businessInfo.placeName)
                                     }
                                 }

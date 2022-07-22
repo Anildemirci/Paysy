@@ -12,6 +12,7 @@ struct BusinessCommentsView: View {
     @State private var showEdit=false
     @State private var show=false
     @State var placeName=""
+    
     var body: some View {
         VStack{
             CommentStructView(placeName:placeName)

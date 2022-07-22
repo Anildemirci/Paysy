@@ -43,7 +43,7 @@ class MenuViewModel : ObservableObject {
                 self.showAlert.toggle()
             } else {
                 self.alertTitle="Başarılı!"
-                self.alertMessage="Kaydedildi."
+                self.alertMessage="Menü eklendi."
                 self.showAlert.toggle()
             }
         }
@@ -61,7 +61,7 @@ class MenuViewModel : ObservableObject {
                 
             } else {
                 self.alertTitle="Başarılı!"
-                self.alertMessage="Ürün eklendi."
+                self.alertMessage="Alt menü eklendi."
                 self.showAlert.toggle()
             }
         }
@@ -84,6 +84,47 @@ class MenuViewModel : ObservableObject {
                 self.alertTitle="Başarılı!"
                 self.alertMessage="Ürün eklendi."
                 self.showAlert.toggle()
+                self.price=""
+                self.itemName=""
+                self.statement=""
+            }
+        }
+    }
+    
+    func addPhotoItem(placeName: String,selectPhoto: UIImage,itemName:String){
+        let storage=Storage.storage()
+        let storageReference=storage.reference()
+        let mediaFolder=storageReference.child("BusinessMenuPhotos").child(placeName)
+        
+        if let data=selectPhoto.jpegData(compressionQuality: 0.75) {
+            let uuid=UUID().uuidString
+
+            let imageReference=mediaFolder.child("\(uuid).jpg")
+            imageReference.putData(data,metadata: nil) { (metadata,error) in
+                if error != nil {
+                    self.alertTitle="Hata"
+                    self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                    self.showAlert.toggle()
+                } else {
+                    imageReference.downloadURL { (url, error) in
+                        if error == nil {
+                            let imageUrl=url?.absoluteString
+                            
+                            Firestore.firestore().collection("Menu").document(placeName).collection("All Items").document(itemName).updateData(["imageUrl":imageUrl!]) { (error )in
+                                if error !=  nil {
+                                    self.alertTitle="Hata"
+                                    self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
+                                    self.showAlert.toggle()
+                                    
+                                } else {
+                                    self.alertTitle="Başarılı"
+                                    self.alertMessage="Fotoğraf yüklendi."
+                                    self.showAlert.toggle()
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -195,7 +236,7 @@ class MenuViewModel : ObservableObject {
                  firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection(menuNameForDelete).document(delDoc).delete(){ error in
                      if error == nil {
                          self.alertTitle="Başarılı"
-                         self.alertMessage="Ürün silindi."
+                         self.alertMessage="Alt menü silindi."
                          self.showAlert.toggle()
                      }else {
                          self.alertTitle="Hata"
@@ -216,16 +257,11 @@ class MenuViewModel : ObservableObject {
          }
     
     func editItem(itemName:String,newItemName:String,newPrice:String,newStatement:String,placeName:String, menuName:String, subCategories:String){
-        
         self.firestoreDatabase.collection("Menu").document(placeNameForDeleteItem).collection("All Items").document(itemName).delete(){ error in
             if error == nil {
-                self.alertTitle="Başarılı"
-                self.alertMessage="Ürün silindi."
-                self.showAlert.toggle()
+                
             }else {
-                self.alertTitle="Hata"
-                self.alertMessage=error?.localizedDescription ?? "Sistem hatası tekrar deneyiniz."
-                self.showAlert.toggle()
+                
             }
         }
         
@@ -243,8 +279,9 @@ class MenuViewModel : ObservableObject {
                 self.showAlert.toggle()
             } else {
                 self.alertTitle="Başarılı!"
-                self.alertMessage="Ürün eklendi."
+                self.alertMessage="Ürün güncellendi."
                 self.showAlert.toggle()
+                self.editItemName=""
             }
         }
     }

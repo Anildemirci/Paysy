@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-//alert koy
-//kontrolleri gerçekleştir öyle ekle ürünleri
 
 struct BusinessSettingsView: View {
     
@@ -77,7 +75,7 @@ struct TableSettingsView: View {
         VStack{
             Form{
                 Section(header: Text("Toplam masa sayısınız")) {
-                    TextField("50,100,150 vs", text: $tablesInfo.totalTable)
+                    TextField("50,100,150 vs", text: $tablesInfo.getTotalTable)
                         .keyboardType(.numberPad)
                 }
                 Section(header: Text("Mekan düzeniniz kaç bölümden oluşuyor(bahçe,katlar,vb.)")){
@@ -85,16 +83,22 @@ struct TableSettingsView: View {
                         .keyboardType(.numberPad)
                 }
                 if partNumber != "" {
-                    Section(header: Text("Bölümlere isim veriniz.")){
+                    VStack{
                         HStack{
                             let intNumber=Int(partNumber)!
                             TextField("isim girin", text: $tableName)
                                 .autocapitalization(.words)
                                 .allowsHitTesting(enteredName==intNumber ? false : true)
                             Button(action: {
-                                enteredName+=1
-                                tablesInfo.parts.append(tableName)
-                                tableName=""
+                                if tableName == "" {
+                                    tablesInfo.showAlert.toggle()
+                                    tablesInfo.alertTitle="Hata"
+                                    tablesInfo.alertMessage="Lütfen isim girin"
+                                } else {
+                                    enteredName+=1
+                                    tablesInfo.parts.append(tableName)
+                                    tableName=""
+                                }
                             }) {
                                 Image(systemName: "plus")
                                     .resizable()
@@ -117,8 +121,6 @@ struct TableSettingsView: View {
                 Button(action: {
                     enteredName=0
                     partNumber=""
-                    print(tablesInfo.city)
-                    print(tablesInfo.town)
                     tablesInfo.setTables(placeName: placeName, city: city, town: town)
                 }) {
                     Text("Onayla")
@@ -147,13 +149,60 @@ struct TableSettingsView: View {
     }
 }
 
-struct MenuSettingsView: View {
+struct PartsView: View {
     
+    @State var selectedPart=""
+    @State private var numberTable=""
+    @State private var selection=Set<String>()
+    @State private var editMode: EditMode = .active
+    @StateObject private var partsInfo=BusinessInformationsViewModel()
+    
+    @State private var features=["Full bar mevcut","İç Mekan","Sigara İçme Alanı","Kokteyl servisi mevcut","Rezervasyon önerilir","Vegan Seçenekler Mevcut","Dış Mekan","Wifi"]
+    
+    var body: some View{
+        VStack{
+            Form{
+                Section(header: Text("Bu bölümdeki masa sayısı")) {
+                    TextField("25,50,75 vb", text: $partsInfo.totalTable)
+                        .keyboardType(.numberPad)
+                }
+            }.frame(maxHeight: 150)
+            Section(header: Text("Bu bölümdeki özellikleri işaretleyin ve kaydedin")) {
+                List(features,id:\.self,selection: $selection) { i in
+                    Text(i)
+                }.listStyle(.plain).environment(\.editMode, $editMode)
+            }
+            Button(action: {
+                partsInfo.features=[String](selection)
+                partsInfo.setPartInfo(placeName: partsInfo.placeName, partName: selectedPart)
+                selection.removeAll(keepingCapacity: false)
+            }) {
+                Text("Onayla")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(Color.white)
+                    .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
+                    .background(Color.green)
+                    .cornerRadius(10)
+            }
+        }
+        .navigationTitle(selectedPart).navigationBarTitleDisplayMode(.inline)
+        .onAppear{
+            partsInfo.getInfos()
+        }
+        .alert(isPresented: $partsInfo.showAlert, content: {
+            Alert(title: Text(partsInfo.alertTitle), message: Text(partsInfo.alertMessage), dismissButton: .default(Text("Tamam")))
+    })
+    }
+}
+
+struct MenuSettingsView: View {
+    //alert vermiyor
     @State var placeName=""
     @State private var menuName=""
     @StateObject private var menuViewModel=MenuViewModel()
     @State private var showAlert=false
-    @State private var dark=false
+    @State private var show=false
     
     var body: some View {
         ZStack {
@@ -188,22 +237,30 @@ struct MenuSettingsView: View {
                 placeNameForDeleteItem=placeName
             }
             CustomAlertTFView(isShown:$showAlert,text: $menuName,title: "Kategori Ekle", buttonName: "Ekle", hint: "Ana Yemekler, İçecekler") { menuName in
-                menuViewModel.categories.append(menuName)
-                menuViewModel.addMenu(placeName: placeName)
-                self.menuName=""
+                if menuName == "" {
+                    show.toggle()
+                } else {
+                    menuViewModel.categories.append(menuName)
+                    menuViewModel.addMenu(placeName: placeName)
+                    self.menuName=""
+                }
             }
+            .alert(isPresented: $show, content: {
+                Alert(title: Text("Hata"), message: Text("Menü ismi giriniz"), dismissButton: .destructive(Text("Tamam")))
+            })
         }
     }
 }
 
 struct AddMenuItemView: View {
+    
     @State var menuName=""
     @State private var subMenu=""
-    @State private var selection="Lütfen kategori seçiniz"
     @StateObject private var menuViewModel=MenuViewModel()
     @State var placeName=""
     @State private var show=false
     @State private var showAlert=false
+    @State private var showingAlert=false
     
     var body: some View {
         ZStack {
@@ -233,15 +290,21 @@ struct AddMenuItemView: View {
             }
             .onAppear{
                 menuViewModel.getSubMenu(placeName: placeName, menuName: menuName)
-                //menuViewModel.getItem(placeName: placeName )
                 menuNameForDelete=menuName
                 placeNameForDeleteItem=placeName
         }
             CustomAlertTFView(isShown:$showAlert,text: $subMenu,title: "Alt Kategori Ekle", buttonName: "Ekle", hint: "Kırmızı Etler, Kırmızı Şaraplar") { subMenu in
-                menuViewModel.subCategories.append(subMenu)
-                menuViewModel.addSubMenu(placeName: placeName, menuName: menuName, subCategories: subMenu)
-                self.subMenu=""
+                if subMenu == "" {
+                    showingAlert.toggle()
+                } else {
+                    menuViewModel.subCategories.append(subMenu)
+                    menuViewModel.addSubMenu(placeName: placeName, menuName: menuName, subCategories: subMenu)
+                    self.subMenu=""
+                }
             }
+            .alert(isPresented: $showingAlert, content: {
+                Alert(title: Text("Hata"), message: Text("İsim giriniz"), dismissButton: .destructive(Text("Tamam")))
+            })
         }
     }
 }
@@ -304,6 +367,9 @@ struct SubMenuView: View {
         .sheet(isPresented: $editShow) {
             EditItemView(menuName: menuName, subMenuName: subMenuName, placeName: placeName,editName:$editName, editPrice:$editPrice,editStatement: $editStatement)
         }
+        .alert(isPresented: $menuViewModel.showAlert, content: {
+            Alert(title: Text(menuViewModel.alertTitle), message: Text(menuViewModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
+        })
     }
 }
 
@@ -316,6 +382,7 @@ struct EditItemView: View{
     @Binding var editName: String
     @Binding var editPrice: String
     @Binding var editStatement: String
+    @State private var showAddPhoto=false
     
     var body: some View {
         Spacer()
@@ -336,9 +403,29 @@ struct EditItemView: View{
                 }
                 .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.4)
                 Button(action: {
-                    menuViewModel.editItem(itemName: menuViewModel.editItemName, newItemName: editName, newPrice: editPrice, newStatement: editStatement, placeName: placeName, menuName: menuName, subCategories: subMenuName)
+                    if editName == "" || editPrice == "" {
+                        menuViewModel.showAlert.toggle()
+                        menuViewModel.alertTitle="Hata"
+                        menuViewModel.alertMessage="İsim/fiyat bilgisini girin."
+                    } else {
+                         menuViewModel.editItem(itemName: menuViewModel.editItemName, newItemName: editName, newPrice: editPrice, newStatement: editStatement, placeName: placeName, menuName: menuName, subCategories: subMenuName)
+                         editName=""
+                         editPrice=""
+                         editStatement=""
+                    }
                 }) {
-                    Text("Ekle")
+                    Text("Güncelle")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundColor(Color.white)
+                    .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
+                    .background(Color.green)
+                    .cornerRadius(10)
+                }
+                Button(action: {
+                    showAddPhoto.toggle()
+                }) {
+                    Text("Fotoğraf Ekle")
                     .font(.title2)
                     .fontWeight(.medium)
                     .foregroundColor(Color.white)
@@ -351,6 +438,12 @@ struct EditItemView: View{
             }.onAppear{
                 menuViewModel.getItemForEdit(placeName: placeName, itemName: editName)
             }
+            .fullScreenCover(isPresented: $showAddPhoto, content: {
+                ItemPhotoUploadView(placeName: placeName, itemName: menuViewModel.editItemName)
+            })
+            .alert(isPresented: $menuViewModel.showAlert, content: {
+                Alert(title: Text(menuViewModel.alertTitle), message: Text(menuViewModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
+            })
     }
 }
 
@@ -377,13 +470,20 @@ struct AddItemView: View{
                             .keyboardType(.numberPad)
                     }
                     Section(header: Text("Ürün açıklaması")){
-                        TextField("içerik", text: $menuViewModel.statement)
+                        TextField("içerik(isteğe bağlı)", text: $menuViewModel.statement)
                             .autocapitalization(.sentences)
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width * 1, height: UIScreen.main.bounds.height * 0.4)
+                
                 Button(action: {
-                    menuViewModel.addItem(placeName: placeName, menuName: menuName, subCategories: subMenuName)
+                    if menuViewModel.price == "" || menuViewModel.itemName == "" {
+                        menuViewModel.showAlert.toggle()
+                        menuViewModel.alertTitle="Hata"
+                        menuViewModel.alertMessage="İsim/fiyat bilgisini girin."
+                    } else {
+                        menuViewModel.addItem(placeName: placeName, menuName: menuName, subCategories: subMenuName)
+                    }
                 }) {
                     Text("Ekle")
                     .font(.title2)
@@ -396,50 +496,104 @@ struct AddItemView: View{
                 Spacer()
                     .navigationTitle(subMenuName).navigationBarTitleDisplayMode(.inline)
             }
+            .alert(isPresented: $menuViewModel.showAlert, content: {
+                Alert(title: Text(menuViewModel.alertTitle), message: Text(menuViewModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
+            })
     }
 }
 
-struct PartsView: View {
+struct ItemPhotoUploadView : View {
     
-    @State var selectedPart=""
-    @State private var numberTable=""
-    @State private var selection=Set<String>()
-    @State private var editMode: EditMode = .active
-    @StateObject private var partsInfo=BusinessInformationsViewModel()
+    @State private var image:UIImage?
+    @State private var isShowCamera=false
+    @State private var isShowPhotoLibrary=false
+    @State private var show=false
+    @StateObject private var addPhoto=MenuViewModel()
     
-    @State private var features=["Full bar mevcut","İç Mekan","Sigara İçme Alanı","Kokteyl servisi mevcut","Rezervasyon önerilir","Vegan Seçenekler Mevcut","Dış Mekan","Wifi"]
+    @State var placeName=""
+    @State var itemName=""
     
-    var body: some View{
+    var body: some View {
         VStack{
-            Form{
-                Section(header: Text("Bu bölümdeki masa sayısı")) {
-                    TextField("25,50,75 vb", text: $partsInfo.totalTable)
-                        .keyboardType(.numberPad)
-                }
-            }.frame(maxHeight: 150)
-            Section(header: Text("Bu bölümdeki özellikleri işaretleyin ve kaydedin")) {
-                List(features,id:\.self,selection: $selection) { i in
-                    Text(i)
-                }.listStyle(.plain).environment(\.editMode, $editMode)
+            CustomDismissButton(show: $show)
+            Spacer()
+            if image != nil {
+                Image(uiImage: image!)
+                                .resizable()
+                                .scaledToFit()
+                                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 2)
+                                .frame(minWidth: 0, maxWidth: .infinity,maxHeight: UIScreen.main.bounds.width * 1)
+                                .padding(.horizontal)
+                                
+            } else {
+                Image(systemName: "photo.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .opacity(0.6)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .padding(.horizontal)
             }
+                        Button(action: {
+                            self.isShowPhotoLibrary = true
+                        }) {
+                            HStack {
+                                Image(systemName: "photo.fill")
+                                    .font(.system(size: 20))
+                                Text("Fotoğraflar")
+                                    .font(.headline)
+                            }
+                            //.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.08 )
+                            .frame(width: 300, height: 60 )
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
+                            .padding(.horizontal)
+                        }
             Button(action: {
-                partsInfo.features=[String](selection)
-                partsInfo.setPartInfo(placeName: partsInfo.placeName, partName: selectedPart)
-                selection.removeAll(keepingCapacity: false)
+                self.isShowCamera = true
             }) {
-                Text("Onayla")
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .foregroundColor(Color.white)
-                    .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
-                    .background(Color.green)
-                    .cornerRadius(10)
+                HStack {
+                    Image(systemName: "camera.fill")
+                        .font(.system(size: 20))
+                    Text("Kamera")
+                        .font(.headline)
+                }
+                //.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.08 )
+                .frame(width: 300, height: 60 )
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
+                .padding(.horizontal)
             }
+            Spacer()
+            if image != nil{
+                Button(action: {
+                    addPhoto.addPhotoItem(placeName: placeName, selectPhoto: image!, itemName: itemName)
+                    image=nil
+                }) {
+                    Text("Yükle")
+                        //.frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.08 )
+                        .frame(width: 300, height: 60 )
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .clipShape(Capsule())
+                        .padding(.horizontal)
+                }
+            }
+            Spacer()
         }
-        .navigationTitle(selectedPart).navigationBarTitleDisplayMode(.inline)
-        .onAppear{
-            partsInfo.getInfos()
+        .fullScreenCover(isPresented: $show) { () -> BusinessAccountView in
+            BusinessAccountView()
         }
+        .sheet(isPresented: $isShowPhotoLibrary) {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $image)
+        }
+        .sheet(isPresented: $isShowCamera) {
+            ImagePicker(sourceType: .camera, selectedImage: $image)
+        }
+        .alert(isPresented: $addPhoto.showAlert, content: {
+            Alert(title: Text(addPhoto.alertTitle), message: Text(addPhoto.alertMessage), dismissButton: .default(Text("Tamam")))
+        })
     }
 }
 

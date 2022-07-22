@@ -204,7 +204,7 @@ class BusinessInformationsViewModel : ObservableObject {
                                "Place Name":placeName,
                                "City":city,
                                "Town":town,
-                               "Total Table":self.totalTable,
+                               "Total Table":self.getTotalTable,
                                "Parts":self.parts,
                                "Date":FieldValue.serverTimestamp()] as [String:Any]
             

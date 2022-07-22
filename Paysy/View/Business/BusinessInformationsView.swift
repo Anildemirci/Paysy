@@ -21,6 +21,7 @@ struct BusinessInformationsView: View {
                 HStack{
                      Spacer()
                      Button(action: {
+                         print(businessInfo.placeName)
                          showEdit.toggle()
                      }) {
                          Text("Düzenle")
@@ -98,7 +99,7 @@ struct BusinessInformationsView: View {
         }
         .onAppear{
             businessInfo.getInfos()
-            businessPhoto.getBusinessMenuPhotoForUser()
+            businessPhoto.getBusinessMenuPhotoForUser(placeName: placeName)
         }
         .fullScreenCover(isPresented: $showEdit) { () -> EditBusinessInformations in
             return EditBusinessInformations()
@@ -210,13 +211,6 @@ struct EditLocation: View {
     }
 }
 
-struct EditMenu: View {
-    var body: some View {
-        VStack{
-            
-        }
-    }
-}
 
 struct EditWorkingHour: View {
     

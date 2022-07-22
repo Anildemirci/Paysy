@@ -317,8 +317,8 @@ class BusinessPhotoViewModel : ObservableObject {
         }
     }
     
-    func getBusinessMenuPhotoForUser(){
-        firebaseDatabase.collection("BusinessPhotos").document("DorockXL").collection("MenuPhotos").order(by: "Date", descending: true).addSnapshotListener { (snapshot, error) in
+    func getBusinessMenuPhotoForUser(placeName: String){
+        firebaseDatabase.collection("BusinessPhotos").document(placeName).collection("MenuPhotos").order(by: "Date", descending: true).addSnapshotListener { (snapshot, error) in
                 if error != nil {
                     print((error?.localizedDescription)!)
                     return
