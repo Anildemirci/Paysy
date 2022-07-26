@@ -22,17 +22,22 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate {
     @Published var village=""
     @Published var street2=""
     @Published var address=""
+    @Published var allowLocLongitude=Double()
+    @Published var allowLocLatitude=Double()
     
     func checkIfLocationServicesIsEnabled(){
         if CLLocationManager.locationServicesEnabled() {
             locationManager=CLLocationManager()
             locationManager!.delegate=self
+            allowLocLatitude=locationManager?.location?.coordinate.latitude ?? 0
+            allowLocLongitude=locationManager?.location?.coordinate.longitude ?? 0
+            //getAddressFromLatLon(pdblLatitude: allowLocLatitude, withLongitude: allowLocLongitude)
         } else {
             //alert göster konuma izin vermesi gerektiğini
         }
     }
     
-    private func checkLocationAuthorization(){
+     func checkLocationAuthorization(){
         guard let locationManager = locationManager else {
             return
         }
@@ -46,7 +51,9 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate {
             print("Konumuza izin verilmedi ayarlardan düzeltin.")
         case .authorizedAlways, .authorizedWhenInUse:
             region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-            
+            allowLocLatitude=locationManager.location?.coordinate.latitude ?? 0
+            allowLocLongitude=locationManager.location?.coordinate.longitude ?? 0
+            getAddressFromLatLon(pdblLatitude: allowLocLatitude, withLongitude: allowLocLongitude)
         @unknown default:
             break
         }
@@ -96,7 +103,6 @@ class MapViewModel: NSObject,ObservableObject,CLLocationManagerDelegate {
                             addressString = addressString + pm.postalCode! + " "
                         }
                         self.address=addressString
-                        print(addressString)
                   }
             })
 

@@ -217,25 +217,23 @@ class ConnectToPlaceViewModel : ObservableObject {
         }
     }
     
-    
-    
-    
     //kullanılmadı
-    func orderItem(){
+    func orderItem(placeName: String,tableID: String, orderNo: String){
         
-        orderArray2=[orderModel(statement: self.statement2, price: self.price, itemName: self.itemName2, status: self.status2, amount: 4)]
-
+        let firestoreUser=["User":Auth.auth().currentUser!.uid,
+                           "Email":Auth.auth().currentUser!.email!,
+                           "Item Name":self.itemName,
+                           "Price":self.price,
+                           "Note":self.customerNote,
+                           "Status":"Onay bekliyor",
+                           "Date":self.currentTime] as [String:Any]
         
-        do {
-            let jsonData = try JSONEncoder().encode(orderArray2)
-            let jsonString = String(data: jsonData, encoding: .utf8)!
-            print(jsonString)
-            
-
-            let decodedSentences = try JSONDecoder().decode([orderModel].self, from: jsonData)
-                print(decodedSentences)
-        } catch {
-            print("hataaaaa")
+        firestoreDatabase.collection("Orders").document(placeName).collection(tableID).document(orderNo).setData(firestoreUser) {error in
+            if error != nil {
+                
+            } else {
+                
+            }
         }
     }
     

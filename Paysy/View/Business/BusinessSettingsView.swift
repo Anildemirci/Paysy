@@ -131,6 +131,19 @@ struct TableSettingsView: View {
                         .background(Color.green)
                         .cornerRadius(10)
                 }
+                Button(action: {
+                    tablesInfo.parts=[String]()
+                    partNumber=""
+                    enteredName=0
+                }) {
+                    Text("İptal")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                        .foregroundColor(Color.white)
+                        .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                }
             } else {
                 List{
                     Section(header: Text("Düzenlemek istediğiniz bölüme tıklayın")) {
@@ -382,7 +395,6 @@ struct EditItemView: View{
     @Binding var editName: String
     @Binding var editPrice: String
     @Binding var editStatement: String
-    @State private var showAddPhoto=false
     
     var body: some View {
         Spacer()
@@ -422,25 +434,11 @@ struct EditItemView: View{
                     .background(Color.green)
                     .cornerRadius(10)
                 }
-                Button(action: {
-                    showAddPhoto.toggle()
-                }) {
-                    Text("Fotoğraf Ekle")
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .foregroundColor(Color.white)
-                    .frame(width: UIScreen.main.bounds.width * 0.4, height: UIScreen.main.bounds.height * 0.05)
-                    .background(Color.green)
-                    .cornerRadius(10)
-                }
                 Spacer()
                     .navigationTitle(subMenuName).navigationBarTitleDisplayMode(.inline)
             }.onAppear{
                 menuViewModel.getItemForEdit(placeName: placeName, itemName: editName)
             }
-            .fullScreenCover(isPresented: $showAddPhoto, content: {
-                ItemPhotoUploadView(placeName: placeName, itemName: menuViewModel.editItemName)
-            })
             .alert(isPresented: $menuViewModel.showAlert, content: {
                 Alert(title: Text(menuViewModel.alertTitle), message: Text(menuViewModel.alertMessage), dismissButton: .destructive(Text("Tamam")))
             })
@@ -502,6 +500,8 @@ struct AddItemView: View{
     }
 }
 
+
+//kullanılmayacak
 struct ItemPhotoUploadView : View {
     
     @State private var image:UIImage?

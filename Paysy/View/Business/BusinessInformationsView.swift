@@ -21,7 +21,6 @@ struct BusinessInformationsView: View {
                 HStack{
                      Spacer()
                      Button(action: {
-                         print(businessInfo.placeName)
                          showEdit.toggle()
                      }) {
                          Text("Düzenle")
@@ -100,9 +99,10 @@ struct BusinessInformationsView: View {
         .onAppear{
             businessInfo.getInfos()
             businessPhoto.getBusinessMenuPhotoForUser(placeName: placeName)
+            businessInfo.getLocationForBusiness()
         }
         .fullScreenCover(isPresented: $showEdit) { () -> EditBusinessInformations in
-            return EditBusinessInformations()
+            EditBusinessInformations(latitude: businessInfo.annotationLatitude, longitude: businessInfo.annotationLongitude)
         }
     }
 }
@@ -118,13 +118,15 @@ struct BusinessInformationsView_Previews: PreviewProvider {
 
 struct EditBusinessInformations: View {
     @State private var show=false
+    @State var latitude=Double()
+    @State var longitude=Double()
     
     var body: some View {
         VStack{
             ScrollView(.vertical, showsIndicators: false){
                 CustomDismissButton(show: $show)
                 EditLocation()
-                EditAddressInformations()
+                EditAddressInformations(latitude:latitude,longitude: longitude)
                 EditWorkingHour()
                 AddMenuPhotosView()
             }
@@ -137,7 +139,9 @@ struct EditBusinessInformations: View {
 struct EditAddressInformations: View {
     
     @StateObject var businessInfo=BusinessInformationsViewModel()
-    //@StateObject var addressInfo=MapViewModel()
+    @StateObject var addressInfo=MapViewModel()
+    @State var latitude=Double()
+    @State var longitude=Double()
     
     var body: some View {
         VStack{
@@ -151,18 +155,18 @@ struct EditAddressInformations: View {
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-                TextField("mahalle", text: $businessInfo.village)
+                TextField("mahalle", text: $addressInfo.village)
                     .autocapitalization(.words)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
-                TextField("cadde,sokak,no", text: $businessInfo.street)
+                TextField("cadde,sokak,no", text: $addressInfo.street2)
                     .frame(height: UIScreen.main.bounds.height * 0.020)
                     .autocapitalization(.words)
                     .padding()
                     .overlay(Rectangle().stroke(Color.black,lineWidth:1))
                 HStack{
-                    TextField("ilçe", text: $businessInfo.town)
+                    TextField("ilçe", text: $addressInfo.town)
                         .autocapitalization(.words)
                         .frame(height: UIScreen.main.bounds.height * 0.020)
                         .padding()
@@ -176,7 +180,7 @@ struct EditAddressInformations: View {
             }
             .background(Color.white)
             Button(action: {
-                businessInfo.updateInfo()
+                businessInfo.updateInfo(village: addressInfo.village, street: addressInfo.street2, address: addressInfo.address, town: addressInfo.town)
             }) {
                 Text("Düzenle")
                     .font(.title2)
@@ -192,6 +196,9 @@ struct EditAddressInformations: View {
     })
         .onAppear{
             businessInfo.getInfos()
+            addressInfo.checkIfLocationServicesIsEnabled()
+            addressInfo.checkLocationAuthorization()
+            //addressInfo.getAddressFromLatLon(pdblLatitude: addressInfo.allowLocLatitude, withLongitude: addressInfo.allowLocLongitude)
         }
     }
 }

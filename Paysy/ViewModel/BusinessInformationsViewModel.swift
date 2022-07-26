@@ -113,6 +113,25 @@ class BusinessInformationsViewModel : ObservableObject {
             }
         }
     }
+    //business için lokasyon koordinatlarını getiriyor
+    
+    func getLocationForBusiness(){
+        firestoreDatabase.collection("Locations").document(Auth.auth().currentUser!.uid).addSnapshotListener { (snapshot, error) in
+            if error == nil {
+                if let longitude=snapshot?.get("Longitude") {
+                    self.annotationLongitude=longitude as! Double
+                } else  {
+                    self.annotationLongitude=0
+                }
+                if let latitude=snapshot?.get("Latitude") {
+                    self.annotationLatitude=latitude as! Double
+                } else {
+                    self.annotationLatitude=0
+                }
+            }
+        }
+    }
+    
     //kullanıcı için lokasyonun koordinatlarını getiriyor
     func getLocation(placeName:String){
         firestoreDatabase.collection("Business").whereField("Place Name", isEqualTo: placeName).addSnapshotListener { (snapshot, error) in
@@ -162,11 +181,11 @@ class BusinessInformationsViewModel : ObservableObject {
     }
     
     //adress güncelleme
-    func updateInfo(){
+    func updateInfo(village:String,street: String, address: String, town: String){
         firestoreDatabase.collection("Business").document(currentUser!.uid).updateData(["Phone":phoneNumber,
                                                                                         "Village":village,
                                                                                         "Street":street,
-                                                                                        "Address":(village)+",\(street)"+",\(town)"+"/\(city)",
+                                                                                        "Address":address, //(village)+",\(street)"+",\(town)"+"/\(city)",
                                                                                         "City":city,
                                                                                         "Town":town
                                                                                        ])

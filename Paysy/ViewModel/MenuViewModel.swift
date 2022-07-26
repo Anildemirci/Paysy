@@ -68,6 +68,7 @@ class MenuViewModel : ObservableObject {
     }
     
     func addItem(placeName:String, menuName:String, subCategories:String){
+        
         let firestoreUser=["Price":self.price,
                            "ItemName":self.itemName,
                            "MenuType":menuName,

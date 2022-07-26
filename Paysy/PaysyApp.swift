@@ -23,6 +23,7 @@ struct PaysyApp: App {
     var body: some Scene {
         WindowGroup {
             LaunchScreenView()
+                .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }.onChange(of: scenePhase) { newScenePhase in
             switch newScenePhase {
             case .active:

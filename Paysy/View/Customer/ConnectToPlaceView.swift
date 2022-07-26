@@ -266,6 +266,7 @@ struct ConfirmOrdersView: View {
     @Binding var orderArray : [orderModel]
     @Binding var totalPrice : String
     @Binding var totalDoublePrice : Double
+    @State var itemName=""
     
     var body: some View {
         VStack{
@@ -352,8 +353,12 @@ struct ConfirmOrdersView: View {
                 }
                 .padding([.top,.horizontal])
                 Button(action: {
+                    for i in orderArray {
+                        //düzenle
+                        //orderViewModel.orderItem(placeName: "DorockXL", tableID: "1", orderNo: i.itemName)
+                    }
                     
-                    //database kaydet
+                    //orderViewModel.orderItem(placeName: "DorockXL", tableID: "1", orderNo: "1")
                     
                 }) {
                     Text("Siparişi ver")
