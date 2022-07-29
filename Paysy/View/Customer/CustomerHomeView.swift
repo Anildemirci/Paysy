@@ -63,7 +63,7 @@ struct CustomerHomeView: View {
                                         .foregroundColor(.white)
                                 })
                                 .navigationBarItems(trailing: Button(action: {
-                                    print(Auth.auth().currentUser?.uid)
+                                    
                                 }) {
                                     Image(systemName: "envelope")
                                         .foregroundColor(.white)

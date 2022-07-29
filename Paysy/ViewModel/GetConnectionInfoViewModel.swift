@@ -23,6 +23,8 @@ class GetConnectionInfoViewModel : ObservableObject {
     @Published var orders=[String]()
     @Published var people=[String]()
     @Published var totalPrice=""
+    @Published var doubleTotalPriceForBusiness=0.0
+    @Published var doubleTotalPriceForUser=0.0
     @Published var userPrice=""
     @Published var alertTitle=""
     @Published var alertMessage=""
@@ -34,6 +36,8 @@ class GetConnectionInfoViewModel : ObservableObject {
     @Published var tableIDFromCheck=""
     @Published var placeNameFromCheck=""
     @Published var documentIDForUser=""
+    @Published var ordersModelForBusiness=[orderModelForBusiness]()
+    @Published var ordersModelForCustomer=[getOrderModelForCustomer]()
     
     func getConnectToPlaceInfoForBusiness(placeName:String, tableID: String){
         
@@ -108,6 +112,56 @@ class GetConnectionInfoViewModel : ObservableObject {
                 if let tableNum=snapshot?.get("Table Number") as? String {
                     self.tableNumber=tableNum
                 }
+            }
+        }
+    }
+ 
+    func getOrderItemsForBusiness(placeName: String, tableID: String){
+        firestoreDatabase.collection("OrdersForBusiness").document(placeName).collection(tableID).getDocuments { (snapshot, error) in
+            if error != nil {
+
+            } else {
+                self.ordersModelForBusiness.removeAll(keepingCapacity: false)
+                
+                for document in snapshot!.documents {
+                    let amount=document.get("Amount") as! Int
+                    let itemName=document.get("Item Name") as! String
+                    let price=document.get("Price") as! String
+                    let note=document.get("Note") as? String
+                    let status=document.get("Status") as! String
+                    let tableNum=document.get("Table Number") as! String
+                    let statement=document.get("Statement") as? String
+                    
+                    self.ordersModelForBusiness.append(orderModelForBusiness(statement: statement ?? "", price: price, itemName: itemName, status: status, amount: amount, note: note ?? "", tableNum: tableNum))
+                    
+                    self.doubleTotalPriceForBusiness+=Double(price)!
+                }
+            }
+        }
+    }
+    
+    func getOrderItemsForCustomer(placeName: String,tableID: String) {
+        firestoreDatabase.collection("Orders").document(placeName).collection(tableID).document(tableID).collection(Auth.auth().currentUser!.uid).getDocuments { (snapshot, error) in
+            if error != nil {
+                
+            } else {
+                
+                 self.ordersModelForCustomer.removeAll(keepingCapacity: false)
+                 
+                 for document in snapshot!.documents {
+                     let note=document.get("Note") as? String
+                     let amount=document.get("Amount") as! Int
+                     let itemName=document.get("Item Name") as! String
+                     let price=document.get("Price") as! String
+                     let status=document.get("Status") as! String
+                     let tableNum=document.get("Table Number") as! String
+                     let statement=document.get("Statement") as? String
+                     let fullName=document.get("UserFullName") as! String
+                     
+                     self.ordersModelForCustomer.append(getOrderModelForCustomer(statement: statement ?? "", price: price, itemName: itemName, status: status, amount: amount, note: note ?? "", tableNum: tableNum,userFullName: fullName))
+                     
+                     self.doubleTotalPriceForUser+=Double(price)!
+                 }
             }
         }
     }

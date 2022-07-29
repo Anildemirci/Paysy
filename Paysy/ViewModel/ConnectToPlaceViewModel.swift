@@ -59,7 +59,7 @@ class ConnectToPlaceViewModel : ObservableObject {
     }
     
     func requestToPlace(placeName: String, userFullName: String){
-        
+        getCurrentTime()
         randomPassword()
         let firestoreUser2=["User":Auth.auth().currentUser!.uid,
                             "Email":Auth.auth().currentUser!.email!,
@@ -217,24 +217,36 @@ class ConnectToPlaceViewModel : ObservableObject {
         }
     }
     
-    //kullanılmadı
-    func orderItem(placeName: String,tableID: String, orderNo: String){
+    func orderItem(placeName: String,tableID: String, orderNo: String,amount: Int,tableNumber: String,userName:String){
+        getCurrentTime()
         
-        let firestoreUser=["User":Auth.auth().currentUser!.uid,
-                           "Email":Auth.auth().currentUser!.email!,
-                           "Item Name":self.itemName,
-                           "Price":self.price,
-                           "Note":self.customerNote,
-                           "Status":"Onay bekliyor",
-                           "Date":self.currentTime] as [String:Any]
+         let firestoreUser=["User":Auth.auth().currentUser!.uid,
+                            "Email":Auth.auth().currentUser!.email!,
+                            "UserFullName":userName,
+                            "Item Name":self.itemName,
+                            "Price":self.price,
+                            "Amount":amount,
+                            "TableID":tableID,
+                            "Table Number":tableNumber,
+                            "Note":self.customerNote,
+                            "Statement":self.statement,
+                            "Status":"Onay bekliyor",
+                            "Date":self.currentTime] as [String:Any]
         
-        firestoreDatabase.collection("Orders").document(placeName).collection(tableID).document(orderNo).setData(firestoreUser) {error in
-            if error != nil {
-                
-            } else {
-                
-            }
-        }
+        self.firestoreDatabase.collection("OrdersForBusiness").document(placeName).collection(tableID).document(self.itemName).setData(firestoreUser)
+        
+        self.firestoreDatabase.collection("Orders").document(placeName).collection(tableID).document(tableID).collection(Auth.auth().currentUser!.uid).document(self.itemName).setData(firestoreUser) {error in
+             if error != nil {
+                 self.alertTitle="Hata!"
+                 self.alertMessage=error?.localizedDescription ?? "Sunucu hatası tekrar deneyiniz."
+                 self.showAlert.toggle()
+             } else {
+                 self.alertTitle="Başarılı"
+                 self.alertMessage="Siparişiniz verildi"
+                 self.showAlert.toggle()
+             }
+         }
+        
     }
     
     

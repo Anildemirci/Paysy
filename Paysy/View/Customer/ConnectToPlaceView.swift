@@ -50,7 +50,7 @@ struct ConnectToPlaceView: View {
                 } else if selected == "orders" {
                     OrdersView(selectedPlace: selectedPlace, tableID: tableID)
                 } else if selected == "menu" {
-                    MenuView(selectedPlaceName: selectedPlace,tableID: tableID, orderArray: $orderArray, totalPrice: $totalPrice, totalDoublePrice: $totalDoublePrice)
+                    MenuView(selectedPlaceName: selectedPlace,tableID: tableID, orderArray: $orderArray, totalPrice: $totalPrice, totalDoublePrice: $totalDoublePrice,tableNum: tableNum)
                 }
             }.navigationTitle(selectedPlace+" Masa "+tableNum).navigationBarTitleDisplayMode(.inline)
         }
@@ -79,8 +79,8 @@ struct RequestConfirmed: View{
                 Text("Masa Durumu: \(connectToPlaceViewModel.status)")
                 Text("\(timerManager.hour) saat \(timerManager.min) dakikadır masadasınız")
                 Group{
-                    Text("Toplam Hesap : \(connectToPlaceViewModel.totalPrice)")
-                    Text("Sizin hesabınız : \(connectToPlaceViewModel.userPrice)")
+                    Text("Toplam hesap :"+String(format: "%.2f", connectToPlaceViewModel.doubleTotalPriceForBusiness))
+                    Text("Sizin hesabınız :"+String(format: "%.2f", connectToPlaceViewModel.doubleTotalPriceForUser))
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.05)
                 .background(Color("logoColor"))
@@ -121,27 +121,32 @@ struct RequestConfirmed: View{
             }
             .onAppear{
                 userInfo.getInfos()
+                connectToPlaceViewModel.getOrderItemsForBusiness(placeName: selectedPlace, tableID: tableID)
+                connectToPlaceViewModel.getOrderItemsForCustomer(placeName: selectedPlace, tableID: tableID)
                 connectToPlaceViewModel.getConnectToPlaceInfoForBusiness(placeName: selectedPlace, tableID: tableID)
                 connectToPlaceViewModel.getConnectToPlaceInfoForUser(placeName: selectedPlace, tableID: tableID)
             }
     }
+    
 }
 
 struct MenuView: View {
     
+    @StateObject private var userInfo=UserInformationsViewModel()
     @StateObject private var menuViewModel=MenuViewModel()
     @State var selectedPlaceName=""
     @State var tableID=""
     @Binding var orderArray : [orderModel]
     @Binding var totalPrice : String
     @Binding var totalDoublePrice : Double
+    @State var tableNum=""
     
     var body: some View {
         VStack{
             List{
                 Section(header: Text("Menüler")){
                     ForEach(menuViewModel.categories,id:\.self){ i in
-                        NavigationLink(destination: SelectedMenuForUserView(placeName: selectedPlaceName, menuName: i, orderArray: $orderArray, totalDoublePrice: $totalDoublePrice, totalPrice: $totalPrice)) {
+                        NavigationLink(destination: SelectedMenuForUserView(placeName: selectedPlaceName, menuName: i, tableNum: tableNum, userName: userInfo.firstName+" "+userInfo.lastName, orderArray: $orderArray, totalDoublePrice: $totalDoublePrice, totalPrice: $totalPrice,tableID: tableID)) {
                             HStack(spacing:10){
                                 Image(systemName: "menucard.fill")
                                 Text(i)
@@ -163,11 +168,14 @@ struct SelectedMenuForUserView: View{
     @StateObject private var menuViewModel=MenuViewModel()
     @State var placeName=""
     @State var menuName=""
+    @State var tableNum=""
+    @State var userName=""
     @State private var selectedSubMenu=""
     @State private var showOrder=false
     @Binding var orderArray : [orderModel]
     @Binding var totalDoublePrice : Double
     @Binding var totalPrice : String
+    @State var tableID=""
     
     var body: some View {
             VStack{
@@ -248,7 +256,7 @@ struct SelectedMenuForUserView: View{
                 menuViewModel.getItem(placeName: placeName)
             }
             .sheet(isPresented: $showOrder) {
-                ConfirmOrdersView(orderArray: $orderArray, totalPrice: $totalPrice, totalDoublePrice: $totalDoublePrice)
+                ConfirmOrdersView(orderArray: $orderArray, totalPrice: $totalPrice, totalDoublePrice: $totalDoublePrice, placeName: placeName, tableID: tableID, tableNum: tableNum,userName: userName)
             }
     }
     
@@ -266,7 +274,10 @@ struct ConfirmOrdersView: View {
     @Binding var orderArray : [orderModel]
     @Binding var totalPrice : String
     @Binding var totalDoublePrice : Double
-    @State var itemName=""
+    @State var placeName=""
+    @State var tableID=""
+    @State var tableNum=""
+    @State var userName=""
     
     var body: some View {
         VStack{
@@ -353,13 +364,15 @@ struct ConfirmOrdersView: View {
                 }
                 .padding([.top,.horizontal])
                 Button(action: {
+                    
                     for i in orderArray {
-                        //düzenle
-                        //orderViewModel.orderItem(placeName: "DorockXL", tableID: "1", orderNo: i.itemName)
+                        orderViewModel.itemName=i.itemName
+                        orderViewModel.price=i.price
+                        orderViewModel.statement=i.statement
+                        orderViewModel.orderItem(placeName: placeName, tableID: tableID, orderNo: i.itemName,amount: i.amount,tableNumber: tableNum,userName: userName)
                     }
-                    
-                    //orderViewModel.orderItem(placeName: "DorockXL", tableID: "1", orderNo: "1")
-                    
+                    orderArray=[orderModel]()
+                    totalDoublePrice=0.0
                 }) {
                     Text("Siparişi ver")
                         .font(.title2)
@@ -371,6 +384,9 @@ struct ConfirmOrdersView: View {
                 }
             }
         }
+        .alert(isPresented: $orderViewModel.showAlert, content: {
+            Alert(title: Text(orderViewModel.alertTitle), message: Text(orderViewModel.alertMessage), dismissButton: .default(Text("Tamam")))
+    })
     }
     
     func deleteItem(item: orderModel){
@@ -409,27 +425,30 @@ struct OrdersView: View {
     
     @State var selectedPlace=""
     @State var tableID=""
+    @StateObject private var orderViewModel=GetConnectionInfoViewModel()
     
     var body: some View {
         VStack{
             List{
                 Section(header: Text("Bekleyen Siparişler")) {
-                    HStack{
-                        Text("Pizza 75₺")
-                        Spacer()
-                        Image(systemName: "clear.fill")
-                            .foregroundColor(Color.red)
+                    ForEach(orderViewModel.ordersModelForCustomer){ i in
+                        if i.status == "Onay bekliyor" {
+                            HStack{
+                                Text(i.itemName+" "+i.price+"₺")
+                                Spacer()
+                                Image(systemName: "clear.fill")
+                                    .foregroundColor(Color.red)
+                            }
+                        }
                     }
-                    HStack{
-                        Text("Şarap 65₺")
-                        Spacer()
-                        Image(systemName: "clear.fill")
-                            .foregroundColor(Color.red)
-                    }
+                    
                 }
                 Section(header: Text("Gelen Siparişler")) {
-                    Text("Bira x2 100₺")
-                    Text("Kokteyl x1 110₺")
+                    ForEach(orderViewModel.ordersModelForCustomer) { i in
+                        if i.status == "Onaylandı" {
+                            Text(i.itemName+" "+i.price+"₺")
+                        }
+                    }
                 }
             }.listStyle(.sidebar)
             Spacer()
@@ -437,6 +456,8 @@ struct OrdersView: View {
                 Text("Öde")
                     .padding()
             }
+        }.onAppear{
+            orderViewModel.getOrderItemsForCustomer(placeName: selectedPlace, tableID: tableID)
         }
     }
 }
